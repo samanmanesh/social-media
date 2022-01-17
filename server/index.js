@@ -21,6 +21,6 @@ mongoose.connect(
 
 app.listen(port, () => {
   console.log(
-    "backend server is running on port 8800"
+    "Backend server is running on port 8800"
   );
 });
