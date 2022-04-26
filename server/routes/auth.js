@@ -10,7 +10,6 @@ router.post("/register", registerUser);
 router.post("/login", authenticate);
   
 
-
 router.get("/", (req, res) => {
   res.send("Hey this is auth route");
 });
