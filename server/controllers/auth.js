@@ -41,9 +41,22 @@ export const registerUser = async (req, res) => {
 export const authenticate = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    !user && res.status(404).send({ message: "User does not exist" });
-    res.status(200).send(user);
+    if (!user) {
+      return res.status(400).send({ message: "User does not exist" });
+    }
+    // !user && res.status(404).send({ message: "User does not exist" });
     
+    const isPasswordCorrect = await bcrypt.compare(
+      req.body.password, user.password);
+
+    // !isPasswordCorrect &&  
+    // return (res.status(401).send({ message: "Password is incorrect" }));
+    if(!isPasswordCorrect){
+      return res.status(401).send({ message: "Password is incorrect" });
+    }
+
+    res.status(200).send(user);
+
   } catch (err) {
     res.status(500).send(err);
   }
