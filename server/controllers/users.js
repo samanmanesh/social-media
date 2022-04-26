@@ -82,16 +82,20 @@ export const getUsers = async (req, res) => {
     const user = await User.findById(id);
 
     if (user) {
+
+      // this will ignore the filed we don't want to send back to the client like password
+      const { password, createdAt , updatedAt, ...other} = user._doc;
+
       return res.status(200).json({
         message: "User found successfully",
-        user,
+        other,
       });
     } else {
       return res.status(404).json({
         message: "User not found",
       });
     }
-    
+
   } catch (err) {
     return res
       .status(500)
