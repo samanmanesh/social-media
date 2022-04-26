@@ -48,11 +48,6 @@ export const updateUser = async (req, res) => {
   }
 };
 
-export const getUsers = (req, res) => {
-  res.send("Hey this is Users route");
-};
-
-
 export const deleteUser = async (req, res) => {
   const { id } = req.params; // id is the user id that we want to delete the user
 
@@ -66,7 +61,9 @@ export const deleteUser = async (req, res) => {
     req.body.isAdmin
   ) {
     try {
-      const user = await User.findByIdAndDelete(id);
+      const user = await User.findByIdAndDelete(
+        id
+      );
       return res.status(200).json({
         message: "User deleted successfully",
         user,
@@ -76,5 +73,28 @@ export const deleteUser = async (req, res) => {
         .status(500)
         .json({ message: err.message });
     }
+  }
+};
+
+export const getUsers = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+
+    if (user) {
+      return res.status(200).json({
+        message: "User found successfully",
+        user,
+      });
+    } else {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: err.message });
   }
 };
