@@ -5,19 +5,21 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
+import bodyParser from "body-parser";
+import cors from "cors";
 
 dotenv.config();
 
-mongoose.connect(
-  process.env.MONGO_URL,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log("Connected to MongoDB");
-  }
-);
+// mongoose.connect(
+//   process.env.MONGO_URL,
+//   {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   },
+//   () => {
+//     console.log("Connected to MongoDB");
+//   }
+// );
 
 app.listen(port, () => {
   console.log(
