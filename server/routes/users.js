@@ -1,9 +1,9 @@
 import express from "express";
+import { getUsers } from "../controllers/users.js";
 const router = express.Router();
 
 
-router.get("/", (req, res) => {
-  res.send("Hey this is Users route");
-});
+router.get("/", getUsers);
+
 
 export default router;
