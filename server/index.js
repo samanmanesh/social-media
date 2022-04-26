@@ -1,31 +1,36 @@
-// const express = require("express");
 import express from "express";
-
-// const mongoose = require("mongoose");
 import mongoose from "mongoose";
-// const dotenv = require("dotenv");
 import dotenv from "dotenv";
-// const helmet = require("helmet");
 import helmet from "helmet";
-// const morgan = require("morgan");
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import cors from "cors";
 
 const app = express();
 const port = 8800;
+//for using dotenv
 dotenv.config();
 
-// mongoose.connect(
-//   process.env.MONGO_URL,
-//   {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   },
-//   () => {
-//     console.log("Connected to MongoDB");
-//   }
-// );
+mongoose.connect(
+  process.env.MONGO_URL,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  () => {
+    console.log("Connected to MongoDB");
+  }
+);
+//middlewares
+
+app.use(express.json()); // 
+app.use(helmet());
+app.use(morgan("common"));
+app.use(cors());
+// app.use(bodyParser.json({ limit: "30mb", extended: true })); // it seems for new version of express dont need this
+// app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // it seems for new version of express dont need this
+
+
 
 app.listen(port, () => {
   console.log(
