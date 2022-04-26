@@ -5,6 +5,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import cors from "cors";
+import userRoutes from "./routes/users.js";
 
 const app = express();
 const port = process.env.port || 8800;
@@ -31,6 +32,7 @@ app.use(helmet());
 app.use(morgan("common"));
 app.use(cors());
 
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello Social Media");
