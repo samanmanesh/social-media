@@ -51,3 +51,30 @@ export const updateUser = async (req, res) => {
 export const getUsers = (req, res) => {
   res.send("Hey this is Users route");
 };
+
+
+export const deleteUser = async (req, res) => {
+  const { id } = req.params; // id is the user id that we want to delete the user
+
+  if (req.body.userId !== id) {
+    return res.status(403).json({
+      message:
+        "You are not authorized to delete this user",
+    });
+  } else if (
+    req.body.userId === id ||
+    req.body.isAdmin
+  ) {
+    try {
+      const user = await User.findByIdAndDelete(id);
+      return res.status(200).json({
+        message: "User deleted successfully",
+        user,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ message: err.message });
+    }
+  }
+};
