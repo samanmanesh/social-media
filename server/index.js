@@ -25,11 +25,17 @@ mongoose
 //middlewares
 
 app.use(express.json()); //
+// app.use(bodyParser.json({ limit: "30mb", extended: true })); // it seems for new version of express dont need this
+// app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // it seems for new version of express dont need this
 app.use(helmet());
 app.use(morgan("common"));
 app.use(cors());
-// app.use(bodyParser.json({ limit: "30mb", extended: true })); // it seems for new version of express dont need this
-// app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // it seems for new version of express dont need this
+
+
+app.get("/", (req, res) => {
+  res.send("Hello Social Media");
+});
+
 
 app.listen(port, () => {
   console.log(
