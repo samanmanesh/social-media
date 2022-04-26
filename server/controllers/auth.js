@@ -1,11 +1,9 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
-
-//!user new Promise or async function to register user?!
-
+//!use new Promise or async function to register user?!
 export const registerUser = async (req, res) => {
-
+  
   const user = await User.findOne({
     email: req.body.email,
   });
@@ -15,6 +13,7 @@ export const registerUser = async (req, res) => {
       .status(400)
       .send({ message: "User already exists" });
   }
+
   try {
     // generate a new password hash
     const salt = await bcrypt.genSalt(10);
@@ -44,6 +43,7 @@ export const authenticate = async (req, res) => {
     const user = await User.findOne({
       email: req.body.email,
     });
+
     if (!user) {
       return res
         .status(400)
@@ -56,13 +56,13 @@ export const authenticate = async (req, res) => {
         req.body.password,
         user.password
       );
+
     if (!isPasswordCorrect) {
-      return res
-        .status(401)
-        .send({
-          message: "Password is incorrect",
-        });
+      return res.status(401).send({
+        message: "Password is incorrect",
+      });
     }
+    
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
