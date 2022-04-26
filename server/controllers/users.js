@@ -1,15 +1,13 @@
-import bcrypt from "bcrypt";
+import User from "../models/user.js";
+import {
+  makeHashedPass,
+  compareHashedPass,
+} from "../helpers/bcryptHandler.js";
 
 export const updateUser = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // id is the user id that we want to update the user
 
-  console.log(id);
-  console.log(req.body.userId);
-
-  if (
-    req.body.userId !== id ||
-    !req.body.isAdmin
-  ) {
+  if (req.body.userId !== id) {
     return res.status(403).json({
       message:
         "You are not authorized to update this user",
@@ -21,11 +19,10 @@ export const updateUser = async (req, res) => {
     // if password is provided to be updated
     if (req.body.password) {
       try {
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(
-          req.body.password,
-          salt
-        );
+        // generate a new password hash
+        const hashedPassword =
+          await makeHashedPass(req.body.password);
+        //update the user
         req.body.password = hashedPassword;
       } catch (err) {
         return res
