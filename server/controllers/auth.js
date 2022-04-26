@@ -1,9 +1,5 @@
 import User from "../models/user.js";
-import bcrypt from "bcrypt";
-import {
-  bcryptPass,
-  comparePass,
-} from "../helpers/bcryptPass.js";
+import { makeHashedPass, compareHashedPass } from "../helpers/bcryptHandler.js";
 
 //!use new Promise or async function to register user?!
 export const registerUser = async (req, res) => {
@@ -19,12 +15,7 @@ export const registerUser = async (req, res) => {
 
   try {
     // generate a new password hash
-    // const salt = await bcrypt.genSalt(10);
-    // const hashedPassword = await bcrypt.hash(
-    //   req.body.password,
-    //   salt
-    // );
-    const hashedPassword = await bcryptPass(
+    const hashedPassword = await makeHashedPass(
       req.body.password
     );
     //create a new user
@@ -56,12 +47,7 @@ export const authenticate = async (req, res) => {
     }
 
     //validate the password
-    // const isPasswordCorrect =
-    //   await bcrypt.compare(
-    //     req.body.password,
-    //     user.password
-    //   );
-    const isPasswordCorrect = await comparePass(
+    const isPasswordCorrect = await compareHashedPass(
       req.body.password,
       user.password
     );
