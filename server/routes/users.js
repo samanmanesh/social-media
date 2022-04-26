@@ -1,5 +1,5 @@
 import express from "express";
-import { getUsers, updateUser, deleteUser } from "../controllers/users.js";
+import { getUsers, updateUser, deleteUser, followUser } from "../controllers/users.js";
 const router = express.Router();
 
 //get a users by id
@@ -11,8 +11,8 @@ router.put("/:id", updateUser);
 //delete a user by id
 router.delete("/:id", deleteUser);
 
-
 //follow a user
+router.put("/follow/:id", followUser);
 //unfollow a user
 
 

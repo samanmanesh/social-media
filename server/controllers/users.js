@@ -82,9 +82,13 @@ export const getUsers = async (req, res) => {
     const user = await User.findById(id);
 
     if (user) {
-
       // this will ignore the filed we don't want to send back to the client like password
-      const { password, createdAt , updatedAt, ...other} = user._doc;
+      const {
+        password,
+        createdAt,
+        updatedAt,
+        ...other
+      } = user._doc;
 
       return res.status(200).json({
         message: "User found successfully",
@@ -95,10 +99,54 @@ export const getUsers = async (req, res) => {
         message: "User not found",
       });
     }
-
   } catch (err) {
     return res
       .status(500)
       .json({ message: err.message });
   }
 };
+
+export const followUser = async (req, res) => {
+  const { id } = req.params; // id is the user id the current user id
+  const { userId } = req.body;
+  
+  if( userId === id ) {
+    return res.status(403).json({
+      message: "You cannot follow yourself",
+    });
+  }
+
+  try {
+    const user = await User.findById(id); // the user that is logged in
+    const userToFollow = await User.findById(userId); // the user that is being followed
+
+    if (user && userToFollow) {
+      if (user.following.includes(userId)) {
+        return res.status(400).json({
+          message: "User already followed",
+        });
+      } else {
+        //first method
+        // user.following.push(userId);
+        // user.save();
+        // userToFollow.followers.push(id);
+        // userToFollow.save();
+
+        //second method
+         await user.updateOne({ $push: { followers: userId } });
+         await userToFollow.updateOne({ $push: { followings: id } }); 
+        return res.status(200).json({
+          message: "User followed successfully",
+        });
+      }
+    } else {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: err.message });
+  }
+}
