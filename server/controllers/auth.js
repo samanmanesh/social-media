@@ -1,9 +1,10 @@
 import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
+
+//!user new Promise or async function to register user?!
+
 export const registerUser = async (req, res) => {
-  //todo: check if user exists in db, if not, create new user
-  //todo: check if password is correct, if not, return error
 
   const user = await User.findOne({
     email: req.body.email,
@@ -31,33 +32,39 @@ export const registerUser = async (req, res) => {
 
     //save the user to the database and return the respond
     const savedUser = await newUser.save();
-    res.status(200).send(savedUser);
+    res.status(200).json(savedUser);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).json(err);
   }
 };
 
-
 export const authenticate = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    //validate the user
+    const user = await User.findOne({
+      email: req.body.email,
+    });
     if (!user) {
-      return res.status(400).send({ message: "User does not exist" });
-    }
-    // !user && res.status(404).send({ message: "User does not exist" });
-    
-    const isPasswordCorrect = await bcrypt.compare(
-      req.body.password, user.password);
-
-    // !isPasswordCorrect &&  
-    // return (res.status(401).send({ message: "Password is incorrect" }));
-    if(!isPasswordCorrect){
-      return res.status(401).send({ message: "Password is incorrect" });
+      return res
+        .status(400)
+        .send({ message: "User does not exist" });
     }
 
-    res.status(200).send(user);
-
+    //validate the password
+    const isPasswordCorrect =
+      await bcrypt.compare(
+        req.body.password,
+        user.password
+      );
+    if (!isPasswordCorrect) {
+      return res
+        .status(401)
+        .send({
+          message: "Password is incorrect",
+        });
+    }
+    res.status(200).json(user);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).json(err);
   }
 };
