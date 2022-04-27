@@ -109,32 +109,35 @@ export const getUsers = async (req, res) => {
 export const followUser = async (req, res) => {
   const { id } = req.params; // id is the user id the current user id
   const { userId } = req.body;
-  
-  if( userId === id ) {
+
+  if (userId === id) {
     return res.status(403).json({
       message: "You cannot follow yourself",
     });
   }
 
   try {
-    const user = await User.findById(id); // the user that is logged in
-    const userToFollow = await User.findById(userId); // the user that is being followed
+    const userToFollow = await User.findById(id); // the user that we want to follow
+    const currentUser = await User.findById(
+      userId
+    ); // the user that is currently logged in
 
-    if (user && userToFollow) {
-      if (user.following.includes(userId)) {
+    if (currentUser && userToFollow) {
+      if (
+        userToFollow.followers.includes(userId)
+      ) {
         return res.status(400).json({
           message: "User already followed",
         });
       } else {
-        //first method
-        // user.following.push(userId);
-        // user.save();
-        // userToFollow.followers.push(id);
-        // userToFollow.save();
+        await userToFollow.updateOne({
+          $push: { followers: userId },
+        });
 
-        //second method
-         await user.updateOne({ $push: { followers: userId } });
-         await userToFollow.updateOne({ $push: { followings: id } }); 
+        await currentUser.updateOne({
+          $push: { followings: id },
+        });
+
         return res.status(200).json({
           message: "User followed successfully",
         });
@@ -149,4 +152,4 @@ export const followUser = async (req, res) => {
       .status(500)
       .json({ message: err.message });
   }
-}
+};

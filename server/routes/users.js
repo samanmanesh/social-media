@@ -12,7 +12,7 @@ router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 
 //follow a user
-router.put("/follow/:id", followUser);
+router.put("/:id/follow", followUser);
 //unfollow a user
 
 
