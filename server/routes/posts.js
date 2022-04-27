@@ -1,5 +1,5 @@
 import express from "express";
-import { createPost } from "../controllers/posts.js";
+import { createPost, updatePost } from "../controllers/posts.js";
 
 const router = express.Router();
 
@@ -8,6 +8,7 @@ const router = express.Router();
 router.post( '/', createPost );
 
 //update a post
+router.put( '/:id', updatePost );
 //delete a post
 //like a post
 //get a post 
