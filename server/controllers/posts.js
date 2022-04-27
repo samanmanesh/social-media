@@ -45,7 +45,7 @@ export const likePost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (!post.likes.includes(req.body.userId)) {
-      await post.updateOne({ $push: { likes: req.body.userId } });
+      await post.updateOne({ $push: { likes: req.body.userId }});
       return res.status(200).json({ message: "Post liked successfully" });
     } else {
       await post.updateOne({ $pull: { likes: req.body.userId } });

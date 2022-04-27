@@ -10,7 +10,7 @@ router.post("/", createPost);
 router.put("/:id", updatePost);
 //delete a post
 router.delete("/:id", deletePost);
-//like a post
+//like and dislike a post
 router.put("/:id/like", likePost);
 //get a post
 //get timeline posts
