@@ -1,49 +1,34 @@
 import User from "../models/user.js";
-import {
-  makeHashedPass,
-  compareHashedPass,
-} from "../helpers/bcryptHandler.js";
+import { makeHashedPass, compareHashedPass } from "../helpers/bcryptHandler.js";
 
 export const updateUser = async (req, res) => {
   const { id } = req.params; // id is the user id that we want to update the user
 
   if (req.body.userId !== id) {
     return res.status(403).json({
-      message:
-        "You are not authorized to update this user",
+      message: "You are not authorized to update this user",
     });
-  } else if (
-    req.body.userId === id ||
-    req.body.isAdmin
-  ) {
+  } else if (req.body.userId === id || req.body.isAdmin) {
     // if password is provided to be updated
     if (req.body.password) {
       try {
         // generate a new password hash
-        const hashedPassword =
-          await makeHashedPass(req.body.password);
+        const hashedPassword = await makeHashedPass(req.body.password);
         //update the user
         req.body.password = hashedPassword;
       } catch (err) {
-        return res
-          .status(500)
-          .json({ message: err.message });
+        return res.status(500).json({ message: err.message });
       }
     }
 
     try {
-      const user = await User.findByIdAndUpdate(
-        id,
-        { $set: req.body }
-      );
+      const user = await User.findByIdAndUpdate(id, { $set: req.body });
       return res.status(200).json({
         message: "User updated successfully",
         user,
       });
     } catch (err) {
-      return res
-        .status(500)
-        .json({ message: err.message });
+      return res.status(500).json({ message: err.message });
     }
   }
 };
@@ -53,25 +38,17 @@ export const deleteUser = async (req, res) => {
 
   if (req.body.userId !== id) {
     return res.status(403).json({
-      message:
-        "You are not authorized to delete this user",
+      message: "You are not authorized to delete this user",
     });
-  } else if (
-    req.body.userId === id ||
-    req.body.isAdmin
-  ) {
+  } else if (req.body.userId === id || req.body.isAdmin) {
     try {
-      const user = await User.findByIdAndDelete(
-        id
-      );
+      const user = await User.findByIdAndDelete(id);
       return res.status(200).json({
         message: "User deleted successfully",
         user,
       });
     } catch (err) {
-      return res
-        .status(500)
-        .json({ message: err.message });
+      return res.status(500).json({ message: err.message });
     }
   }
 };
@@ -83,12 +60,7 @@ export const getUsers = async (req, res) => {
 
     if (user) {
       // this will ignore the filed we don't want to send back to the client like password
-      const {
-        password,
-        createdAt,
-        updatedAt,
-        ...other
-      } = user._doc;
+      const { password, createdAt, updatedAt, ...other } = user._doc;
 
       return res.status(200).json({
         message: "User found successfully",
@@ -100,9 +72,7 @@ export const getUsers = async (req, res) => {
       });
     }
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 
@@ -118,14 +88,10 @@ export const followUser = async (req, res) => {
 
   try {
     const userToFollow = await User.findById(id); // the user that we want to follow
-    const currentUser = await User.findById(
-      userId
-    ); // the user that is currently logged in
+    const currentUser = await User.findById(userId); // the user that is currently logged in
 
     if (currentUser && userToFollow) {
-      if (
-        userToFollow.followers.includes(userId)
-      ) {
+      if (userToFollow.followers.includes(userId)) {
         return res.status(400).json({
           message: "User already followed",
         });
@@ -148,8 +114,6 @@ export const followUser = async (req, res) => {
       });
     }
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: err.message });
+    return res.status(500).json({ message: err.message });
   }
 };

@@ -40,9 +40,6 @@ app.get("/", (req, res) => {
   res.send("Hello Social Media");
 });
 
-
 app.listen(port, () => {
-  console.log(
-    "Backend server is running on port 8800"
-  );
+  console.log("Backend server is running on port 8800");
 });

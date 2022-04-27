@@ -8,16 +8,12 @@ export const registerUser = async (req, res) => {
   });
 
   if (user) {
-    return res
-      .status(400)
-      .send({ message: "User already exists" });
+    return res.status(400).send({ message: "User already exists" });
   }
 
   try {
     // generate a new password hash
-    const hashedPassword = await makeHashedPass(
-      req.body.password
-    );
+    const hashedPassword = await makeHashedPass(req.body.password);
     //create a new user
     const newUser = new User({
       userName: req.body.userName,
@@ -41,9 +37,7 @@ export const authenticate = async (req, res) => {
     });
 
     if (!user) {
-      return res
-        .status(400)
-        .send({ message: "User does not exist" });
+      return res.status(400).send({ message: "User does not exist" });
     }
 
     //validate the password
