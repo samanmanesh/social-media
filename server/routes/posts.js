@@ -15,8 +15,10 @@ router.post("/", createPost);
 
 //update a post
 router.put("/:id", updatePost);
+
 //delete a post
 router.delete("/:id", deletePost);
+
 //like and dislike a post
 router.put("/:id/like", likePost);
 
@@ -26,8 +28,8 @@ router.get("/:id", getPost);
 //get timeline posts
 router.get("/timeline/all", getTimeLinePosts);
 
-router.get("/", (req, res) => {
-  res.send("Hello from Posts");
-});
+// router.get("/", (req, res) => {
+//   res.send("Hello from Posts");
+// });
 
 export default router;
