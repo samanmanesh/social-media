@@ -7,7 +7,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import userRoutes from "./routes/users.js";
 import authRoute from "./routes/auth.js";
-
+import postRoutes from "./routes/posts.js";
 const app = express();
 const port = process.env.port || 8800;
 //for using dotenv
@@ -35,6 +35,8 @@ app.use(cors());
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoute);
+
+app.use('/api/posts', postRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello Social Media");
