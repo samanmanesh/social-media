@@ -117,3 +117,45 @@ export const followUser = async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 };
+
+export const unfollowUser = async (req, res) => {
+  const { id } = req.params; // id is the user id the current user id
+  const { userId } = req.body;
+
+  if (userId === id) {
+    return res.status(403).json({
+      message: "You cannot unfollow yourself",
+    });
+  }
+
+  try {
+    const userToUnfollow = await User.findById(id); // the user that we want to unfollow
+    const currentUser = await User.findById(userId); // the user that is currently logged in
+
+    if (currentUser && userToUnfollow) {
+      if (!userToUnfollow.followers.includes(userId)) {
+        return res.status(400).json({
+          message: "User not followed",
+        });
+      } else {
+        await userToUnfollow.updateOne({
+          $pull: { followers: userId },
+        });
+
+        await currentUser.updateOne({
+          $pull: { followings: id },
+        });
+
+        return res.status(200).json({
+          message: "User unfollowed successfully",
+        });
+      }
+    } else {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
