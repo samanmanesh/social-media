@@ -1,12 +1,10 @@
 import './App.css';
-
+import Home from './pages/home/Home';
 function App() {
   return (
     <div class="h-screen bg-gray-800" >
-      <h1 class="text-white">Hello Saman</h1>
-
+      <Home />
     </div>
   );
 }
-
 export default App;
