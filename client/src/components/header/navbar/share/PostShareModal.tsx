@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import FileUploaderHandler from "../../../helper/FileUploaderHandler";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -41,16 +42,35 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
           <Dialog.Panel className="bg-white  rounded-lg relative">
             <Dialog.Title>Create new post</Dialog.Title>
             <hr />
-            <input type="file" className=" w-26"/>
-            <button>Select from computer</button>
+
+            <FileUploaderHandler />
+
+            <input
+              type="file"
+              name="Select from computer"
+              className=" block w-full text-sm text-slate-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-full file:border-0
+      file:text-sm file:font-semibold
+      file:bg-violet-50 file:text-violet-700
+      hover:file:bg-violet-100 placeholder:boo"
+            />
 
             <div className=" rounded-full w-5 h-5">
-              <img src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg" alt="profile" className=" w-5 h-5 rounded-full bg-cover" />
+              <img
+                src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
+                alt="profile"
+                className=" w-5 h-5 rounded-full bg-cover"
+              />
             </div>
-            <input type="text" placeholder="Write a caption..." className="w-full border" />
+
+            <input
+              type="text"
+              placeholder="Write a caption..."
+              className="w-full border"
+            />
 
             <button className="text-blue-500 font-semibold">Share</button>
-
           </Dialog.Panel>
         </Transition.Child>
       </Dialog>
