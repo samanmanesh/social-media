@@ -4,7 +4,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      MsMadi: ['Ms Madi', 'cursive'],
+      sans: ["Inter var", "sans-serif"],
+      freehand: ['Freehand', 'cursive'],
     },
     extend: {},
   },
