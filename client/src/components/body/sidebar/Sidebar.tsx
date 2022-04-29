@@ -1,9 +1,9 @@
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
-
-type Props = {}
-
-export default function Sidebar({}: Props) {
+export default function Sidebar({ ...props }: Props) {
   return (
-    <div>sidebar</div>
-  )
+    <div className="w-96 h-96  sticky top-28 flex-shrink-0 bg-gray-400">
+      sidebar
+    </div>
+  );
 }
