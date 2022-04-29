@@ -8,7 +8,7 @@ export default function Search({}: Props) {
     <input
       type="text"
       placeholder="Search"
-      className="min-w-fit p-1 pl-7 h-7 border rounded border-black w-80 focus:outline-none focus:ring focus:border-blue-500"
+      className="min-w-fit p-1 pl-7 h-7 border rounded border-black  focus:outline-none focus:ring focus:border-blue-500"
     />
   </div>
   )

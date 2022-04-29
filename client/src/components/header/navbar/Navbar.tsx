@@ -1,9 +1,13 @@
-import { HomeIcon, UserGroupIcon, PlusIcon } from "@heroicons/react/solid";
-import { HeartIcon, ChatAltIcon } from "@heroicons/react/outline";
+import { HomeIcon, PlusIcon } from "@heroicons/react/solid";
+import {
+  HeartIcon,
+  ChatAltIcon,
+  UserGroupIcon,
+} from "@heroicons/react/outline";
 
 export default function Navbar() {
   return (
-    <div className="flex items-center space-x-3 ">
+    <div className="flex items-center space-x-4">
       <button>
         <HomeIcon className="w-7 h-7" />
       </button>
@@ -13,18 +17,19 @@ export default function Navbar() {
       <button>
         <PlusIcon className="w-7 h-7" />
       </button>
-      <button>
-        <UserGroupIcon className="w-7 h-7 " />
+      <button className="relative">
+        <UserGroupIcon className="w-7 h-7" />
+        <span className="absolute top-4 left-7">+1</span>
       </button>
       <button className="">
         <HeartIcon className="w-7 h-7" />
       </button>
-      <button className="rounded-full border border-black w-7 h-7 ">
+      <button className="rounded-full border border-black w-7 h-7">
         {" "}
         <img
           src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
           alt="profile"
-          className=" w-7 h-7 rounded-full "
+          className=" w-7 h-7 rounded-full"
         />{" "}
       </button>
     </div>
