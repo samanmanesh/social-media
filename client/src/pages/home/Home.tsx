@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="">This is home page</div>
+      <div className="bg-slate-50">This is home page</div>
     </>
   );
 }
