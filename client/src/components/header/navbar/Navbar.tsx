@@ -24,12 +24,12 @@ export default function Navbar() {
       <button className="">
         <HeartIcon className="w-7 h-7" />
       </button>
-      <button className="rounded-full border border-black w-7 h-7">
+      <button className="rounded-full  w-7 h-7">
         {" "}
         <img
           src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
           alt="profile"
-          className=" w-7 h-7 rounded-full"
+          className=" w-7 h-7 rounded-full bg-cover"
         />{" "}
       </button>
     </div>
