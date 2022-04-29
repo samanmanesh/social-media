@@ -19,7 +19,7 @@ export default function Navbar() {
       </button>
       <button className="relative">
         <UserGroupIcon className="w-7 h-7" />
-        <span className="absolute top-4 left-7">+1</span>
+        <span className="absolute top-4 left-7"> +1 </span>
       </button>
       <button className="">
         <HeartIcon className="w-7 h-7" />
