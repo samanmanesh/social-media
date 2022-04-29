@@ -1,7 +1,7 @@
 import { SearchIcon } from "@heroicons/react/outline";
 import Navbar from "../navbar/Navbar";
 
-export default function TopBar() {
+export default function Header() {
   return (
     <div className="flex justify-between p-4 border-b border-black">
       <span className="font-freehand font-black text-3xl">Xenophone</span>
