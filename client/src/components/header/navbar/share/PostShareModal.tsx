@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -29,7 +29,6 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
         >
           <Dialog.Overlay className="absolute inset-0 bg-black bg-opacity-50" />
         </Transition.Child>
-
         <Transition.Child
           as="div"
           enter="ease-out duration-100"
@@ -39,8 +38,19 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="bg-white p-4 rounded-lg relative">
-            <Dialog.Title>Share a Post</Dialog.Title>
+          <Dialog.Panel className="bg-white  rounded-lg relative">
+            <Dialog.Title>Create new post</Dialog.Title>
+            <hr />
+            <input type="file" className=" w-26"/>
+            <button>Select from computer</button>
+
+            <div className=" rounded-full w-5 h-5">
+              <img src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg" alt="profile" className=" w-5 h-5 rounded-full bg-cover" />
+            </div>
+            <input type="text" placeholder="Write a caption..." className="w-full border" />
+
+            <button className="text-blue-500 font-semibold">Share</button>
+
           </Dialog.Panel>
         </Transition.Child>
       </Dialog>
