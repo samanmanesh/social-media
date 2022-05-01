@@ -40,7 +40,7 @@ export default function Navbar() {
         <img
           src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
           alt="profile"
-          className=" w-6 h-6 rounded-full bg-cover"
+          className=" w-6 h-6 rounded-full object-cover border border-gray-400"
         />{" "}
       </button>
     </div>

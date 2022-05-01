@@ -14,7 +14,7 @@ export default function PostCard({ ...props }: Props) {
           <img
             src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
             alt="profile"
-            className=" w-7 h-7 rounded-full bg-cover"
+            className=" w-7 h-7 rounded-full object-cover border border-gray-400"
           />
           <span className="pl-2">dualipa</span>
         </div>
