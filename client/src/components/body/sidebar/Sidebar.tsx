@@ -24,6 +24,9 @@ export default function Sidebar({ ...props }: Props) {
       <Suggestion/>
       <Suggestion/>
       </div>
+      <div className='text-gray-400 text-xs font-medium p-3'>
+      © 2022 SAMAN MANESH  
+      </div>
     </div>
   );
 }
