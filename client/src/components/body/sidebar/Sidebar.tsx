@@ -6,7 +6,7 @@ export default function Sidebar({ ...props }: Props) {
     <div className="w-96 h-96 sticky flex-shrink-0 top-20 p-6">
       <div className="flex space-x-4">
         <img
-          src="./assets/people/bailey-burton-1QyI-cct-_A-unsplash.jpg"
+          src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
           alt="profile"
           className="rounded-full w-14 h-14 object-cover border border-gray-400 "
         />
