@@ -17,30 +17,30 @@ export default function Navbar() {
   return (
     <div className="flex items-center space-x-4 mx-2">
       <button>
-        <HomeIcon className="w-7 h-7" />
+        <HomeIcon className="w-6 h-6" />
       </button>
       <button>
-        <ChatAltIcon className="w-7 h-7" />
+        <ChatAltIcon className="w-6 h-6" />
       </button>
 
       <button onClick={openModal}>
-        <PlusIcon className="w-7 h-7" />
+        <PlusIcon className="w-6 h-6" />
       </button>
       <PostShareModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <button className="relative">
-        <UserGroupIcon className="w-7 h-7" />
-        <span className="absolute top-4 left-7"> +1 </span>
+        <UserGroupIcon className="w-6 h-6" />
+        <span className="absolute top-4 left-6"> +1 </span>
       </button>
       <button className="">
-        <HeartIcon className="w-7 h-7" />
+        <HeartIcon className="w-6 h-6" />
       </button>
-      <button className="rounded-full  w-7 h-7">
+      <button className="rounded-full  w-6 h-6">
         {" "}
         <img
           src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
           alt="profile"
-          className=" w-7 h-7 rounded-full bg-cover"
+          className=" w-6 h-6 rounded-full bg-cover"
         />{" "}
       </button>
     </div>
