@@ -7,13 +7,13 @@ interface Props {} // extends React.HTMLAttributes<HTMLDivElement> {}
 export default function Feed({...props}: Props) {
   const arrOfPosts = Array(10).fill(0);
   return (
-    <div className="container flex">
-      <div className="space-y-5 w-full grid place-content-end ">
+    <div className="container max-w-6xl flex flex-col md:flex-row bg-blue-400">
+      <div className="space-y-5 w-full   ">
         {arrOfPosts.map((p, index) => (
           <PostCard key={index} />
         ))}
       </div>
-      <Sidebar />
+      <Sidebar className=""/>
     </div>
   );
 }
