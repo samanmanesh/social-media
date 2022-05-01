@@ -16,7 +16,7 @@ export default function PostCard({ ...props }: Props) {
             alt="profile"
             className=" w-7 h-7 rounded-full object-cover border border-gray-400"
           />
-          <span className="pl-2">dualipa</span>
+          <span className="pl-2 font-semibold">dualipa</span>
         </div>
         <button>
           <DotsHorizontalIcon className="w-3 h-3" />
