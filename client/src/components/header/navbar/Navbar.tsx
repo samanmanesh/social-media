@@ -15,7 +15,7 @@ export default function Navbar() {
   };
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-4 mx-2">
       <button>
         <HomeIcon className="w-7 h-7" />
       </button>

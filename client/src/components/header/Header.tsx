@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <>
     
-    <div className="flex justify-around px-16 py-2 border-b border-black sticky inset-x-0 top-0 bg-white">
+    <div className="flex justify-around x-40 py-2 border-b border-black sticky inset-x-0 top-0 bg-white">
       <span 
       style={{
         filter: 'drop-shadow(0px 5px 3px rgba(0,0,0,0.2))',

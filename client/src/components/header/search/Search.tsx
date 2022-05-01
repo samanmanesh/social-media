@@ -3,7 +3,7 @@ type Props = {}
 
 export default function Search({}: Props) {
   return (
-    <div className="relative flex items-center">
+    <div className="relative hidden items-center  sm:flex">
     <SearchIcon className="w-4 h-4 absolute left-2" />
     <input
       type="text"
