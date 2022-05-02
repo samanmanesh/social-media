@@ -10,8 +10,11 @@ export default function FileUploaderHandler({}: Props) {
   const handleChange = (file: any) => {
     setFile(file);
   };
-  
+  console.log("file is ",file);
   return (
+    <div>
     <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
+    
+    </div>
   );
 }
