@@ -1,23 +1,50 @@
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import { HeartIcon, AnnotationIcon } from "@heroicons/react/outline";
 import { Users, Posts } from "../../../DummyData";
+import { useMemo, useState } from "react";
+import { useEffect } from "react";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
- post : {
+  post: {
     id: string;
     userId: string;
     desc: string;
     img: string;
-    likes: string[],
- };
+    likes: string[];
+  };
 }
 
-export default function PostCard({
-post,
-  ...props
-}: Props) {
+export default function PostCard({ post, ...props }: Props) {
+  
+  const USER_ID = "3";
+  // const [isLiked, setIsLiked] = useState(false);
+
+  const liked = useMemo(() => {
+    post.likes.includes(USER_ID)
+  }, [post])
+
+  // const numLikes: number = useMemo(() => {
+  //   const { likes } = post;
+  //   if (likes.includes(USER_ID)) {
+      
+  //   } else {
+
+  //   }
+
+  //   return -1;
+
+  // }, [isLiked, post])
+
   console.log(post);
-  const user = Users.find(u => u.id === post.userId);
+
+  const currentUserId = "1";
+  const user = useMemo(
+    () => Users.find((u) => u.id === currentUserId),
+    []
+  );
+
+  useEffect(() => {},[] );
+
   return (
     <div
       {...props}
@@ -44,10 +71,12 @@ post,
           className="object-cover max-h-[40rem] h-full w-full"
         />
       </div>
-      <div className="p-2 border-y border-black w-full flex space-x-3">
+      <button
+        className="p-2 border-y border-black w-full flex space-x-3"
+      >
         <HeartIcon className="w-7 h-7" />
         <AnnotationIcon className="w-7 h-7" />
-      </div>
+      </button>
       <div className="flex flex-col space-y-1 p-2">
         <span className="">Liked by mohammadgh4907 and others</span>
         <span>

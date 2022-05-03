@@ -8,8 +8,6 @@ export default function Sidebar({ ...props }: Props) {
   const friends = Users.map(u => u.followings);
   console.log("friends : ",friends);
 
-  
-
   return (
     <div className="w-96 h-96 sticky flex-shrink-0 top-20 p-6">
       <div className="flex space-x-4">
