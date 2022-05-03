@@ -1,12 +1,12 @@
 
 import Header from "../../components/header/Header";
-import Feed from '../../components/body/feed/Feed';
+import Body from "../../components/body/Body";
 
 export default function Home() {
   return (
     <div className="bg-neutral-100">
       <Header />
-      <Feed/>
+      <Body />
     </div>
   );
 }

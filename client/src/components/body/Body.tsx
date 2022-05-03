@@ -1,11 +1,11 @@
 import Feed from "./feed/Feed"
 import Sidebar from "./sidebar/Sidebar"
 
-type Props = {}
+interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default function Body({}: Props) {
+export default function Body({...props}: Props) {
   return (
-    <div className= "container max-w-6xl flex flex-col md:flex-row pt-6">
+    <div {...props} className= "container max-w-6xl flex flex-col md:flex-row pt-6">
       <Feed />
       <Sidebar />
     </div>
