@@ -2,7 +2,6 @@ import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import { HeartIcon, AnnotationIcon } from "@heroicons/react/outline";
 import { useMemo, useState } from "react";
 import { useEffect } from "react";
-import PostImage from './postimage/PostImage';
 import { Users } from "../../../../DummyData";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -31,16 +30,11 @@ export default function PostCard({ post, ...props }: Props) {
 
   console.log(post);
 
-//getting the user's name and profile picture for each post 
+  //getting the user's name and profile picture for each post
   const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
-  
-  
 
   return (
-    <div
-      {...props}
-      className=" min-w-[35rem] bg-white border rounded border-gray-400 "
-    >
+    <div {...props} className="bg-white border rounded border-gray-400 w-full">
       <div className="p-2 border-b border-black flex items-center justify-between">
         <div className="flex">
           <img
@@ -54,14 +48,9 @@ export default function PostCard({ post, ...props }: Props) {
           <DotsHorizontalIcon className="w-3 h-3" />
         </button>
       </div>
-      <PostImage img={post.img} />
-      {/* <div className="">
-        <img
-          src={post.img}
-          alt="post"
-          className="object-cover max-h-[40rem] h-full w-full"
-        />
-      </div> */}
+      <div className="aspect-square w-full">
+        <img src={'post.img'} alt="post" className="object-cover h-full w-full" />
+      </div>
       <button className="p-2 border-y border-black w-full flex space-x-3">
         <HeartIcon className="w-7 h-7" />
         <AnnotationIcon className="w-7 h-7" />
