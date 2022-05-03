@@ -15,35 +15,25 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function PostCard({ post, ...props }: Props) {
-  
   const USER_ID = "3";
   // const [isLiked, setIsLiked] = useState(false);
-
   const liked = useMemo(() => {
-    post.likes.includes(USER_ID)
-  }, [post])
-
+    post.likes.includes(USER_ID);
+  }, [post]);
   // const numLikes: number = useMemo(() => {
   //   const { likes } = post;
   //   if (likes.includes(USER_ID)) {
-      
   //   } else {
-
   //   }
-
   //   return -1;
-
   // }, [isLiked, post])
 
   console.log(post);
 
-  const currentUserId = "1";
-  const user = useMemo(
-    () => Users.find((u) => u.id === currentUserId),
-    []
-  );
-
-  useEffect(() => {},[] );
+//getting the user's name and profile picture for each post 
+  const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
+  
+  
 
   return (
     <div
@@ -63,7 +53,6 @@ export default function PostCard({ post, ...props }: Props) {
           <DotsHorizontalIcon className="w-3 h-3" />
         </button>
       </div>
-
       <div className="">
         <img
           src={post.img}
@@ -71,9 +60,7 @@ export default function PostCard({ post, ...props }: Props) {
           className="object-cover max-h-[40rem] h-full w-full"
         />
       </div>
-      <button
-        className="p-2 border-y border-black w-full flex space-x-3"
-      >
+      <button className="p-2 border-y border-black w-full flex space-x-3">
         <HeartIcon className="w-7 h-7" />
         <AnnotationIcon className="w-7 h-7" />
       </button>
