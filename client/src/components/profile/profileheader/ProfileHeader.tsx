@@ -3,7 +3,7 @@ type Props = {};
 const ProfileHeader = (props: Props) => {
   const username = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, velit?"
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center">
       <div className="max-w-4xl flex-1 flex border-b border-gray-400 py-8">
         <div className="px-4 py-2 mr-4 md:mr-8 flex-shrink-0 grid place-items-center">
           <img
