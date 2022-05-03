@@ -3,6 +3,7 @@ import { HeartIcon, AnnotationIcon } from "@heroicons/react/outline";
 import { Users, Posts } from "../../../DummyData";
 import { useMemo, useState } from "react";
 import { useEffect } from "react";
+import PostImage from './postimage/PostImage';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: {
@@ -53,13 +54,14 @@ export default function PostCard({ post, ...props }: Props) {
           <DotsHorizontalIcon className="w-3 h-3" />
         </button>
       </div>
-      <div className="">
+      <PostImage img={post.img} />
+      {/* <div className="">
         <img
           src={post.img}
           alt="post"
           className="object-cover max-h-[40rem] h-full w-full"
         />
-      </div>
+      </div> */}
       <button className="p-2 border-y border-black w-full flex space-x-3">
         <HeartIcon className="w-7 h-7" />
         <AnnotationIcon className="w-7 h-7" />
