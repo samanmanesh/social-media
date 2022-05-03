@@ -1,10 +1,13 @@
-import Header from '../../components/header/Header';
+import ProfileGallery from '../../components/profile/profilegallery/ProfileGallery';
+import ProfileHeader from '../../components/profile/profileheader/ProfileHeader';
+
 type Props = {}
 
 const ProfilePage = (props: Props) => {
   return (
-    <div>
-      <h1>Profile</h1>
+    <div className=' container flex flex-col'>
+      <ProfileHeader />
+      <ProfileGallery />
     </div>
   )
 }

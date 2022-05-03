@@ -1,9 +1,9 @@
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import { HeartIcon, AnnotationIcon } from "@heroicons/react/outline";
-import { Users, Posts } from "../../../DummyData";
 import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import PostImage from './postimage/PostImage';
+import { Users } from "../../../../DummyData";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: {

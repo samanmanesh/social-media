@@ -1,5 +1,6 @@
-import Feed from "../components/home/feed/Feed";
-import Sidebar from "../components/home/sidebar/Sidebar";
+import Feed from "../components/home/body/feed/Feed";
+import Sidebar from "../components/home/body/sidebar/Sidebar";
+
 
 export default function HomePage() {
   return (
