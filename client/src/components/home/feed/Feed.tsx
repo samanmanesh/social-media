@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "../sidebar/Sidebar";
 import PostCard from "./card/PostCard";
-import { Users, Posts } from '../../../DummyData';
+import { Users, Posts } from '../../DummyData';
 interface Props {} // extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function Feed({...props}: Props) {
