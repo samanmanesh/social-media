@@ -1,5 +1,5 @@
 import FriendSuggestion from '../feed/commonFriends/FriendSuggestion';
-import {Users} from '../../DummyData';
+import {Users} from '../../../DummyData';
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function Sidebar({ ...props }: Props) {

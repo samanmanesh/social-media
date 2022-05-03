@@ -1,5 +1,5 @@
 
-import Feed from '../../components/body/feed/Feed';
+import Feed from '../../components/home/body/feed/Feed';
 import Header from '../../components/header/Header';
 type Props = {}
 
