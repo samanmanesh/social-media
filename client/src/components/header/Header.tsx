@@ -4,8 +4,8 @@ import Search from "./search/Search";
 
 export default function Header() {
   return (
-    <>
-      <div className="flex justify-around x-40 py-2 border-b border-black sticky inset-x-0 top-0 bg-white">
+    <div className="sticky inset-x-0 top-0 border-b border-gray-300 bg-white">
+      <div className="py-3 container max-w-7xl flex justify-between">
         <Link
           to="/"
           style={{
@@ -15,9 +15,11 @@ export default function Header() {
         >
           Xenophone
         </Link>
-        <Search />
+        <div className="hidden lg:block">
+          <Search />
+        </div>
         <Navbar />
       </div>
-    </>
+    </div>
   );
 }

@@ -4,14 +4,18 @@ import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import { Users } from "../../../../DummyData";
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  post: {
+interface Post 
+  {
     id: string;
     userId: string;
     desc: string;
     img: string;
     likes: string[];
   };
+
+
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
+  post: Post
 }
 
 export default function PostCard({ post, ...props }: Props) {
@@ -34,7 +38,7 @@ export default function PostCard({ post, ...props }: Props) {
   const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
 
   return (
-    <div {...props} className="bg-white border rounded border-gray-400 w-full">
+    <div {...props} className="bg-white border rounded-[2px] border-gray-400 w-full">
       <div className="p-2 border-b border-black flex items-center justify-between">
         <div className="flex">
           <img
