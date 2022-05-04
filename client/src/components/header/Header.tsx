@@ -11,9 +11,9 @@ export default function Header() {
           style={{
             filter: "drop-shadow(0px 2px 1px rgba(0,0,0,0.2))",
           }}
-          className="font-freehand font-black text-3xl drop-shadow-lg"
+          className="font-engagement font-bold text-3xl drop-shadow-lg"
         >
-          Xenophone
+          Hilarion
         </Link>
         <div className="hidden lg:block">
           <Search />

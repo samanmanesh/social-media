@@ -4,6 +4,7 @@ module.exports = {
     fontFamily: {
       sans: ["Inter var", "sans-serif"],
       freehand: ["Freehand", "cursive"],
+      engagement: ["Engagement", "cursive"],
     },
     extend: {
       container: {
