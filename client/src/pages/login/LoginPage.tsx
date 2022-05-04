@@ -23,8 +23,13 @@ const LoginPage = (props: Props) => {
             Login
           </button>
         </form>
-        <div className=" border-b-2 border-black w-full h-2"></div>
-        <h2 className=" bg-white  ">Or</h2>
+        {/* <div className=" border-b-2 border-black w-full h-2"></div> */}
+        <div className="w-full flex items-center  justify-between">
+          <div className="  w-full border border-gray-300 "></div>
+          <span className="px-3 bg-white text-sm">OR</span>
+          <div className="border w-full border-gray-300"></div>
+        </div>
+        {/* <h2 className=" bg-white  top-10 ">Or</h2> */}
         <div className="flex w-full justify-between ">
           <span>Don't have an account?</span>
           <button className="text-sm font-medium text-blue-500">Sign up</button>
