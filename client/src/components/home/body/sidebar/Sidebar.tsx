@@ -21,12 +21,11 @@ export default function Sidebar({ ...props }: Props) {
           <span className="text-gray-800">Dua 💋</span>
         </div>
       </div>
-      <div className="mt-4 flex justify-between font-semibold">
+      <div className="mt-6 flex justify-between font-semibold">
         <span className="text-gray-500"> Suggestions For You</span>
         <button className="">See All</button>
       </div>
-      <div className="flex flex-col space-y-4 p-2">
-
+      <div className="flex flex-col space-y-4 p-3">
         
       <FriendSuggestion />
       </div>
