@@ -5,6 +5,7 @@ module.exports = {
       sans: ["Inter var", "sans-serif"],
       freehand: ["Freehand", "cursive"],
       engagement: ["Engagement", "cursive"],
+      gemunu: ['Gemunu Libre', 'sans-serif'],
     },
     extend: {
       container: {
