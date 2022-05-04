@@ -49,7 +49,7 @@ export default function PostCard({ post, ...props }: Props) {
         </button>
       </div>
       <div className="aspect-square w-full">
-        <img src={'post.img'} alt="post" className="object-cover h-full w-full" />
+        <img src={post.img} alt="post" className="object-cover h-full w-full" />
       </div>
       <button className="p-2 border-y border-black w-full flex space-x-3">
         <HeartIcon className="w-7 h-7" />

@@ -9,7 +9,7 @@ export default function Sidebar({ ...props }: Props) {
   console.log("friends : ",friends);
 
   return (
-    <div className="h-96 sticky flex-shrink-0 top-20 p-6 hidden md:block">
+    <div className="h-96 sticky flex-shrink-0 top-20 p-6 hidden lg:block ml-8 w-80">
       <div className="flex space-x-4">
         <img
           src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
