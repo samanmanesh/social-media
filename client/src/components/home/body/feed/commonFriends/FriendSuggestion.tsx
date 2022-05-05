@@ -9,7 +9,7 @@ const Suggestion = ({...props}: Props) => {
     <div className="flex justify-between ">
           <div className="flex">
             <img
-              src={PF + "/people/aben-tefra-UB2S23kSZLM-unsplash.jpg"}
+              src={`${PF}/people/aben-tefra-UB2S23kSZLM-unsplash.jpg`}
               alt="profile"
               className="w-9 h-9 rounded-full object-cover border border-gray-400"
             />
