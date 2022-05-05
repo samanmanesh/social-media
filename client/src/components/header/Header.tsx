@@ -3,6 +3,7 @@ import Navbar from "./navbar/Navbar";
 import Search from "./search/Search";
 
 export default function Header() {
+  
   return (
     <div className="sticky inset-x-0 top-0 border-b border-gray-300 bg-white">
       <div className="py-3 container max-w-7xl flex justify-between items-center">
