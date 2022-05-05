@@ -1,40 +1,57 @@
+import React from "react";
+
 type Props = {};
 
-const LoginPage = (props: Props) => {
+const RegisterPage = (props: Props) => {
   return (
     <div className="w-full h-screen">
       <div className="grid h-[90%]">
         <div className="container max-w-xs flex flex-col justify-center p-8 space-y-5 items-center border-2 rounded self-center">
           <h1 className="font-freehand text-5xl p-4">Hilarion</h1>
+          <p className="text-gray-400 text-lg font-semibold">
+            Sign up to see photos and videos from your friends.
+          </p>
           <form action="" className="flex flex-col w-full space-y-4">
+            <input
+              type="email"
+              placeholder="Email"
+              className="border rounded-[2px] border-black w-full h-full p-1.5 bg-gray-100 "
+              required
+            />
             <input
               type="text"
               placeholder="Username"
-              className="border rounded-[2px] border-black w-full h-full p-1.5 bg-gray-200 "
+              className="border rounded-[2px] border-black w-full h-full p-1.5 bg-gray-100 "
+              required
             />
             <input
               type="password"
               placeholder="Password"
-              className="border rounded-[2px] border-black p-1.5 bg-gray-200"
+              className="border rounded-[2px] border-black p-1.5 bg-gray-100"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="border rounded-[2px] border-black p-1.5 bg-gray-100"
+              required
             />
             <button
               type="submit"
               className="border p-0.5 bg-blue-500 text-white font-medium rounded-[4px] drop-shadow-lg"
             >
-              Login
+              Sign up
             </button>
           </form>
-          {/* <div className=" border-b-2 border-black w-full h-2"></div> */}
           <div className="w-full flex items-center  justify-between">
             <div className="  w-full border border-gray-300 "></div>
             <span className="px-3 bg-white text-sm">OR</span>
             <div className="border w-full border-gray-300"></div>
           </div>
-          {/* <h2 className=" bg-white  top-10 ">Or</h2> */}
           <div className="flex w-full justify-between ">
-            <span>Don't have an account?</span>
+            <span>Have an account?</span>
             <button className="text-sm font-medium text-blue-500">
-              Sign up
+              Log in
             </button>
           </div>
           <button className="text-sm font-medium text-blue-500">
@@ -50,4 +67,4 @@ const LoginPage = (props: Props) => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
