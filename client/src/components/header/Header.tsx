@@ -11,7 +11,7 @@ export default function Header() {
           style={{
             filter: "drop-shadow(0px 2px 1px rgba(0,0,0,0.1))",
           }}
-          className="font-gemunu font-bold text-3xl drop-shadow-lg"
+          className="font-freehand font-bold text-3xl drop-shadow-lg"
         >
           Hilarion
         </Link>
