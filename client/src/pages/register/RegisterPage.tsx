@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -50,9 +50,9 @@ const RegisterPage = (props: Props) => {
           </div>
           <div className="flex w-full justify-between ">
             <span>Have an account?</span>
-            <button className="text-sm font-medium text-blue-500">
+            <Link to="/login" className="text-sm font-medium text-blue-500">
               Log in
-            </button>
+            </Link>
           </div>
         </div>
       </div>

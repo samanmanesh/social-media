@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 type Props = {};
+
 
 const LoginPage = (props: Props) => {
   return (
@@ -31,9 +33,9 @@ const LoginPage = (props: Props) => {
           </div>
           <div className="flex w-full justify-between ">
             <span>Don't have an account?</span>
-            <button className="text-sm font-medium text-blue-500">
+            <Link to='/register' className="text-sm font-medium text-blue-500">
               Sign up
-            </button>
+            </Link>
           </div>
           <button className="text-sm font-medium text-blue-500">
             Forgot password?
