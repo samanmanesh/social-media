@@ -15,25 +15,25 @@ const RegisterPage = (props: Props) => {
             <input
               type="email"
               placeholder="Email"
-              className="border rounded-[2px] border-black w-full h-full p-1.5 bg-gray-100 "
+              className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-100 "
               required
             />
             <input
               type="text"
               placeholder="Username"
-              className="border rounded-[2px] border-black w-full h-full p-1.5 bg-gray-100 "
+              className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-100 "
               required
             />
             <input
               type="password"
               placeholder="Password"
-              className="border rounded-[2px] border-black p-1.5 bg-gray-100"
+              className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100"
               required
             />
             <input
               type="password"
               placeholder="Password"
-              className="border rounded-[2px] border-black p-1.5 bg-gray-100"
+              className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100"
               required
             />
             <button
@@ -54,9 +54,6 @@ const RegisterPage = (props: Props) => {
               Log in
             </button>
           </div>
-          <button className="text-sm font-medium text-blue-500">
-            Forgot password?
-          </button>
         </div>
       </div>
       <div className="text-gray-400 h-[10%] p-4 text-sm flex justify-center space-x-4">
