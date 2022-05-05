@@ -14,6 +14,9 @@ export default function Navbar() {
     setIsOpen(true);
   };
 
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
+
+
   return (
     <div className="flex items-center space-x-5 mx-2">
       <button>
@@ -38,7 +41,7 @@ export default function Navbar() {
       <button className="rounded-full  w-7 h-7">
         {" "}
         <img
-          src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
+          src={PF+"people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"}
           alt="profile"
           className=" w-7 h-7 rounded-full object-cover border border-gray-400"
         />{" "}
