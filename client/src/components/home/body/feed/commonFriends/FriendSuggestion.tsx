@@ -3,11 +3,13 @@ import React from 'react'
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Suggestion = ({...props}: Props) => {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
+
   return (
     <div className="flex justify-between ">
           <div className="flex">
             <img
-              src="./assets/people/aben-tefra-UB2S23kSZLM-unsplash.jpg"
+              src={PF + "/people/aben-tefra-UB2S23kSZLM-unsplash.jpg"}
               alt="profile"
               className="w-9 h-9 rounded-full object-cover border border-gray-400"
             />
