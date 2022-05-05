@@ -12,7 +12,6 @@ const app = express();
 const port = process.env.port || 8800;
 //for using dotenv
 dotenv.config();
-
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
