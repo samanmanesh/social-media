@@ -4,21 +4,20 @@ import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import { Users } from "../../../../DummyData";
 
-interface Post 
-  {
-    id: string;
-    userId: string;
-    desc: string;
-    img: string;
-    likes: string[];
-  };
-
+interface Post {
+  id: string;
+  userId: string;
+  desc: string;
+  img: string;
+  likes: string[];
+}
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  post: Post
+  post: Post;
 }
 
 export default function PostCard({ post, ...props }: Props) {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const USER_ID = "3";
   // const [isLiked, setIsLiked] = useState(false);
   const liked = useMemo(() => {
@@ -37,12 +36,20 @@ export default function PostCard({ post, ...props }: Props) {
   //getting the user's name and profile picture for each post
   const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
 
+  console.log(PF + post.img);
   return (
-    <div {...props} className="bg-white border rounded-[2px] border-gray-400 w-full">
+    <div
+      {...props}
+      className="bg-white border rounded-[2px] border-gray-400 w-full"
+    >
       <div className="p-2 border-b border-black flex items-center justify-between">
         <div className="flex">
           <img
-            src={user?.profilePicture}
+            src={
+              user?.profilePicture
+                ? PF + user.profilePicture
+                : "https://via.placeholder.com/150"
+            }
             alt="profile"
             className=" w-9 h-9 rounded-full object-cover border border-gray-400"
           />
@@ -53,7 +60,11 @@ export default function PostCard({ post, ...props }: Props) {
         </button>
       </div>
       <div className="aspect-square w-full">
-        <img src={post.img} alt="post" className="object-cover h-full w-full" />
+        <img
+          src={PF + post.img}
+          alt="postImage"
+          className="object-cover h-full w-full"
+        />
       </div>
       <button className="p-2 border-y border-black w-full flex space-x-3">
         <HeartIcon className="w-7 h-7" />
