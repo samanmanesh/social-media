@@ -26,7 +26,7 @@ router.put("/:id/like", likePost);
 router.get("/:id", getPost);
 
 //get timeline posts
-router.get("/timeline/all", getTimeLinePosts);
+router.get("/timeline/:userId", getTimeLinePosts);
 
 // router.get("/", (req, res) => {
 //   res.send("Hello from Posts");

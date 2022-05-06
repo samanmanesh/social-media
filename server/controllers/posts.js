@@ -68,7 +68,7 @@ export const getPost = async (req, res) => {
 
 export const getTimeLinePosts = async (req, res) => {
   try {
-    const currentUser = await User.findById(req.body.userId);
+    const currentUser = await User.findById(req.params.userId);
 
     const userPosts = await Post.find({ userId: currentUser._id });
 

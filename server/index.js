@@ -23,6 +23,7 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
 //middlewares
 
 app.use(express.json()); //
@@ -34,7 +35,6 @@ app.use(cors());
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoute);
-
 app.use('/api/posts', postRoutes);
 
 app.get("/", (req, res) => {
