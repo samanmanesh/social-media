@@ -19,6 +19,15 @@ interface User{
   coverPicture: string;
   followers: string[];
   following: string[];
+  isAdmin: boolean;
+  city: string;
+  country: string;
+  from: string;
+  relationship: Number;
+  desc: string;
+  createAt: Date;
+  updateAt: Date;
+  
 }
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -28,7 +37,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function PostCard({ post, ...props }: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
-  const [user, setUser] = useState({}:);
+  const [user, setUser] = useState({} as User);
   // const [isLiked, setIsLiked] = useState(false);
   // const liked = useMemo(() => {
   //   post.likes.includes(USER_ID);
@@ -43,7 +52,7 @@ export default function PostCard({ post, ...props }: Props) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/users/${post.userId}`);
+      const res = await axios.get(`users/${post.userId}`);
       console.log("res", res);
       setUser(res.data);
     };
