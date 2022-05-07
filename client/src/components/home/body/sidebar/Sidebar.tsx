@@ -4,9 +4,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function Sidebar({ ...props }: Props) {
 
-  const currentUserId = "1" ;
-  const friends = Users.map(u => u.followings);
-  console.log("friends : ",friends);
+  // const currentUserId = "1" ;
+  // const friends = Users.map(u => u.followings);
 
   return (
     <div className="h-96 sticky flex-shrink-0 top-20 p-6 hidden lg:block ml-8 w-80">

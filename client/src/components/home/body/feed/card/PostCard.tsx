@@ -62,7 +62,6 @@ export default function PostCard({ post, ...props }: Props) {
   //getting the user's name and profile picture for each post
   // const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
 
-  console.log(PF + post.img);
   return (
     <div
       {...props}
