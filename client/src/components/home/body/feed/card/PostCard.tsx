@@ -10,7 +10,7 @@ interface Post {
   img: string;
   likes: string[];
 }
-interface User{
+interface User {
   id: string;
   userName: string;
   email: string;
@@ -27,17 +27,18 @@ interface User{
   desc: string;
   createAt: Date;
   updateAt: Date;
-  
 }
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
-
 }
 
 export default function PostCard({ post, ...props }: Props) {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER ; // public folder path in env file for routing to work
   const [user, setUser] = useState({} as User);
+  // const [numLikes, setNumLikes] = useState(post.likes.length);
+  //todo fist check if you like it or not and then set the icon
+  //todo make a list of likes by users 
   // const [isLiked, setIsLiked] = useState(false);
   // const liked = useMemo(() => {
   //   post.likes.includes(USER_ID);
@@ -74,7 +75,7 @@ export default function PostCard({ post, ...props }: Props) {
             src={
               user?.profilePicture
                 ? PF + user.profilePicture
-                : PF + "people/no-image-avatar2.png" 
+                : PF + "people/no-image-avatar2.png"
             }
             alt="profile"
             className=" w-9 h-9 rounded-full object-cover border border-gray-400"
@@ -87,7 +88,7 @@ export default function PostCard({ post, ...props }: Props) {
       </div>
       <div className="aspect-square w-full">
         <img
-          src={PF + post.img}
+          src={PF +"/post/"+ post.img}
           alt="postImage"
           className="object-cover h-full w-full"
         />
@@ -97,7 +98,7 @@ export default function PostCard({ post, ...props }: Props) {
         <AnnotationIcon className="w-7 h-7" />
       </button>
       <div className="flex flex-col space-y-1 p-2">
-        <span className="">Liked by mohammadgh4907 and others</span>
+        <span className="">Liked by mohammadgh4907 and others </span>
         <span>
           {user?.userName} {post?.desc}
           <button className="text-s text-gray-600">more</button>
