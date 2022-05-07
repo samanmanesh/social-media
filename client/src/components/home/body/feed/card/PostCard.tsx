@@ -54,6 +54,7 @@ export default function PostCard({ post, ...props }: Props) {
     const fetchUser = async () => {
       const res = await axios.get(`users/${post.userId}`);
       console.log("res", res);
+      console.log("likes", post.likes);
       setUser(res.data);
     };
     fetchUser();
@@ -73,7 +74,7 @@ export default function PostCard({ post, ...props }: Props) {
             src={
               user?.profilePicture
                 ? PF + user.profilePicture
-                : "https://via.placeholder.com/150"
+                : PF + "people/no-image-avatar2.png" 
             }
             alt="profile"
             className=" w-9 h-9 rounded-full object-cover border border-gray-400"
