@@ -3,12 +3,15 @@ import { HeartIcon, AnnotationIcon } from "@heroicons/react/outline";
 import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import {format} from "timeago.js";
 interface Post {
   id: string;
   userId: string;
   desc: string;
   img: string;
   likes: string[];
+  createdAt: Date;
+  updateAt: Date;
 }
 interface User {
   id: string;
@@ -25,7 +28,7 @@ interface User {
   from: string;
   relationship: Number;
   desc: string;
-  createAt: Date;
+  createdAt: Date;
   updateAt: Date;
 }
 
@@ -104,7 +107,7 @@ export default function PostCard({ post, ...props }: Props) {
           <button className="text-s text-gray-600">more</button>
         </span>
         <span className="text-s text-gray-600">View all 1,8,932 comments</span>
-        <span className="text-gray-800 text-sm">1 week ago</span>
+        <span className="text-gray-800 text-sm">{format(post.createdAt)}</span>
       </div>
       <div className="border-t  w-full p-4 flex justify-between">
         <input type="text" placeholder="Add a comment..." className="w-full" />
