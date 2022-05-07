@@ -62,10 +62,7 @@ export const getUsers = async (req, res) => {
       // this will ignore the filed we don't want to send back to the client like password
       const { password, createdAt, updatedAt, ...other } = user._doc;
 
-      return res.status(200).json({
-        message: "User found successfully",
-        other,
-      });
+      return res.status(200).json(user);
     } else {
       return res.status(404).json({
         message: "User not found",

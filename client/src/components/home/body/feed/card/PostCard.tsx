@@ -2,8 +2,7 @@ import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import { HeartIcon, AnnotationIcon } from "@heroicons/react/outline";
 import { useMemo, useState } from "react";
 import { useEffect } from "react";
-import { Users } from "../../../../DummyData";
-
+import axios from "axios";
 interface Post {
   id: string;
   userId: string;
@@ -11,18 +10,29 @@ interface Post {
   img: string;
   likes: string[];
 }
+interface User{
+  id: string;
+  userName: string;
+  email: string;
+  password: string;
+  profilePicture: string;
+  coverPicture: string;
+  followers: string[];
+  following: string[];
+}
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
+
 }
 
 export default function PostCard({ post, ...props }: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
-  const USER_ID = "3";
+  const [user, setUser] = useState({}:);
   // const [isLiked, setIsLiked] = useState(false);
-  const liked = useMemo(() => {
-    post.likes.includes(USER_ID);
-  }, [post]);
+  // const liked = useMemo(() => {
+  //   post.likes.includes(USER_ID);
+  // }, [post]);
   // const numLikes: number = useMemo(() => {
   //   const { likes } = post;
   //   if (likes.includes(USER_ID)) {
@@ -31,10 +41,17 @@ export default function PostCard({ post, ...props }: Props) {
   //   return -1;
   // }, [isLiked, post])
 
-  console.log(post);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users/${post.userId}`);
+      console.log("res", res);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, []);
 
   //getting the user's name and profile picture for each post
-  const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
+  // const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
 
   console.log(PF + post.img);
   return (
