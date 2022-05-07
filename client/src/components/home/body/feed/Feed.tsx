@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PostShareModal from "../../../header/navbar/share/PostShareModal";
 import PostCard from "./card/PostCard";
+import {Post, User} from "../../../interface/Interface";
 // import { Posts } from "../../../DummyData";
 interface Props {} // extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -12,7 +13,7 @@ export default function Feed({ ...props }: Props) {
   useEffect(() => {
     const fetchPosts = async () => {
       const res = await axios.get("posts/timeline/62687513cdb831c3abb54c54");
-      console.log("post res",res);
+      console.log("post res", res);
       setPosts(res.data);
     };
     fetchPosts();
@@ -21,19 +22,16 @@ export default function Feed({ ...props }: Props) {
   return (
     <div className="space-y-5 flex-1 mt-6 max-w-xl">
       {}
-      {posts && posts.map((p, index) => (
-        <PostCard key={index} post={p} />
-      ))}
-      {!posts.length &&
+      {posts && posts.map((p: Post) => <PostCard key={p._id} post={p} />)}
+      {!posts.length && (
         <div className="flex  w-full h-full justify-center items-center ">
-          
-            <div className="flex justify-center text-medium font-semibold text-gray-500">
-              Add a post to see it here 
-              {/* here needs global state for postShareModal */}
-              {/* <PostShareModal isOpen={isOpen} setIsOpen={setIsOpen} /> */}
-              </div>
+          <div className="flex justify-center text-medium font-semibold text-gray-500">
+            Add a post to see it here
+            {/* here needs global state for postShareModal */}
+            {/* <PostShareModal isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+          </div>
         </div>
-              }
+      )}
     </div>
   );
 }

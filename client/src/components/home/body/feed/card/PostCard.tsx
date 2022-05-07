@@ -4,33 +4,34 @@ import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import {format} from "timeago.js";
-interface Post {
-  id: string;
-  userId: string;
-  desc: string;
-  img: string;
-  likes: string[];
-  createdAt: Date;
-  updateAt: Date;
-}
-interface User {
-  id: string;
-  userName: string;
-  email: string;
-  password: string;
-  profilePicture: string;
-  coverPicture: string;
-  followers: string[];
-  following: string[];
-  isAdmin: boolean;
-  city: string;
-  country: string;
-  from: string;
-  relationship: Number;
-  desc: string;
-  createdAt: Date;
-  updateAt: Date;
-}
+import {Post, User} from "../../../../interface/Interface";
+// interface Post {
+//   _id: string;
+//   userId: string;
+//   desc: string;
+//   img: string;
+//   likes: string[];
+//   createdAt: Date;
+//   updateAt: Date;
+// }
+// interface User {
+//   id: string;
+//   userName: string;
+//   email: string;
+//   password: string;
+//   profilePicture: string;
+//   coverPicture: string;
+//   followers: string[];
+//   following: string[];
+//   isAdmin: boolean;
+//   city: string;
+//   country: string;
+//   from: string;
+//   relationship: Number;
+//   desc: string;
+//   createdAt: Date;
+//   updateAt: Date;
+// }
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
@@ -58,11 +59,11 @@ export default function PostCard({ post, ...props }: Props) {
     const fetchUser = async () => {
       const res = await axios.get(`users/${post.userId}`);
       console.log("res", res);
-      console.log("likes", post.likes);
+      // console.log("likes", post.likes);
       setUser(res.data);
     };
     fetchUser();
-  }, []);
+  }, [post.userId]);
 
   //getting the user's name and profile picture for each post
   // const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
