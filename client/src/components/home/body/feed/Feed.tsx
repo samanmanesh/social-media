@@ -13,10 +13,8 @@ export default function Feed({ ...props }: Props) {
     const fetchPosts = async () => {
       //letter needs to be logged in user to see their posts
        // const res = await axios.get("posts/timeline/62687513cdb831c3abb54c54");
-      const res = await getTimelinePosts("62687513cdb831c3abb54c54")
+      const res = await getTimelinePosts("6278167416616ac15d842712")
       console.debug(res)
-
-      console.log("post res", res);
       setPosts(res.data);
     };
     fetchPosts();

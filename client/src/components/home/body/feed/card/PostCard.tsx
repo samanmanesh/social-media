@@ -32,8 +32,7 @@ export default function PostCard({ post, ...props }: Props) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await getUser(post.userId);
-      // console.log("likes", post.likes);
+      const res = await getUser({userId: post.userId});
       setUser(res.data);
     };
     fetchUser();  
@@ -49,7 +48,7 @@ export default function PostCard({ post, ...props }: Props) {
     >
       <div className="p-2 border-b border-black flex items-center justify-between">
         <div className="flex">
-          <Link to={`/profile/${user.userName}`}>
+          <Link to={`/profile/${user.username}`}>
           <img
             src={
               user?.profilePicture
@@ -60,7 +59,7 @@ export default function PostCard({ post, ...props }: Props) {
             className=" w-9 h-9 rounded-full object-cover border border-gray-400"
           />
           </Link>
-          <span className="pl-2 font-semibold">{user?.userName}</span>
+          <span className="pl-2 font-semibold">{user?.username}</span>
         </div>
         <button>
           <DotsHorizontalIcon className="w-3 h-3" />
@@ -80,7 +79,7 @@ export default function PostCard({ post, ...props }: Props) {
       <div className="flex flex-col space-y-1 p-2">
         <span className="">Liked by mohammadgh4907 and others </span>
         <span>
-          {user?.userName} {post?.desc}
+          {user?.username} {post?.desc}
           <button className="text-s text-gray-600">more</button>
         </span>
         <span className="text-s text-gray-600">View all 1,8,932 comments</span>

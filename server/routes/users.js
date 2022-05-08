@@ -9,7 +9,9 @@ import {
 const router = express.Router();
 
 //get a users by id
-router.get("/:id", getUsers);
+// router.get("/:id", getUsers);
+//get a user by query
+router.get("/", getUsers);
 
 //update user by id
 router.put("/:id", updateUser);

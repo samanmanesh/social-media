@@ -10,7 +10,7 @@ interface Post {
 
 interface User {
   id: string;
-  userName: string;
+  username: string;
   email: string;
   password: string;
   profilePicture: string;
