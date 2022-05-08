@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import PostShareModal from "../../../header/navbar/share/PostShareModal";
+import PostShareModal from "components/header/navbar/share/PostShareModal";
 import PostCard from "./card/PostCard";
-import { Post, User } from "../../../interface/Interface";
 interface Props {} // extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function Feed({ ...props }: Props) {

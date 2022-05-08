@@ -1,13 +1,14 @@
-export interface Post {
-_id: string;
-userId: string;
-desc: string;
-img: string;
-likes: string[];
-createdAt: Date;
-updateAt: Date;
-} 
-export interface User {
+interface Post {
+  _id: string;
+  userId: string;
+  desc: string;
+  img: string;
+  likes: string[];
+  createdAt: Date;
+  updateAt: Date;
+}
+
+interface User {
   id: string;
   userName: string;
   email: string;

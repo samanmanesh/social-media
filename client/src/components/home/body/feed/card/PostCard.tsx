@@ -4,8 +4,8 @@ import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import {format} from "timeago.js";
-import {Post, User} from "../../../../interface/Interface";
 import { Link } from 'react-router-dom';
+import { getUser } from "api";
 
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,8 +32,7 @@ export default function PostCard({ post, ...props }: Props) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`users/${post.userId}`);
-      console.log("res", res);
+      const res = await getUser(post.userId);
       // console.log("likes", post.likes);
       setUser(res.data);
     };
