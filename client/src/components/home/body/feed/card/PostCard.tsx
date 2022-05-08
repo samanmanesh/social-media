@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import {format} from "timeago.js";
 import {Post, User} from "../../../../interface/Interface";
+import { Link } from 'react-router-dom';
 
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -49,6 +50,7 @@ export default function PostCard({ post, ...props }: Props) {
     >
       <div className="p-2 border-b border-black flex items-center justify-between">
         <div className="flex">
+          <Link to={`/profile/${user.id}`}>
           <img
             src={
               user?.profilePicture
@@ -58,6 +60,7 @@ export default function PostCard({ post, ...props }: Props) {
             alt="profile"
             className=" w-9 h-9 rounded-full object-cover border border-gray-400"
           />
+          </Link>
           <span className="pl-2 font-semibold">{user?.userName}</span>
         </div>
         <button>

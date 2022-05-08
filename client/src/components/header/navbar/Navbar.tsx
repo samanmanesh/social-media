@@ -40,14 +40,16 @@ export default function Navbar() {
       <button className="">
         <HeartIcon className="w-7 h-7" />
       </button>
-      <button className="rounded-full  w-7 h-7">
+      {/* use global state to go to user profile when its clicked */}
+      {/* <Link to={`/profile/${user.id}`}  className="rounded-full  w-7 h-7" > */}
+      <Link to="/profile/dua" className="rounded-full  w-7 h-7" >
         {" "}
         <img
           src={PF+"people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"}
           alt="profile"
           className=" w-7 h-7 rounded-full object-cover border border-gray-400"
         />{" "}
-      </button>
+      </Link>
     </div>
   );
 }
