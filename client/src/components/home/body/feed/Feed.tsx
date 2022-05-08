@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PostShareModal from "components/header/navbar/share/PostShareModal";
 import PostCard from "./card/PostCard";
-import { getUser,  getTimeline } from "api";
+import { getUser,  getTimelinePosts } from "api";
 interface Props {} // extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function Feed({ ...props }: Props) {
@@ -12,8 +12,8 @@ export default function Feed({ ...props }: Props) {
   useEffect(() => {
     const fetchPosts = async () => {
       //letter needs to be logged in user to see their posts
-      // const res = await axios.get("posts/timeline/62687513cdb831c3abb54c54");
-      const res = await getTimeline("62687513cdb831c3abb54c54")
+       // const res = await axios.get("posts/timeline/62687513cdb831c3abb54c54");
+      const res = await getTimelinePosts("62687513cdb831c3abb54c54")
       console.debug(res)
 
       console.log("post res", res);
