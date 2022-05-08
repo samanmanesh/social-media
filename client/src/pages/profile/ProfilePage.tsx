@@ -12,12 +12,8 @@ const ProfilePage = (props: Props) => {
 
   const [userPosts, setUserPosts] = useState([]);
 
-  console.debug("!!:", params);
   useEffect(() => {
     const fetchPosts = async () => {
-      // console.log("posts/profile/" + params.username);
-      //proxy didn't work for this one 
-      // await axios.get("posts/timeline/62687513cdb831c3abb54c54");
       const res = await axios.get(`posts/profile/${params.username}`);
       console.log("User post res", res);
       setUserPosts(res.data);
