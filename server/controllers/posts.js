@@ -84,3 +84,15 @@ export const getTimeLinePosts = async (req, res) => {
     return res.status(500).json(error);
   }
 };
+
+export const getUserPosts = async (req, res) => {
+  try {
+    console.log("hit here");
+    const user = await User.findOne({userName: req.params.username });
+    const post = await Post.find({ userId: user._id });
+    console.log("user posts",user, post);
+    return res.status(200).json(post);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};

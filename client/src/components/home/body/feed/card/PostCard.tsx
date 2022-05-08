@@ -50,7 +50,7 @@ export default function PostCard({ post, ...props }: Props) {
     >
       <div className="p-2 border-b border-black flex items-center justify-between">
         <div className="flex">
-          <Link to={`/profile/${user.id}`}>
+          <Link to={`/profile/${user.userName}`}>
           <img
             src={
               user?.profilePicture

@@ -6,6 +6,7 @@ import {
   likePost,
   getPost,
   getTimeLinePosts,
+  getUserPosts
 } from "../controllers/posts.js";
 
 const router = express.Router();
@@ -27,6 +28,9 @@ router.get("/:id", getPost);
 
 //get timeline posts
 router.get("/timeline/:userId", getTimeLinePosts);
+
+//get user's  all posts
+router.get("/profile/:username", getUserPosts);
 
 // router.get("/", (req, res) => {
 //   res.send("Hello from Posts");
