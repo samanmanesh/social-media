@@ -26,7 +26,7 @@ const ProfilePage = (props: Props) => {
       setUserPosts(posts);
     };
     fetchUserData();
-  }, []);
+  }, [ params.username]);
 
   // console.log("userPosts", userPosts);
   // console.log("user", user);
