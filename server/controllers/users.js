@@ -85,7 +85,7 @@ export const followUser = async (req, res) => {
       message: "You cannot follow yourself",
     });
   }
-
+//there is a bug here when the user follows another user it will not show up in the following list
   try {
     const userToFollow = await User.findById(id); // the user that we want to follow
     const currentUser = await User.findById(userId); // the user that is currently logged in
