@@ -1,20 +1,28 @@
-import { Posts } from "../../DummyData";
+// import { Posts } from "../../DummyData";
+interface UserDetails{
+  numOfPosts: number;
+      numOfLikes  : number;
+      numOfComments : number;
+      numOfFollowers : number;
+      numOfFollowing : number;
+}
 
 type Props = {
-  getUserPosts: Post[];
+  userPosts: Post[];
+  userDetails: UserDetails;
 };
 
-const ProfileGallery = (props: Props) => {
+const ProfileGallery = ({userPosts, userDetails}: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
 
   return (
     <div className="flex justify-center">
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl flex-1 mt-6">
-        {Posts.map((p, index) => (
+        {userPosts.map((p, index) => (
           <div key={index} className=" aspect-square">
             <img
-              src={PF + p.img}
+              src={PF +"/post/" + p.img}
               alt="post"
               className="object-cover w-full h-full"
             />

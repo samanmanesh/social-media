@@ -1,4 +1,3 @@
-import axios, { AxiosPromise } from "axios";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProfileGallery from "../../components/profile/profilegallery/ProfileGallery";
@@ -7,11 +6,10 @@ import { getUser, getUserPosts } from "api";
 
 type Props = {};
 
-//todo make the num of followers and following
-//todo make the num of posts
-// todo make the num of likes
+//todo make the num of followers and following ✔︎
+//todo make the num of posts ✔︎
+// todo make the num of likes ✔︎
 // todo make the num of comments
-//
 
 const ProfilePage = (props: Props) => {
   const params = useParams();
@@ -19,8 +17,6 @@ const ProfilePage = (props: Props) => {
   const [user, setUser] = useState({} as User);
 
   useEffect(() => {
-    console.debug("fetching");
-
     const fetchUserData = async () => {
       //user data
       const { data: userData } = await getUser({ username: params.username });
@@ -75,12 +71,10 @@ const ProfilePage = (props: Props) => {
     };
   }, [userPosts, user]);
 
-  console.log("userDetails:", userDetails);
-
   return (
     <div className=" container flex flex-col">
       <ProfileHeader user={user} userDetails={userDetails} />
-      <ProfileGallery getUserPosts={userPosts} />
+      <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
     </div>
   );
 };
