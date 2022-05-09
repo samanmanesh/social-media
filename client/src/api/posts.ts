@@ -10,5 +10,6 @@ export const getTimelinePosts = (
 export const getUserPosts = (
   username: string
 ): Promise<AxiosResponse<Post[]>> => {
+  console.log("username in getUserPosts: ", username)
   return instance.get(`posts/profile/${username}`);
 };
