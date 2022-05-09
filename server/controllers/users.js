@@ -54,21 +54,19 @@ export const deleteUser = async (req, res) => {
 };
 
 export const getUsers = async (req, res) => {
-
   const userId = req.query.userId;
   const username = req.query.username;
-  
+
   try {
-    const user = userId ? await User.findById(userId) : await User.find({username:
-      username
-    });
-  console.log(username, "- user - ", user);
+    const user = userId
+      ? await User.findById(userId)
+      : await User.find({ username: username });
 
     if (user) {
       // this will ignore the filed we don't want to send back to the client like password
-      const { password, createdAt, updatedAt, ...other } = user._doc;
-
+      const { password, updatedAt, ...other } = user._doc;
       return res.status(200).json(user);
+      
     } else {
       return res.status(404).json({
         message: "User not found",

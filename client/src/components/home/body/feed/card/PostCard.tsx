@@ -3,21 +3,20 @@ import { HeartIcon, AnnotationIcon } from "@heroicons/react/outline";
 import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import {format} from "timeago.js";
-import { Link } from 'react-router-dom';
+import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 import { getUser } from "api";
-
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
 }
 
 export default function PostCard({ post, ...props }: Props) {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER ; // public folder path in env file for routing to work
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const [user, setUser] = useState({} as User);
   // const [numLikes, setNumLikes] = useState(post.likes.length);
   //todo fist check if you like it or not and then set the icon
-  //todo make a list of likes by users 
+  //todo make a list of likes by users
   // const [isLiked, setIsLiked] = useState(false);
   // const liked = useMemo(() => {
   //   post.likes.includes(USER_ID);
@@ -32,10 +31,10 @@ export default function PostCard({ post, ...props }: Props) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await getUser({userId: post.userId});
+      const res = await getUser({ userId: post.userId });
       setUser(res.data);
     };
-    fetchUser();  
+    fetchUser();
   }, [post.userId]);
 
   //getting the user's name and profile picture for each post
@@ -49,17 +48,19 @@ export default function PostCard({ post, ...props }: Props) {
       <div className="p-2 border-b border-black flex items-center justify-between">
         <div className="flex">
           <Link to={`/profile/${user.username}`}>
-          <img
-            src={
-              user?.profilePicture
-                ? PF + user.profilePicture
-                : PF + "people/no-image-avatar2.png"
-            }
-            alt="profile"
-            className=" w-9 h-9 rounded-full object-cover border border-gray-400"
-          />
+            <img
+              src={
+                user?.profilePicture
+                  ? PF + user.profilePicture
+                  : PF + "people/no-image-avatar2.png"
+              }
+              alt="profile"
+              className=" w-9 h-9 rounded-full object-cover border border-gray-400"
+            />
           </Link>
-          <span className="pl-2 font-semibold">{user?.username}</span>
+          <Link to={`/profile/${user.username}`}>
+            <span className="pl-2 font-semibold">{user?.username}</span>
+          </Link>
         </div>
         <button>
           <DotsHorizontalIcon className="w-3 h-3" />
@@ -67,7 +68,7 @@ export default function PostCard({ post, ...props }: Props) {
       </div>
       <div className="aspect-square w-full">
         <img
-          src={PF +"/post/"+ post.img}
+          src={PF + "/post/" + post.img}
           alt="postImage"
           className="object-cover h-full w-full"
         />

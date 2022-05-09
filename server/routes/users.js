@@ -10,7 +10,8 @@ const router = express.Router();
 
 //get a users by id
 // router.get("/:id", getUsers);
-//get a user by query
+
+//get a user by query (id or username)
 router.get("/", getUsers);
 
 //update user by id
