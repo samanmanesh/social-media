@@ -1,7 +1,8 @@
-type Props = {};
+type Props = {
+  user: User;
+};
 
-const ProfileHeader = (props: Props) => {
-  const username = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta, velit?"
+const ProfileHeader = ({user}: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
   return (
@@ -17,8 +18,8 @@ const ProfileHeader = (props: Props) => {
         <div className="flex-1">
           {/* Username Section */}
           <div className="flex flex-col sm:flex-row justify-between items-start mb-4">
-            <h1 title={username} className="font-medium text-2xl overflow-hidden whitespace-nowrap text-ellipsis w-56 sm:w-64 cursor-default">
-              {username}
+            <h1 title={user.username} className="font-medium text-2xl overflow-hidden whitespace-nowrap text-ellipsis w-56 sm:w-64 cursor-default">
+              {user.username}
             </h1>
             <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-medium whitespace-nowrap rounded">
               Edit Profile

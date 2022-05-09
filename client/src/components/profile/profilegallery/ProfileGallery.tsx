@@ -1,6 +1,8 @@
 import { Posts } from "../../DummyData";
 
-type Props = {};
+type Props = {
+  getUserPosts: Post[];
+};
 
 const ProfileGallery = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
