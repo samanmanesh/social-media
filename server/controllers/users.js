@@ -95,12 +95,13 @@ export const followUser = async (req, res) => {
           message: "User already followed",
         });
       } else {
+
         await userToFollow.updateOne({
           $push: { followers: userId },
         });
 
         await currentUser.updateOne({
-          $push: { followings: id },
+          $push: { following: id },
         });
 
         return res.status(200).json({
