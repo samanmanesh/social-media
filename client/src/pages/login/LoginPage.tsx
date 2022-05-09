@@ -7,13 +7,13 @@ const LoginPage = (props: Props) => {
   // const formValue = (event: React.ChangeEvent<HTMLSelectElement>) => {
   //   setState({ ...state, [event.target.value]: event.target.value.trim() });
   // };
-  let username = useRef();
-  let password = useRef();
+  let username = useRef<HTMLInputElement>(null);
+  let password = useRef<HTMLInputElement>(null);
   const handleClick = (e: React.SyntheticEvent) => {
     // event.preventDefault();
     e.preventDefault(); 
-    console.log("username", username.current.value);
-    console.log("password", password.current.value);
+    console.log("username", username.current?.value);
+    console.log("password", password.current?.value);
   };
 
   return (
