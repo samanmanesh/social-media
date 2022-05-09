@@ -50,8 +50,8 @@ export default function PostCard({ post, ...props }: Props) {
           <Link to={`/profile/${user.username}`}>
             <img
               src={
-                user?.profilePicture
-                  ? PF + user.profilePicture
+                user.profilePicture
+                  ? PF + "/people/" + user.profilePicture
                   : PF + "people/no-image-avatar2.png"
               }
               alt="profile"
