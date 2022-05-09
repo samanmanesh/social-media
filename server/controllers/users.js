@@ -143,7 +143,7 @@ export const unfollowUser = async (req, res) => {
         });
 
         await currentUser.updateOne({
-          $pull: { followings: id },
+          $pull: { following: id },
         });
 
         return res.status(200).json({
