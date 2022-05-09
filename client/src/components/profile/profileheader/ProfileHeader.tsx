@@ -1,8 +1,17 @@
+interface UserDetails{
+  numOfPosts: number;
+      numOfLikes  : number;
+      numOfComments : number;
+      numOfFollowers : number;
+      numOfFollowing : number;
+}
+
 type Props = {
   user: User;
+  userDetails: UserDetails;
 };
 
-const ProfileHeader = ({user}: Props) => {
+const ProfileHeader = ({user, userDetails}: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
   return (
@@ -27,13 +36,13 @@ const ProfileHeader = ({user}: Props) => {
           </div>
           <div className="hidden sm:block space-x-4 md:space-x-8">
             <span>
-              <strong>19</strong> posts
+              <strong>{userDetails.numOfPosts}</strong> posts
             </span>
             <span>
-              <strong>2,987</strong> followers
+              <strong>{userDetails.numOfFollowers}</strong> followers
             </span>
             <span>
-              <strong>1,903</strong> following
+              <strong>{userDetails.numOfFollowing}</strong> following
             </span>
           </div>
           <div className="mt-2">

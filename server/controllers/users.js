@@ -56,7 +56,6 @@ export const deleteUser = async (req, res) => {
 export const getUsers = async (req, res) => {
   const userId = req.query.userId;
   const username = req.query.username;
-  console.log("getUsers in server: ", userId, username);
 
   try {
     const user = userId
