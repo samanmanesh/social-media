@@ -9,11 +9,8 @@ type Props = {};
 
 const ProfilePage = (props: Props) => {
   const params = useParams();
-  console.log("username in ProfilePage: ", params.username);
-
   const [userPosts, setUserPosts] = useState([] as Post[]);
   const [user, setUser] = useState({} as User);
-
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -21,7 +18,7 @@ const ProfilePage = (props: Props) => {
       const user = await getUser({ username: params.username });
       setUser(user.data);
       //user posts
-      const posts =  await getUserPosts(user.data.username);
+      const posts = await getUserPosts(user.data.username);
       setUserPosts(posts.data);
     };
 
