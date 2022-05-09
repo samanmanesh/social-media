@@ -1,11 +1,19 @@
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 type Props = {};
 
 const LoginPage = (props: Props) => {
+  // const [state, setState] = useState({ });
+  // const formValue = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setState({ ...state, [event.target.value]: event.target.value.trim() });
+  // };
+  let username = useRef();
+  let password = useRef();
   const handleClick = (e: React.SyntheticEvent) => {
     // event.preventDefault();
     e.preventDefault(); 
-    console.log("clicked");
+    console.log("username", username.current.value);
+    console.log("password", password.current.value);
   };
 
   return (
@@ -21,11 +29,16 @@ const LoginPage = (props: Props) => {
             <input
               type="text"
               placeholder="Username"
+              ref={username}
               className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-200 "
+              required
             />
             <input
               type="password"
               placeholder="Password"
+              ref={password}
+              required
+              minLength={6}
               className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-200"
             />
             <button
