@@ -12,6 +12,7 @@ type Props = {
 };
 
 const ProfileHeader = ({user, userDetails}: Props) => {
+  console.log("user", user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
   return (
@@ -46,8 +47,10 @@ const ProfileHeader = ({user, userDetails}: Props) => {
             </span>
           </div>
           <div className="mt-2">
-            <p className="font-medium">Name</p>
-            <p>bio what ever they want put here</p>
+
+            {/* <p className="font-medium">Name</p>
+            <p>bio what ever they want put here</p> */}
+            {user.desc}
           </div>
         </div>
       </div>
