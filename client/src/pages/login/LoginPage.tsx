@@ -1,14 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 type Props = {};
 
-
 const LoginPage = (props: Props) => {
+  const handleClick = (e: React.SyntheticEvent) => {
+    // event.preventDefault();
+    e.preventDefault(); 
+    console.log("clicked");
+  };
+
   return (
     <div className="w-full h-screen">
       <div className="grid h-[90%]">
         <div className="container max-w-xs flex flex-col justify-center p-8 space-y-5 items-center border-2 rounded self-center">
           <h1 className="font-freehand text-5xl p-4">Hilarion</h1>
-          <form action="" className="flex flex-col w-full space-y-4">
+          <form
+            action=""
+            className="flex flex-col w-full space-y-4"
+            onSubmit={handleClick}
+          >
             <input
               type="text"
               placeholder="Username"
@@ -33,7 +42,7 @@ const LoginPage = (props: Props) => {
           </div>
           <div className="flex w-full justify-between ">
             <span>Don't have an account?</span>
-            <Link to='/register' className="text-sm font-medium text-blue-500">
+            <Link to="/register" className="text-sm font-medium text-blue-500">
               Sign up
             </Link>
           </div>
