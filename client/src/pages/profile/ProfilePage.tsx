@@ -39,10 +39,10 @@ const ProfilePage = (props: Props) => {
       // }
       // );
       const { data: userData } = await getUser({ username: params.username });
-      setUser(userData);
 
       //user posts
       const { data: posts } = await getUserPosts(userData.username);
+      setUser(userData);
       setUserPosts(posts);
     };
     fetchUserData();
@@ -50,6 +50,23 @@ const ProfilePage = (props: Props) => {
 
   console.log("userPosts", userPosts);
   console.log("user", user);
+
+  const usersDetails = useMemo(() => {
+    console.log("user in userDetails", user);
+    let numOfFollowers = user && user.followers?.length;
+    let numOfFollowing = user && user.following?.length;
+    return { numOfFollowers, numOfFollowing };
+  }, [user]);
+  console.log("usersDetails", usersDetails);
+
+  const postsDetails = useMemo(() => {
+    let numOfPosts = userPosts.length;
+    let numOfLikes = userPosts.reduce((acc, post) => {
+      return acc + post.likes.length;
+    }, 0);
+  return { numOfPosts, numOfLikes };
+  }, [userPosts]);
+  console.log("postsDetails", postsDetails);
 
   // const data = useMemo(() => {
   //   let numOfFollowers = 0;
