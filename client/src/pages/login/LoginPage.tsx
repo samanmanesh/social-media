@@ -10,7 +10,6 @@ const LoginPage = (props: Props) => {
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
   const handleClick = (e: React.SyntheticEvent) => {
-    // event.preventDefault();
     e.preventDefault();
     console.log("username", username.current?.value);
     console.log("password", password.current?.value);
