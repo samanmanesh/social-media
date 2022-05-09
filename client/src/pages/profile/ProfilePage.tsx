@@ -14,27 +14,18 @@ const ProfilePage = (props: Props) => {
   const [userPosts, setUserPosts] = useState([] as Post[]);
   const [user, setUser] = useState({} as User);
 
-  //todo: get user data from api
-  //todo: get users posts from api
 
   useEffect(() => {
     const fetchUserData = async () => {
+      //user data
       const user = await getUser({ username: params.username });
       setUser(user.data);
-      console.log("user: ", user.data);
+      //user posts
       const posts =  await getUserPosts(user.data.username);
       setUserPosts(posts.data);
-      console.log("posts: ", posts.data);
     };
 
-    // const fetchPosts = async () => {
-    //   const res = await axios.get(`posts/profile/${params.username}`);
-    //   console.log("User post res", res);
-    //   setUserPosts(res.data);
-    // };
-
     fetchUserData();
-    // fetchPosts();
   }, []);
 
   return (
