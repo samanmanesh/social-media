@@ -6,15 +6,10 @@ export const getUser = (params: {
   username?: string;
 }): Promise<AxiosResponse<User>> => {
   const { userId, username } = params;
-  
   if (!userId && !username) {
     throw new Error("Must pass either `userId` or `username`");
   }
-  console.log("call the get User with params", params);
-  
   return instance.get(`users`, {
-    params
+    params,
   });
 };
-
-
