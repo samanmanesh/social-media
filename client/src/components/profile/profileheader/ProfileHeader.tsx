@@ -20,8 +20,8 @@ const ProfileHeader = ({user, userDetails}: Props) => {
       <div className="max-w-4xl flex-1 flex border-b border-gray-400 py-8">
         <div className="px-4 py-2 mr-4 md:mr-8 flex-shrink-0 grid place-items-center">
           <img
-            src={PF+"/people/courtney-hill-aixlh4umWQw-unsplash.jpg"}
-            alt=""
+            src={ PF+"/people/"+user.profilePicture || PF + "people/no-image-avatar2.png"}
+            alt="profileImage"
             className="rounded-full w-20 h-20 md:w-36 md:h-36 border border-gray-500 object-cover"
           />
         </div>
