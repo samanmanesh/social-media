@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import { AuthContext } from "components/context/AuthContext";
+import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { login } from "../../api/login";
 type Props = {};
 
 const LoginPage = (props: Props) => {
@@ -7,12 +9,19 @@ const LoginPage = (props: Props) => {
   // const formValue = (event: React.ChangeEvent<HTMLSelectElement>) => {
   //   setState({ ...state, [event.target.value]: event.target.value.trim() });
   // };
+  const { isFetching, error, dispatch } = useContext(AuthContext);
+
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log("username", username.current?.value);
     console.log("password", password.current?.value);
+
+    login(
+      { username: username.current?.value, password: password.current?.value },
+      dispatch
+    );
 
     if (username.current && password.current) {
       username.current.value = "";
