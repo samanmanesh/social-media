@@ -1,6 +1,11 @@
-const 
+import { AuthState } from "./AuthContext";
+type ActionTypes = "LOGIN_START" | "LOGIN_SUCCESS" | "LOGIN_FAILURE";
+interface Actions {
+  type: ActionTypes;
+  payload?: any;
+}
 
-const AuthReducer = (state, action) => {
+const AuthReducer = (state: AuthState, action: Actions) => {
   switch (action.type) {
     case "LOGIN_START":
       return {

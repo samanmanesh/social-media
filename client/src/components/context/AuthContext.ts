@@ -1,5 +1,11 @@
 import { createContext, useReducer } from "react";
 
+export interface AuthState {
+  user: User | null;
+  isFetching: boolean;
+  error: any;
+}
+
 const INITIAL_STATE = {
   user: null,
   isFetchig: false,
