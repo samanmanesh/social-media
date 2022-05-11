@@ -2,7 +2,7 @@ import { AuthState } from "./AuthContext";
 type ActionTypes = "LOGIN_START" | "LOGIN_SUCCESS" | "LOGIN_FAILURE";
 export interface Actions {
   type: ActionTypes;
-  payload?: any;
+  payload?: User ;
 }
 
 const AuthReducer = (state: AuthState, action: Actions) => {

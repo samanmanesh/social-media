@@ -5,13 +5,14 @@ export interface AuthState {
   user: User | null;
   isFetching: boolean;
   error: any;
-  dispatch?: React.Dispatch<Actions>; 
+  dispatch: React.Dispatch<Actions>; 
 }
 
 const INITIAL_STATE: AuthState = {
   user: null,
   isFetching: false,
   error: null,
+  dispatch: () => {},
 };
 
 type Props = {

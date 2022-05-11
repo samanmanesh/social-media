@@ -7,7 +7,10 @@ interface Props {
   dispatch: React.Dispatch<Actions>;
 }
 
-export const login = async ({ userCredentials, dispatch }: Props) => {
+export const login = async (
+  userCredentials: userCredentials,
+  dispatch: React.Dispatch<Actions>
+) => {
   dispatch({ type: "LOGIN_START" });
   try {
     const res = await instance.post("auth/login", userCredentials);
