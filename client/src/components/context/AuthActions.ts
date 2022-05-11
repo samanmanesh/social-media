@@ -1,6 +1,6 @@
 import { AuthState } from "./AuthContext";
 type ActionTypes = "LOGIN_START" | "LOGIN_SUCCESS" | "LOGIN_FAILURE";
-interface Actions {
+export interface Actions {
   type: ActionTypes;
   payload?: any;
 }

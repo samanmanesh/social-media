@@ -1,11 +1,11 @@
 import { createContext, useReducer } from "react";
-import AuthReducer from "./AuthActions";
+import AuthReducer, { Actions } from "./AuthActions";
 
 export interface AuthState {
   user: User | null;
   isFetching: boolean;
   error: any;
-  dispatch?: any; // TODO: fix this type, I don't know whats its type
+  dispatch?: React.Dispatch<Actions>; 
 }
 
 const INITIAL_STATE: AuthState = {
