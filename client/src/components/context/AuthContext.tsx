@@ -8,13 +8,12 @@ export interface AuthState {
   dispatch: React.Dispatch<Action>;
 }
 
-const INITIAL_STATE : AuthState = {
+const INITIAL_STATE: AuthState = {
   user: null,
   isFetching: false,
   error: false,
   dispatch: () => {},
 };
-
 
 type Props = {
   children: React.ReactNode;
@@ -31,7 +30,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         user: state.user,
         isFetching: state.isFetching,
         error: state.error,
-        dispatch
+        dispatch,
       }}
     >
       {children}
