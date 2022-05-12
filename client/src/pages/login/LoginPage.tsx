@@ -29,8 +29,10 @@ const LoginPage = (props: Props) => {
   //     }
   //   }
   // };
+  
   const fetchAuthLogin = async () => {
     if (username.current && password.current) {
+      
       try {
         const {data} = await  axios.post('http://localhost:8800/api/login', {
           username: username.current.value,
@@ -43,7 +45,6 @@ const LoginPage = (props: Props) => {
     }
   }
   
-  
   const { data, status } = useQuery("user_auth", fetchAuthLogin);
 
   const handleClick = (e: React.SyntheticEvent) => {
@@ -52,6 +53,7 @@ const LoginPage = (props: Props) => {
     console.log("password", password.current?.value);
 
     if (username.current && password.current) {
+      
       // login({
       //   userCredentials: {
       //     username: username.current.value,
