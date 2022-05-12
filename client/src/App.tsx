@@ -3,11 +3,15 @@ import HomePage from "./pages";
 import ProfilePage from "./pages/profile/ProfilePage";
 import Layout from "./components/layout/Layout";
 import LoginPage from "./pages/login/LoginPage";
-import RegisterPage from './pages/register/RegisterPage';
+import RegisterPage from "./pages/register/RegisterPage";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
+  const client = new QueryClient();
+
   return (
     <div>
+      <QueryClientProvider client={client}>
       <Router>
         <Routes>
           <Route path="login" element={<LoginPage />} />
@@ -18,6 +22,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      </QueryClientProvider>
     </div>
   );
 }

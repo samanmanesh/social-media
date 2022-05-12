@@ -9,8 +9,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
+    {/* <AuthContextProvider> */}
       <App />
-    </AuthContextProvider>
+    {/* </AuthContextProvider> */}
   </React.StrictMode>
 );

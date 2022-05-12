@@ -19,7 +19,7 @@ type Props = {
 
 export const AuthContext = createContext(INITIAL_STATE);
 export const AuthUpdateContext = createContext((payload: any) => {});
-
+ 
 export const AuthContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(authReducer, INITIAL_STATE);
 

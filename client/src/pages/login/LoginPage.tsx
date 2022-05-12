@@ -1,26 +1,38 @@
 import { AuthContext } from "components/context/AuthContext";
 import { useContext, useRef, useState } from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { login } from "../../api/login";
 type Props = {};
 
 const LoginPage = (props: Props) => {
-  const { user, isFetching, error } = useContext(AuthContext);
+  // const { user, isFetching, error } = useContext(AuthContext);
 
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
+
+  const queryClient = useQueryClient();
+
+  const fetchAuthLogin = async () => {
+    login 
+
+
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log("username", username.current?.value);
     console.log("password", password.current?.value);
 
     if (username.current && password.current) {
-      login({
-        userCredentials: {
-          username: username.current.value,
-          password: password.current.value,
-        }
-      });
+      const {data, status}  = useQuery( 'user_auth', );
+      
+     
+     
+      // login({
+      //   userCredentials: {
+      //     username: username.current.value,
+      //     password: password.current.value,
+      //   }
+      // });
 
       username.current.value = "";
       password.current.value = "";
