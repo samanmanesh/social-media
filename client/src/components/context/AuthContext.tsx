@@ -4,15 +4,14 @@ import AuthReducer, { Actions } from "./AuthReducer";
 export interface AuthState {
   user: User | null;
   isFetching: boolean;
-  error: any;
-  dispatch: React.Dispatch<Actions>; 
+  error: boolean;
+  dispatch: React.Dispatch<Actions>;
 }
 
-const INITIAL_STATE: AuthState = {
+const INITIAL_STATE = {
   user: null,
   isFetching: false,
-  error: null,
-  
+  error: false,
 };
 
 type Props = {
@@ -22,10 +21,9 @@ type Props = {
 export const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }: Props) => {
-  
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
-  return ( 
+  return (
     <AuthContext.Provider
       value={{
         user: state.user,

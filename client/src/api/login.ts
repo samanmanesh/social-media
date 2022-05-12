@@ -1,21 +1,18 @@
-import { userCredentials } from "../components/context/AuthReducer";
-import { Actions } from "../components/context/AuthActions";
 import { instance } from "api";
+import { userCredentials } from "components/context/AuthActions";
+import { Actions } from "components/context/AuthReducer";
 
 interface Props {
   userCredentials: userCredentials;
-  dispatch: React.Dispatch<Actions>;
+  dispatch: React.Dispatch<any>;
 }
 
-export const login = async (
-  userCredentials: userCredentials,
-  dispatch: React.Dispatch<Actions>
-) => {
+export const login = async ({ userCredentials, dispatch }: Props) => {
   dispatch({ type: "LOGIN_START" });
   try {
     const res = await instance.post("auth/login", userCredentials);
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-  } catch (error) {
+  } catch (error: any) {
     dispatch({ type: "LOGIN_FAILURE", payload: error });
   }
 };
