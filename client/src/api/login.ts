@@ -5,7 +5,7 @@ import { AuthUpdateContext } from "../components/context/AuthContext";
 import { ACTIONS } from '../components/context/AuthReducer';
 
 export interface userCredentials {
-  username?: string ;
+  username: string ;
   email?: string;
   password: string;
 }
@@ -15,7 +15,6 @@ interface Props {
 
 export const login = async ({ userCredentials }: Props) => {
   
-
   return instance.post("auth/login", userCredentials);
   // dispatch({ type: ACTIONS.LOGIN_START });
 

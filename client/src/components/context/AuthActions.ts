@@ -1,4 +1,8 @@
-
+export interface userCredentials {
+  username?: string ;
+  email?: string;
+  password: string;
+}
 
 export const LoginStart = (userCredentials: userCredentials) => ({
   type: "LOGIN_START",

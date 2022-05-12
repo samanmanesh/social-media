@@ -3,7 +3,9 @@ import { useContext, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { login } from "../../api/login";
+import axios from "axios";
 type Props = {};
+
 
 const LoginPage = (props: Props) => {
   // const { user, isFetching, error } = useContext(AuthContext);
@@ -13,9 +15,36 @@ const LoginPage = (props: Props) => {
 
   const queryClient = useQueryClient();
 
-  const fetchAuthLogin = async () => {
-    login 
+  // const fetchAuthLogin = async () => {
+  //   if (username.current && password.current) {
 
+  //     try {
+  //       const {data} = await login({
+  //         username: username.current.value,
+  //         password: password.current.value,
+  //       });
+  //       return data;
+  //     } catch (error) {
+  //       console.log("error", error);
+  //     }
+  //   }
+  // };
+  const fetchAuthLogin = async () => {
+    if (username.current && password.current) {
+      try {
+        const {data} = await  axios.post('http://localhost:8800/api/login', {
+          username: username.current.value,
+          password: password.current.value,
+        });
+        return data;
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+  }
+  
+  
+  const { data, status } = useQuery("user_auth", fetchAuthLogin);
 
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -23,10 +52,6 @@ const LoginPage = (props: Props) => {
     console.log("password", password.current?.value);
 
     if (username.current && password.current) {
-      const {data, status}  = useQuery( 'user_auth', );
-      
-     
-     
       // login({
       //   userCredentials: {
       //     username: username.current.value,
