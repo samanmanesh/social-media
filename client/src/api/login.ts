@@ -1,6 +1,6 @@
 import { instance } from "api";
 import { userCredentials } from "components/context/AuthActions";
-import { Actions } from "components/context/AuthReducer";
+import { Action } from "components/context/AuthReducer";
 
 interface Props {
   userCredentials: userCredentials;

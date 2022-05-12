@@ -13,12 +13,16 @@ const LoginPage = (props: Props) => {
     e.preventDefault();
     console.log("username", username.current?.value);
     console.log("password", password.current?.value);
-    
-    if (username.current && password.current) {
 
+    if (username.current && password.current) {
       login(
-        { username: username.current.value, password: password.current?.value }, 
-        dispatch
+        {
+          userCredentials: {
+            username: username.current.value,
+            password: password.current?.value,
+          },
+          dispatch,
+        }
       );
 
       username.current.value = "";
