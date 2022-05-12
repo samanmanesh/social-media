@@ -6,7 +6,7 @@ export const ACTIONS = {
   LOGIN_FAILURE: "LOGIN_FAILURE",
 }
 
-type ActionTypes = "LOGIN_START" | "LOGIN_SUCCESS" | "LOGIN_FAILURE";
+export type ActionTypes = "LOGIN_START" | "LOGIN_SUCCESS" | "LOGIN_FAILURE";
 export interface Action {
   type: ActionTypes;
   payload?: User ;

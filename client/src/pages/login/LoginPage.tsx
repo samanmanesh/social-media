@@ -5,7 +5,7 @@ import { login } from "../../api/login";
 type Props = {};
 
 const LoginPage = (props: Props) => {
-  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  const { user, isFetching, error } = useContext(AuthContext);
 
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
@@ -15,15 +15,12 @@ const LoginPage = (props: Props) => {
     console.log("password", password.current?.value);
 
     if (username.current && password.current) {
-      login(
-        {
-          userCredentials: {
-            username: username.current.value,
-            password: password.current?.value,
-          },
-          dispatch,
+      login({
+        userCredentials: {
+          username: username.current.value,
+          password: password.current.value,
         }
-      );
+      });
 
       username.current.value = "";
       password.current.value = "";

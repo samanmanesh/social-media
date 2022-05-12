@@ -1,18 +1,16 @@
 import { createContext, useReducer } from "react";
-import authReducer, { Action } from "./AuthReducer";
+import authReducer, { Action, ActionTypes } from "./AuthReducer";
 
 export interface AuthState {
   user: User | null;
   isFetching: boolean;
   error: boolean;
-  dispatch: React.Dispatch<Action>;
 }
 
 const INITIAL_STATE: AuthState = {
   user: null,
   isFetching: false,
   error: false,
-  dispatch: () => {},
 };
 
 type Props = {
@@ -20,9 +18,15 @@ type Props = {
 };
 
 export const AuthContext = createContext(INITIAL_STATE);
+export const AuthUpdateContext = createContext((payload: any) => {});
 
 export const AuthContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(authReducer, INITIAL_STATE);
+
+  // const updateContext = (action: ActionTypes, value?: any) => {
+
+  //   return dispatch({ type: action, payload: value });
+  // };
 
   return (
     <AuthContext.Provider
@@ -30,10 +34,11 @@ export const AuthContextProvider = ({ children }: Props) => {
         user: state.user,
         isFetching: state.isFetching,
         error: state.error,
-        dispatch,
       }}
     >
-      {children}
+      <AuthUpdateContext.Provider value={dispatch}>
+        {children}
+      </AuthUpdateContext.Provider>
     </AuthContext.Provider>
   );
 };
