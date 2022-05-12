@@ -1,33 +1,19 @@
-import { AuthState } from "./AuthContext";
-type ActionTypes = "LOGIN_START" | "LOGIN_SUCCESS" | "LOGIN_FAILURE";
-export interface Actions {
-  type: ActionTypes;
-  payload?: User ;
+export interface userCredentials {
+  username?: string;
+  email?: string;
+  password: string;
 }
 
-const AuthReducer = (state: AuthState, action: Actions) => {
-  switch (action.type) {
-    case "LOGIN_START":
-      return {
-        user: null,
-        isFetching: true,
-        error: null,
-      };
-    case "LOGIN_SUCCESS":
-      return {
-        user: action.payload,
-        isFetching: false,
-        error: null,
-      };
-    case "LOGIN_FAILURE":
-      return {
-        user: null,
-        isFetching: false,
-        error: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+export const LoginStart = (userCredentials: userCredentials) => ({
+  type: "LOGIN_START",
+});
 
-export default AuthReducer;
+export const LoginSuccess = (user: User) => ({
+  type: "LOGIN_SUCCESS",
+  payload: user,
+});
+
+export const LoginFailure = (error: any) => ({
+  type: "LOGIN_FAILURE",
+  payload: error,
+});
