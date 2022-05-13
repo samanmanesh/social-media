@@ -12,7 +12,7 @@ const LoginPage = (props: Props) => {
     email: "",
   } as UserCredentials);
 
-  const { mutate } = useMutation(login, {
+  const { mutate, error , isLoading } = useMutation(login, {
     onSuccess: (data) => {
       console.log("data", data);
     },
