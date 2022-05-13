@@ -19,7 +19,7 @@ const LoginPage = (props: Props) => {
       const { data } = await login({ userCredentials: userInput });
       return data;
     } catch (error) {
-      console.log("error", error);
+      console.log("error in fetchAuthLogin", error);
     }
   };
 
@@ -32,7 +32,7 @@ const LoginPage = (props: Props) => {
   console.log("isFetching", isFetching);
   console.log("error", error);
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();

@@ -32,8 +32,11 @@ export const registerUser = async (req, res) => {
 export const authenticate = async (req, res) => {
   try {
     //validate the user
+    // const user = await User.findOne({
+    //   email: req.body.email,
+    // });
     const user = await User.findOne({
-      email: req.body.email,
+      username: req.body.username,
     });
 
     if (!user) {
