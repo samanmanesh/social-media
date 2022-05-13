@@ -36,18 +36,10 @@ const LoginPage = (props: Props) => {
 
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log("username", username.current?.value);
-    console.log("password", password.current?.value);
+    // console.log("username", username.current?.value);
+    // console.log("password", password.current?.value);
 
     if (username.current && password.current) {
-      // login({
-      //   userCredentials: {
-      //     username: username.current.value,
-      //     password: password.current.value,
-      //   }
-      // });
-      // const {data, status} = AuthLoginQuery(username.current.value, password.current.value);
-
       setUserInput({
         username: username.current.value,
         password: password.current.value,
