@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
-import { login, userCredentials } from "../../api/login";
+import { login, UserCredentials } from "../../api/login";
 type Props = {};
 
 const LoginPage = (props: Props) => {
@@ -10,27 +10,30 @@ const LoginPage = (props: Props) => {
     username: "",
     password: "",
     email: "",
-  } as userCredentials);
+  } as UserCredentials);
+
+  const { mutate } = useMutation(login, {
+    onSuccess: (data) => {
+      console.log("data", data);
+    },
+  });
+
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
 
-  const fetchAuthLogin = async () => {
-    try {
-      const { data } = await login({ userCredentials: userInput });
-      return data;
-    } catch (error) {
-      console.log("error in fetchAuthLogin", error);
-    }
-  };
+  // const fetchAuthLogin = async () => {
+  //   const { data } = await login(userInput);
+  //   return data;
+  // };
 
-  const { data, isFetching, error } = useQuery(
-    ["login", userInput],
-    fetchAuthLogin
-  );
+  // const { data, isFetching, error } = useQuery(
+  //   ["login", userInput],
+  //   fetchAuthLogin
+  // );
 
-  console.log("data", data);
-  console.log("isFetching", isFetching);
-  console.log("error", error);
+  // console.log("data", data);
+  // console.log("isFetching", isFetching);
+  // console.log("error", error);
 
   // const queryClient = useQueryClient();
 
@@ -38,16 +41,20 @@ const LoginPage = (props: Props) => {
     e.preventDefault();
     // console.log("username", username.current?.value);
     // console.log("password", password.current?.value);
+    // if (username.current && password.current) {
+    //   setUserInput({
+    //     username: username.current.value,
+    //     password: password.current.value,
+    //   });
+    mutate({
+      username: username.current?.value ?? "",
+      password: password.current?.value ?? "",
+      email: "",
+    });
 
-    if (username.current && password.current) {
-      setUserInput({
-        username: username.current.value,
-        password: password.current.value,
-      });
-
-      username.current.value = "";
-      password.current.value = "";
-    }
+    //   username.current.value = "";
+    //   password.current.value = "";
+    // }
   };
 
   return (
