@@ -23,28 +23,18 @@ const LoginPage = (props: Props) => {
     onSuccess: (data) => {
       console.log("data", data);
       // put the user in the context
+      console.log("authContext before update", authContext);
       updateAuthContext(data);
+      console.log("authContext after update", authContext);
     },
   });
 
+  console.log("isLoading", isLoading);
+  console.log("error", error);
+  console.log("authContext out", authContext);
+
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
-
-  // const fetchAuthLogin = async () => {
-  //   const { data } = await login(userInput);
-  //   return data;
-  // };
-
-  // const { data, isFetching, error } = useQuery(
-  //   ["login", userInput],
-  //   fetchAuthLogin
-  // );
-
-  // console.log("data", data);
-  // console.log("isFetching", isFetching);
-  // console.log("error", error);
-
-  // const queryClient = useQueryClient();
 
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
