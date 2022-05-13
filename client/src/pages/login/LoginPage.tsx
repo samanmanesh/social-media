@@ -1,51 +1,38 @@
-import { AuthContext } from "components/context/AuthContext";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
-import { login } from "../../api/login";
-import axios from "axios";
-import AuthLoginQuery from '../../components/query/AuthLoginQuery';
+import { login, userCredentials } from "../../api/login";
 type Props = {};
-
 
 const LoginPage = (props: Props) => {
   // const { user, isFetching, error } = useContext(AuthContext);
-
+  const [userInput, setUserInput] = useState({
+    username: "",
+    password: "",
+    email: "",
+  } as userCredentials);
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
 
+  const fetchAuthLogin = async () => {
+    try {
+      const { data } = await login({ userCredentials: userInput });
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const { data, isFetching, error } = useQuery(
+    ["login", userInput],
+    fetchAuthLogin
+  );
+
+  console.log("data", data);
+  console.log("isFetching", isFetching);
+  console.log("error", error);
+
   const queryClient = useQueryClient();
-
-  // const fetchAuthLogin = async () => {
-  //   if (username.current && password.current) {
-
-  //     try {
-  //       const {data} = await login({
-  //         username: username.current.value,
-  //         password: password.current.value,
-  //       });
-  //       return data;
-  //     } catch (error) {
-  //       console.log("error", error);
-  //     }
-  //   }
-  // };
-  
-  // const fetchAuthLogin = async () => {
-  //   if (username.current && password.current) {
-  //     try {
-  //       const {data} = await  axios.post('http://localhost:8800/api/login', {
-  //         username: username.current.value,
-  //         password: password.current.value,
-  //       });
-  //       return data;
-  //     } catch (error) {
-  //       console.log("error", error);
-  //     }
-  //   }
-  // }
-  
-  
 
   const handleClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -59,10 +46,12 @@ const LoginPage = (props: Props) => {
       //     password: password.current.value,
       //   }
       // });
-      const {data, status} = AuthLoginQuery(username.current.value, password.current.value);
+      // const {data, status} = AuthLoginQuery(username.current.value, password.current.value);
 
-      console.log("data", data);
-      console.log("status", status);
+      setUserInput({
+        username: username.current.value,
+        password: password.current.value,
+      });
 
       username.current.value = "";
       password.current.value = "";

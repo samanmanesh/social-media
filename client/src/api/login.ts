@@ -6,8 +6,8 @@ import { ACTIONS } from '../components/context/AuthReducer';
 
 export interface userCredentials {
   username: string ;
-  email?: string;
   password: string;
+  email?: string;
 }
 interface Props {
   userCredentials: userCredentials;
@@ -16,12 +16,4 @@ interface Props {
 export const login = async ({ userCredentials }: Props) => {
   
   return instance.post("auth/login", userCredentials);
-  // dispatch({ type: ACTIONS.LOGIN_START });
-
-  // try {
-  //   const res = await instance.post("auth/login", userCredentials);
-  //   // dispatch({ type: ACTIONS.LOGIN_SUCCESS, payload: res.data });
-  // } catch (error: any) {
-  //   // dispatch({ type: ACTIONS.LOGIN_FAILURE, payload: error });
-  // }
 };
