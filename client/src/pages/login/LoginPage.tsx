@@ -1,20 +1,29 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { login, UserCredentials } from "../../api/login";
+import {
+  AuthContext,
+  AuthUpdateContext,
+} from "../../components/context/AuthContext";
 type Props = {};
 
 const LoginPage = (props: Props) => {
   // const { user, isFetching, error } = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
+  const updateAuthContext = useContext(AuthUpdateContext);
+
   const [userInput, setUserInput] = useState({
     username: "",
     password: "",
     email: "",
   } as UserCredentials);
 
-  const { mutate, error , isLoading } = useMutation(login, {
+  const { mutate, error, isLoading } = useMutation(login, {
     onSuccess: (data) => {
       console.log("data", data);
+      // put the user in the context
+      updateAuthContext(data);
     },
   });
 
@@ -41,16 +50,13 @@ const LoginPage = (props: Props) => {
     e.preventDefault();
     // console.log("username", username.current?.value);
     // console.log("password", password.current?.value);
-    // if (username.current && password.current) {
-    //   setUserInput({
-    //     username: username.current.value,
-    //     password: password.current.value,
-    //   });
-    mutate({
-      username: username.current?.value ?? "",
-      password: password.current?.value ?? "",
-      email: "",
-    });
+    if (username.current && password.current) {
+      mutate({
+        username: username.current?.value ?? "",
+        password: password.current?.value ?? "",
+        email: "",
+      });
+    }
 
     //   username.current.value = "";
     //   password.current.value = "";
