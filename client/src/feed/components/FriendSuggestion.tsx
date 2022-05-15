@@ -2,7 +2,7 @@ import React from 'react'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
-const Suggestion = ({...props}: Props) => {
+export const FriendSuggestion = ({...props}: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
   return (
@@ -22,5 +22,3 @@ const Suggestion = ({...props}: Props) => {
         </div>
   )
 }
-
-export default Suggestion;

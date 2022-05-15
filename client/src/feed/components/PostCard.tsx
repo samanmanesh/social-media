@@ -1,8 +1,7 @@
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import { HeartIcon, AnnotationIcon } from "@heroicons/react/outline";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
-import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { getUser } from "api";
@@ -11,7 +10,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
 }
 
-export default function PostCard({ post, ...props }: Props) {
+export function PostCard({ post, ...props }: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const [user, setUser] = useState({} as User);
   // const [numLikes, setNumLikes] = useState(post.likes.length);

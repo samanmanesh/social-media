@@ -1,12 +1,7 @@
-import FriendSuggestion from '../feed/commonFriends/FriendSuggestion';
-import { Users } from '../../../DummyData';
+import { FriendSuggestion } from "./FriendSuggestion";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
-export default function Sidebar({ ...props }: Props) {
-
-  // const currentUserId = "1" ;
-  // const friends = Users.map(u => u.followings);
-
+export function Sidebar({ ...props }: Props) {
   return (
     <div className="h-96 sticky flex-shrink-0 top-20 p-6 hidden lg:block ml-8 w-80">
       <div className="flex space-x-4">
@@ -25,11 +20,10 @@ export default function Sidebar({ ...props }: Props) {
         <button className="">See All</button>
       </div>
       <div className="flex flex-col space-y-4 p-3">
-        
-      <FriendSuggestion />
+        <FriendSuggestion />
       </div>
-      <div className='text-gray-400 text-xs font-medium p-3'>
-      © 2022 SAMAN MANESH  
+      <div className="text-gray-400 text-xs font-medium p-3">
+        © 2022 SAMAN MANESH
       </div>
     </div>
   );
