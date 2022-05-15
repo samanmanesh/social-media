@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import ProfileGallery from "../../components/profile/profilegallery/ProfileGallery";
-import ProfileHeader from "../../components/profile/profileheader/ProfileHeader";
+import ProfileGallery from "./components/ProfileGallery";
 import { getUser, getUserPosts } from "api";
+import ProfileHeader from "./components/ProfileHeader";
 
 type Props = {};
 

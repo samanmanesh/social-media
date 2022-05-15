@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Navbar from "./navbar/Navbar";
-import Search from "./search/Search";
+import Navbar from "./Navbar";
+import Search from "./Search";
 
 export default function Header() {
   

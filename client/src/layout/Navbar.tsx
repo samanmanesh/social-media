@@ -5,7 +5,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/outline";
 import { useState } from "react";
-import PostShareModal from './share/PostShareModal';
+import PostShareModal from './PostShareModal';
 import { Link } from "react-router-dom";
 
 export default function Navbar() {

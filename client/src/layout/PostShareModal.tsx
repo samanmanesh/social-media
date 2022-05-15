@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import FileUploaderHandler from "../../../../helper/FileUploaderHandler";
+import FileUploaderHandler from "../utils/FileUploaderHandler";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;

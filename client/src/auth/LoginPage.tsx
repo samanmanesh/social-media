@@ -1,17 +1,14 @@
 import { useContext, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
-import { login, UserCredentials } from "../../api/login";
-import {
-  AuthContext,
-  AuthUpdateContext,
-} from "../../components/context/AuthContext";
+import { login, UserCredentials } from "../api/login";
+
 type Props = {};
 
 const LoginPage = (props: Props) => {
   // const { user, isFetching, error } = useContext(AuthContext);
-  const authContext = useContext(AuthContext);
-  const updateAuthContext = useContext(AuthUpdateContext);
+  // const authContext = useContext(AuthContext);
+  // const updateAuthContext = useContext(AuthUpdateContext);
 
   // const [userInput, setUserInput] = useState({
   //   username: "",
@@ -23,16 +20,16 @@ const LoginPage = (props: Props) => {
     onSuccess: (data) => {
       console.log("data", data);
       // put the user in the context
-      console.log("authContext before update", authContext);
-      updateAuthContext(data);
-      console.log("authContext after update", authContext);
+      // console.log("authContext before update", authContext);
+      // updateAuthContext(data);
+      // console.log("authContext after update", authContext);
       
     },
   });
 
   console.log("isLoading", isLoading);
   console.log("error", error);
-  console.log("authContext out", authContext);
+  // console.log("authContext out", authContext);
 
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);

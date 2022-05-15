@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ProfilePage from "./pages/profile/ProfilePage";
-import Layout from "./components/layout/Layout";
-import LoginPage from "./pages/login/LoginPage";
-import RegisterPage from "./pages/register/RegisterPage";
+import ProfilePage from "./profile/ProfilePage";
+import Layout from "./layout/Layout";
+import LoginPage from "./auth/LoginPage";
+import RegisterPage from "./auth/RegisterPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { FeedPage } from "./feed/components";
 import { AuthProvider } from "auth";
