@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import { login, UserCredentials } from "../api/login";
+import { useAuth } from 'auth';
 
 type Props = {};
 
@@ -15,6 +16,7 @@ const LoginPage = (props: Props) => {
   //   password: "",
   //   email: "",
   // } as UserCredentials);
+  const {setUser, user} = useAuth();
 
   const { mutate, error, isLoading } = useMutation(login, {
     onSuccess: (data) => {
@@ -22,6 +24,7 @@ const LoginPage = (props: Props) => {
       // put the user in the context
       // console.log("authContext before update", authContext);
       // updateAuthContext(data);
+      setUser(data);
       // console.log("authContext after update", authContext);
       
     },
@@ -30,7 +33,8 @@ const LoginPage = (props: Props) => {
   console.log("isLoading", isLoading);
   console.log("error", error);
   // console.log("authContext out", authContext);
-
+  console.log("user", user);
+  
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
 

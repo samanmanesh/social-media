@@ -22,7 +22,6 @@ function App() {
                 <Route index element={<FeedPage />} />
                 <Route path="profile/:username" element={<ProfilePage />} />
               </Route>
-              <Route path="register" element={<RegisterPage />} />
             </Routes>
           </Router>
         </QueryClientProvider>

@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react";
 import { PostCard } from "./PostCard";
 import {  getTimelinePosts } from "api";
+import { useFeed } from '../hooks';
 interface Props {} // extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Feed({ ...props }: Props) {
   const [posts, setPosts] = useState<Post[]>([]);
+  
+  const {data, status} = useFeed();
+  console.log("data in Feed", data);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
       
-      const res = await getTimelinePosts("6278167416616ac15d842712");
-      setPosts(res.data);
-    };
-    fetchPosts();
-  }, []);
+  //     // const res = await getTimelinePosts("6278167416616ac15d842712");
+  //     // setPosts(res.data);
+  //   };
+  //   fetchPosts();
+  // }, []);
 
   return (
     <div className="space-y-5 flex-1 mt-6 max-w-xl">
