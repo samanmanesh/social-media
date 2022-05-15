@@ -13,11 +13,11 @@ const LoginPage = (props: Props) => {
   const authContext = useContext(AuthContext);
   const updateAuthContext = useContext(AuthUpdateContext);
 
-  const [userInput, setUserInput] = useState({
-    username: "",
-    password: "",
-    email: "",
-  } as UserCredentials);
+  // const [userInput, setUserInput] = useState({
+  //   username: "",
+  //   password: "",
+  //   email: "",
+  // } as UserCredentials);
 
   const { mutate, error, isLoading } = useMutation(login, {
     onSuccess: (data) => {
@@ -26,6 +26,7 @@ const LoginPage = (props: Props) => {
       console.log("authContext before update", authContext);
       updateAuthContext(data);
       console.log("authContext after update", authContext);
+      
     },
   });
 
@@ -81,6 +82,7 @@ const LoginPage = (props: Props) => {
             <button
               type="submit"
               className="border p-0.5 bg-blue-500 text-white font-medium rounded-[4px] drop-shadow-lg "
+              disabled={isLoading}
             >
               {isLoading ? (
                 <span className="flex justify-center items-center space-x-2">

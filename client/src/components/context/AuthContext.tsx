@@ -19,20 +19,18 @@ type Props = {
 
 // export const AuthContext = createContext(INITIAL_STATE);
 // export const AuthUpdateContext = createContext((payload: any) => {});
-export const AuthContext = createContext({} as User);
+export const AuthContext = createContext({} as User | null);
 
 export const AuthUpdateContext = createContext((payload: any) => {});
 
 export const AuthContextProvider = ({ children }: Props) => {
-  // const [state, dispatch] = useReducer(authReducer, INITIAL_STATE)
-  const [userSate, setUserSate] = useState({} as User);
-  
+  const [userState, setUserState] = useState({} as User | null);
   const updateAuthContext = (userData: User) => {
-    setUserSate(userData);
+    setUserState(userData);
   };
 
   return (
-    <AuthContext.Provider value={userSate}>
+    <AuthContext.Provider value={userState}>
       <AuthUpdateContext.Provider value={updateAuthContext}>
         {children}
       </AuthUpdateContext.Provider>
