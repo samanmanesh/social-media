@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import ProfileGallery from "./components/ProfileGallery";
 import { getUser, getUserPosts } from "api";
 import ProfileHeader from "./components/ProfileHeader";
-import { useAuth } from 'auth';
+import { useAuth } from "auth";
 
 type Props = {};
 
@@ -11,6 +11,7 @@ type Props = {};
 //todo make the num of posts ✔︎
 // todo make the num of likes ✔︎
 // todo make the num of comments
+// todo check is the user is admin or check if the user is the same as the current user then show the profile related to the user
 
 const ProfilePage = (props: Props) => {
   const params = useParams();
@@ -28,27 +29,7 @@ const ProfilePage = (props: Props) => {
       setUserPosts(posts);
     };
     fetchUserData();
-  }, [ params.username]);
-
-  // console.log("userPosts", userPosts);
-  // console.log("user", user);
-
-  // const usersDetails = useMemo(() => {
-  //   console.log("user in userDetails", user);
-  //   let numOfFollowers = user && user.followers?.length;
-  //   let numOfFollowing = user && user.following?.length;
-  //   return { numOfFollowers, numOfFollowing };
-  // }, [user]);
-  // console.log("usersDetails", usersDetails);
-
-  // const postsDetails = useMemo(() => {
-  //   let numOfPosts = userPosts.length;
-  //   let numOfLikes = userPosts.reduce((acc, post) => {
-  //     return acc + post.likes.length;
-  //   }, 0);
-  // return { numOfPosts, numOfLikes };
-  // }, [userPosts]);
-  // console.log("postsDetails", postsDetails);
+  }, [params.username]);
 
   const userDetails = useMemo(() => {
     let numOfFollowers = 0;
