@@ -11,6 +11,7 @@ export const useAuth = () => {
 
   const handleSignOut = () => {
     context.setUser(null);
+    
   };
 
   return { ...context, handleSignOut };

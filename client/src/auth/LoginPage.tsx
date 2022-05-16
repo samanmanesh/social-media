@@ -57,11 +57,6 @@ const LoginPage = (props: Props) => {
     },
   });
 
-  console.log("isLoading", isLoading);
-  console.log("error", error);
-  // console.log("authContext out", authContext);
-  console.log("user", user);
-
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
 
