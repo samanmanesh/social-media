@@ -3,7 +3,6 @@ import { AuthContext } from "./states";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  console.log("useAuth context", context);
 
   if (context === undefined) {
     throw new Error("useAuth must be used within a AuthProvider");

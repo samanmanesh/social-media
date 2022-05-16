@@ -11,7 +11,7 @@ export function FeedPage() {
   useEffect(() => {
     if (data) setPosts(data);
   }, [data]);
-  // setPosts();
+  
   return (
     <div className="container justify-center flex">
       <Feed posts={posts} />

@@ -40,7 +40,6 @@ const LoginPage = (props: Props) => {
 
   const { mutate, error, isLoading } = useMutation(login, {
     onSuccess: ({ data }) => {
-      console.log("data on Success", data);
       setUser(data);
       redirect();
     },
