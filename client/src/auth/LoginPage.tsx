@@ -54,10 +54,6 @@ const LoginPage = (props: Props) => {
       console.log("data on Success", data);
       setUser(data);
       redirect();
-      // put the user in the context
-      // console.log("authContext before update", authContext);
-      // updateAuthContext(data);
-      // console.log("authContext after update", authContext);
     },
   });
 
