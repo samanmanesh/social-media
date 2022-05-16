@@ -22,15 +22,6 @@ export const RequireAuth = ({ children }: { children: JSX.Element }) => {
 };
 
 const LoginPage = (props: Props) => {
-  // const { user, isFetching, error } = useContext(AuthContext);
-  // const authContext = useContext(AuthContext);
-  // const updateAuthContext = useContext(AuthUpdateContext);
-
-  // const [userInput, setUserInput] = useState({
-  //   username: "",
-  //   password: "",
-  //   email: "",
-  // } as UserCredentials);
   const navigate = useNavigate();
   const location = useLocation();
   const { setUser, user } = useAuth();
