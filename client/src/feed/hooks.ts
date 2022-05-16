@@ -16,10 +16,6 @@ export const useFeed = () => {
   //   return  getTimelinePosts(user?._id || "");
   // });
   const { data, status } = useQuery(["feed", user?._id], fetchTimelinePosts);
-
   console.log("useFeed data", data);
-
-  // console.log("useFeed check", check.data);
   return { data, status };
-  // return check;
 };
