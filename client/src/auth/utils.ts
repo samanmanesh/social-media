@@ -11,7 +11,7 @@ export const useAuth = () => {
 
   const handleSignOut = () => {
     context.setUser(null);
-    
+    localStorage.removeItem("user");
   };
 
   return { ...context, handleSignOut };
