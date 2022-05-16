@@ -4,7 +4,6 @@ import { getTimelinePosts } from "../api/posts";
 
 export const useFeed = () => {
   const { user } = useAuth();
-  console.log("useFeed user", user);
 
   const fetchTimelinePosts = async () => {
     const { data } = await getTimelinePosts(user?._id || "");
