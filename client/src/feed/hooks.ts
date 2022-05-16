@@ -1,19 +1,25 @@
-import { AuthContext, useAuth } from "auth";
-import { useContext } from "react";
+import { useAuth } from "auth";
 import { useQuery } from "react-query";
-import { textChangeRangeIsUnchanged } from "typescript";
-import { threadId } from "worker_threads";
 import { getTimelinePosts } from "../api/posts";
 
 export const useFeed = () => {
   const { user } = useAuth();
-  console.log("useFeed user", user?.country);
+  console.log("useFeed user", user);
 
-  const { data, status } = useQuery(["feed", user?._id], () => {
-    console.debug('>>', user?._id)
-    return getTimelinePosts(user?._id || "");
-  });
+  const fetchTimelinePosts = async () => {
+    const { data } = await getTimelinePosts(user?._id || "");
+    return data;
+  };
+
+  // const {data, status} = useQuery(["feed", user?._id],  () => {
+  //   console.debug(">>", user?._id);
+  //   return  getTimelinePosts(user?._id || "");
+  // });
+  const { data, status } = useQuery(["feed", user?._id], fetchTimelinePosts);
 
   console.log("useFeed data", data);
+
+  // console.log("useFeed check", check.data);
   return { data, status };
+  // return check;
 };
