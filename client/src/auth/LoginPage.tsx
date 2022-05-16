@@ -31,7 +31,8 @@ const LoginPage = (props: Props) => {
   }, [user])
   
 
-  // let from = location.state?.from?.pathname || "/";
+  //@ts-ignore
+  let from = location.state?.from?.pathname || "/";
 
   const redirect = () => {
     navigate(from, { replace: true });
