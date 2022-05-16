@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import ProfileGallery from "./components/ProfileGallery";
 import { getUser, getUserPosts } from "api";
 import ProfileHeader from "./components/ProfileHeader";
+import { useAuth } from 'auth';
 
 type Props = {};
 
@@ -15,6 +16,7 @@ const ProfilePage = (props: Props) => {
   const params = useParams();
   const [userPosts, setUserPosts] = useState([] as Post[]);
   const [user, setUser] = useState({} as User);
+  const { handleSignOut } = useAuth();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -75,6 +77,7 @@ const ProfilePage = (props: Props) => {
     <div className=" container flex flex-col">
       <ProfileHeader user={user} userDetails={userDetails} />
       <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
+      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 };

@@ -1,10 +1,25 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { login, UserCredentials } from "../api/login";
-import { useAuth } from 'auth';
+import { useAuth } from "auth";
 
 type Props = {};
+
+export const RequireAuth = ({ children }: { children: JSX.Element }) => {
+  let auth = useAuth();
+  let location = useLocation();
+
+  if (!auth.user) {
+    // Redirect them to the /login page, but save the current location they were
+    // trying to go to when they were redirected. This allows us to send them
+    // along to that page after they login, which is a nicer user experience
+    // than dropping them off on the home page.
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return children;
+};
 
 const LoginPage = (props: Props) => {
   // const { user, isFetching, error } = useContext(AuthContext);
@@ -16,17 +31,33 @@ const LoginPage = (props: Props) => {
   //   password: "",
   //   email: "",
   // } as UserCredentials);
-  const {setUser, user} = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { setUser, user } = useAuth();
 
+  useEffect(() => {
+    if (user) redirect();
+  }, [user])
+  
+
+  // let from = location.state?.from?.pathname || "/";
+
+  const redirect = () => {
+    navigate(from, { replace: true });
+  }
+  
+  //@ts-ignore
+  const from = location.state?.from?.pathname || "/";
+  
   const { mutate, error, isLoading } = useMutation(login, {
-    onSuccess: (data) => {
-      console.log("data", data);
+    onSuccess: ({ data }) => {
+      console.log("data on Success", data);
+      setUser(data);
+      redirect();
       // put the user in the context
       // console.log("authContext before update", authContext);
       // updateAuthContext(data);
-      setUser(data);
       // console.log("authContext after update", authContext);
-      
     },
   });
 
@@ -34,7 +65,7 @@ const LoginPage = (props: Props) => {
   console.log("error", error);
   // console.log("authContext out", authContext);
   console.log("user", user);
-  
+
   let username = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
 

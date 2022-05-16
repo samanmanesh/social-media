@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { PostCard } from "./PostCard";
 import {  getTimelinePosts } from "api";
 import { useFeed } from '../hooks';
-interface Props {} // extends React.HTMLAttributes<HTMLDivElement> {}
+interface Props {
+  posts: Post[];
+} // extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function Feed({ ...props }: Props) {
-  const [posts, setPosts] = useState<Post[]>([]);
+export function Feed({posts ,...props }: Props) {
+  // const [posts, setPosts] = useState<Post[]>([]);
   
-  const {data, status} = useFeed();
-  console.log("data in Feed", data);
+  // const {data, status} = useFeed();
+  // console.log("data in Feed", data);
 
   // useEffect(() => {
   //   const fetchPosts = async () => {
