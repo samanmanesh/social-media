@@ -18,12 +18,25 @@ function App() {
             <Routes>
               <Route path="register" element={<RegisterPage />} />
               <Route path="login" element={<LoginPage />} />
-  
-              <Route path="/" element={ <Layout /> }>
-                <Route index element={<RequireAuth ><FeedPage /></RequireAuth>} />
-                <Route path="profile/:username" element={<RequireAuth><ProfilePage /></RequireAuth>} />
+
+              <Route path="/" element={<Layout />}>
+                <Route
+                  index
+                  element={
+                    <RequireAuth>
+                      <FeedPage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="profile/:username"
+                  element={
+                    <RequireAuth>
+                      <ProfilePage />
+                    </RequireAuth>
+                  }
+                />
               </Route>
-              
             </Routes>
           </Router>
         </QueryClientProvider>

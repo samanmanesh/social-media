@@ -1,26 +1,9 @@
-import { useEffect, useState } from "react";
 import { PostCard } from "./PostCard";
-import {  getTimelinePosts } from "api";
-import { useFeed } from '../hooks';
 interface Props {
   posts: Post[];
 } // extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function Feed({posts ,...props }: Props) {
-  // const [posts, setPosts] = useState<Post[]>([]);
-  
-  // const {data, status} = useFeed();
-  // console.log("data in Feed", data);
-
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-      
-  //     // const res = await getTimelinePosts("6278167416616ac15d842712");
-  //     // setPosts(res.data);
-  //   };
-  //   fetchPosts();
-  // }, []);
-
+export function Feed({ posts, ...props }: Props) {
   return (
     <div className="space-y-5 flex-1 mt-6 max-w-xl">
       {posts && posts.map((p: Post) => <PostCard key={p._id} post={p} />)}
