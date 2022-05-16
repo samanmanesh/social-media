@@ -1,7 +1,7 @@
-import { useContext, useRef, useState, useEffect } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useRef, useEffect } from "react";
+import { useMutation } from "react-query";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { login, UserCredentials } from "../api/login";
+import { login } from "../api/login";
 import { useAuth } from "auth";
 
 type Props = {};
@@ -26,21 +26,18 @@ const LoginPage = (props: Props) => {
   const location = useLocation();
   const { setUser, user } = useAuth();
 
+  // If the user is already logged in, redirect them to the home page
   useEffect(() => {
     if (user) redirect();
-  }, [user])
-  
+  }, [user]);
 
   //@ts-ignore
-  let from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/";
 
   const redirect = () => {
     navigate(from, { replace: true });
-  }
-  
-  //@ts-ignore
-  const from = location.state?.from?.pathname || "/";
-  
+  };
+
   const { mutate, error, isLoading } = useMutation(login, {
     onSuccess: ({ data }) => {
       console.log("data on Success", data);
