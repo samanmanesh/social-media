@@ -1,5 +1,7 @@
 import { registerUser } from "api/register";
+import { AxiosError } from "axios";
 import { useRef } from "react";
+import toast from "react-hot-toast";
 import { useMutation } from "react-query";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./utils";
@@ -15,12 +17,15 @@ const RegisterPage = (props: Props) => {
   const location = useLocation();
 
   const { setUser, user } = useAuth();
-  
+
   const { mutate, error, isLoading } = useMutation(registerUser, {
     onSuccess: ({ data }) => {
       console.log("data on success on register", data);
       setUser(data);
       redirect();
+    },
+    onError: (err : any) => {
+      toast.error(err.response.data.message);
     },
   });
 
@@ -31,16 +36,13 @@ const RegisterPage = (props: Props) => {
     navigate(from, { replace: true });
   };
 
-  
-
-
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log("username", username.current?.value);
     console.log("password", password.current?.value);
     console.log("email", email.current?.value);
     console.log("confirmPassword", confirmPassword.current?.value);
-
+    
     if (
       username.current &&
       password.current &&
@@ -48,14 +50,13 @@ const RegisterPage = (props: Props) => {
       confirmPassword.current
     ) {
       if (password.current?.value !== confirmPassword.current?.value) {
-        console.log("password mismatch");
+        console.log("password mismatch", password.current?.value, confirmPassword.current?.value);
         // password.current.setCustomValidity("Passwords do not match!");
         confirmPassword.current.setCustomValidity("Passwords do not match!");
-
       } else {
         console.log("password match");
         const user = {
-          username: username.current.value ,
+          username: username.current.value,
           password: password.current.value,
           email: email.current.value,
         };
@@ -105,6 +106,7 @@ const RegisterPage = (props: Props) => {
               className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100"
               required
               minLength={6}
+              defaultValue='password'
             />
             <input
               type="password"
@@ -113,6 +115,7 @@ const RegisterPage = (props: Props) => {
               className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100"
               required
               minLength={6}
+              defaultValue='password'
             />
             <button
               type="submit"
@@ -138,6 +141,9 @@ const RegisterPage = (props: Props) => {
         <span>© SAMAN MANESH</span>
         <span>2022</span>
       </div>
+      <span>
+        
+      </span>
     </div>
   );
 };

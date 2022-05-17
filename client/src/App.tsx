@@ -6,6 +6,7 @@ import RegisterPage from "./auth/RegisterPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { FeedPage } from "./feed/components";
 import { AuthProvider } from "auth";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const client = new QueryClient();
@@ -41,6 +42,7 @@ function App() {
           </Router>
         </QueryClientProvider>
       </AuthProvider>
+      <Toaster />
     </div>
   );
 }
