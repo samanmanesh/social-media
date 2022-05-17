@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import { instance } from "./index";
 
 export interface UserRegisterCredentials {

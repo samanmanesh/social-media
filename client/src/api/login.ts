@@ -1,15 +1,15 @@
 import { instance } from "api";
 import { AxiosResponse } from 'axios';
 
-export interface UserCredentials {
+export interface UserLoginCredentials {
   username: string;
   password: string;
   email?: string;
 }
 interface Props {
-  userCredentials: UserCredentials;
+  userCredentials: UserLoginCredentials;
 }
 
-export const login = async (userCredentials: UserCredentials): Promise<AxiosResponse<User>> => {
+export const login = async (userCredentials: UserLoginCredentials): Promise<AxiosResponse<User>> => {
   return instance.post("auth/login", userCredentials);
 };

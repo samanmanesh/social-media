@@ -24,7 +24,9 @@ const RegisterPage = (props: Props) => {
     ) {
       if (password.current?.value !== confirmPassword.current?.value) {
         console.log("password mismatch");
-        password.current.setCustomValidity("Passwords do not match!");
+        // password.current.setCustomValidity("Passwords do not match!");
+        confirmPassword.current.setCustomValidity("Passwords do not match!");
+
       } else {
         console.log("password match");
         const user = {
@@ -33,12 +35,14 @@ const RegisterPage = (props: Props) => {
           email: email.current.value,
         };
 
+
+
+        //clean the form
+        email.current.value = "";
+        username.current.value = "";
+        password.current.value = "";
+        confirmPassword.current.value = "";
       }
-      //clean the form
-      email.current.value = "";
-      username.current.value = "";
-      password.current.value = "";
-      confirmPassword.current.value = "";
     }
   };
 
