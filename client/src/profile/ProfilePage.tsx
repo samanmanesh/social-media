@@ -17,20 +17,31 @@ type Props = {};
 const ProfilePage = (props: Props) => {
   const params = useParams();
   const [userPosts, setUserPosts] = useState([] as Post[]);
-  const [user, setUser] = useState({} as User);
-  const { handleSignOut } = useAuth();
+  const [userOfProfile, setUserOfProfile] = useState({} as User);
+  const { handleSignOut, user } = useAuth();
   useEffect(() => {
+    
     const fetchUserData = async () => {
-      
-      //user data
-      const { data: userData } = await getUser({ username: params.username });
+      if (user && params.username === user?.username) {
+        setUserOfProfile(user);
+      } else {
+        //user data
+        const { data: userData } = await getUser({ username: params.username });
+        setUserOfProfile(userData);
+      }
       //user posts
-      const { data: posts } = await getUserPosts(userData.username);
-      setUser(userData);
+      
+      const { data: posts } = await getUserPosts(userOfProfile.username);
+      // setUserOfProfile(userData);
       setUserPosts(posts);
     };
+
     fetchUserData();
+
   }, [params.username]);
+
+  console.log("userOfProfile", userOfProfile);
+  console.log("userPosts", userPosts);
 
   const userDetails = useMemo(() => {
     let numOfFollowers = 0;
@@ -45,7 +56,7 @@ const ProfilePage = (props: Props) => {
       numOfFollowing = user ? user.following?.length : 0;
     };
 
-    getDetails(user);
+    getDetails(userOfProfile);
     return {
       numOfPosts,
       numOfLikes,
@@ -53,11 +64,11 @@ const ProfilePage = (props: Props) => {
       numOfFollowers,
       numOfFollowing,
     };
-  }, [userPosts, user]);
+  }, [userPosts, userOfProfile]);
 
   return (
     <div className=" container flex flex-col">
-      <ProfileHeader user={user} userDetails={userDetails} />
+      <ProfileHeader user={userOfProfile} userDetails={userDetails} />
       <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
       <button onClick={handleSignOut}>Sign Out</button>
     </div>
