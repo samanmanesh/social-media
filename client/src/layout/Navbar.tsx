@@ -1,3 +1,4 @@
+import { Menu } from '@headlessui/react'
 import { HomeIcon, PlusIcon } from "@heroicons/react/solid";
 import {
   HeartIcon,
@@ -47,7 +48,37 @@ export default function Navbar() {
       </button>
       {/* use global state to go to user profile when its clicked */}
       {/* <Link to={`/profile/${user.id}`}  className="rounded-full  w-7 h-7" > */}
-      <Link to={`/profile/${username}`} className="rounded-full  w-7 h-7" >
+      <div className="rounded-full  w-7 h-7">
+      <Menu>
+      <Menu.Button>More</Menu.Button>
+      <Menu.Items>
+        <Menu.Item>
+          {({ active }) => (
+            <a
+              className={`${active && 'bg-blue-500'}`}
+              href="/account-settings"
+            >
+              Account settings
+            </a>
+          )}
+        </Menu.Item>
+        <Menu.Item>
+          {({ active }) => (
+            <a
+              className={`${active && 'bg-blue-500'}`}
+              href="/account-settings"
+            >
+              Documentation
+            </a>
+          )}
+        </Menu.Item>
+        <Menu.Item disabled>
+          <span className="opacity-75">Invite a friend (coming soon!)</span>
+        </Menu.Item>
+      </Menu.Items>
+    </Menu>
+      </div>
+      {/* <Link to={`/profile/${username}`} className="rounded-full  w-7 h-7" >
         {" "}
         <img
           src={
@@ -58,7 +89,10 @@ export default function Navbar() {
           alt="profile"
           className=" w-7 h-7 rounded-full object-cover border border-gray-400"
         />{" "}
-      </Link>
+      </Link> */}
     </div>
   );
 }
+
+
+
