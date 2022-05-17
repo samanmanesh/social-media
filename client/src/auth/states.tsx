@@ -13,7 +13,7 @@ export const AuthContext = React.createContext<AuthContextProps>(null!);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = React.useState<User | null>(null);
-
+  console.log("user in auth context", user);
   React.useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));

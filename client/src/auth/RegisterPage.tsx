@@ -1,6 +1,8 @@
+import { registerUser } from "api/register";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
-
+import { useMutation } from "react-query";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "./utils";
 type Props = {};
 
 const RegisterPage = (props: Props) => {
@@ -8,6 +10,24 @@ const RegisterPage = (props: Props) => {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const confirmPassword = useRef<HTMLInputElement>(null);
+
+  const { setUser, user } = useAuth();
+  
+  const { mutate, error, isLoading } = useMutation(registerUser, {
+    onSuccess: ({ data }) => {
+      console.log("data on success on register", data);
+      setUser(data);
+      // redirect();
+    },
+  });
+
+  //@ts-ignore
+  // const from = location.state?.from?.pathname || "/";
+
+  // const redirect = () => {
+  //   navigate(from, { replace: true });
+  // };
+
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -34,8 +54,8 @@ const RegisterPage = (props: Props) => {
           password: password.current.value,
           email: email.current.value,
         };
-
-
+        
+        mutate(user);
 
         //clean the form
         email.current.value = "";
