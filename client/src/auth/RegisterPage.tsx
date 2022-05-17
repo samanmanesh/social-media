@@ -9,12 +9,37 @@ const RegisterPage = (props: Props) => {
   const password = useRef<HTMLInputElement>(null);
   const confirmPassword = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e: React.SyntheticEvent) => {
+  const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log("username", username.current?.value);
     console.log("password", password.current?.value);
     console.log("email", email.current?.value);
     console.log("confirmPassword", confirmPassword.current?.value);
+
+    if (
+      username.current &&
+      password.current &&
+      email.current &&
+      confirmPassword.current
+    ) {
+      if (password.current?.value !== confirmPassword.current?.value) {
+        console.log("password mismatch");
+        password.current.setCustomValidity("Passwords do not match!");
+      } else {
+        console.log("password match");
+        const user = {
+          username: username.current.value ,
+          password: password.current.value,
+          email: email.current.value,
+        };
+
+      }
+      //clean the form
+      email.current.value = "";
+      username.current.value = "";
+      password.current.value = "";
+      confirmPassword.current.value = "";
+    }
   };
 
   return (
@@ -54,7 +79,7 @@ const RegisterPage = (props: Props) => {
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Password Confirmation"
               ref={confirmPassword}
               className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100"
               required
