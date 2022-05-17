@@ -1,8 +1,22 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 type Props = {};
 
 const RegisterPage = (props: Props) => {
+  const email = useRef<HTMLInputElement>(null) ;
+  const username = useRef<HTMLInputElement>(null)
+  const password = useRef<HTMLInputElement>(null);
+  const confirmPassword = useRef<HTMLInputElement>(null);
+  
+  const onSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log("username", username.current?.value);
+    console.log("password", password.current?.value);
+    console.log("email", email.current?.value);
+    console.log("confirmPassword", confirmPassword.current?.value);
+  };
+
   return (
     <div className="w-full h-screen">
       <div className="grid h-[90%]">
@@ -11,10 +25,11 @@ const RegisterPage = (props: Props) => {
           <p className="text-gray-400 text-lg font-semibold">
             Sign up to see photos and videos from your friends.
           </p>
-          <form action="" className="flex flex-col w-full space-y-4">
+          <form action="" className="flex flex-col w-full space-y-4" onSubmit={onSubmit}>
             <input
               type="email"
               placeholder="Email"
+              ref={email}
               className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-100 "
               required
             />
