@@ -7,9 +7,14 @@ import {
 import { useState } from "react";
 import PostShareModal from './PostShareModal';
 import { Link } from "react-router-dom";
+import { useAuth } from '../auth/utils';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const {user} =useAuth();
+  const username = user?.username;
+  
+  
 
   const openModal = () => {
     setIsOpen(true);
@@ -42,10 +47,14 @@ export default function Navbar() {
       </button>
       {/* use global state to go to user profile when its clicked */}
       {/* <Link to={`/profile/${user.id}`}  className="rounded-full  w-7 h-7" > */}
-      <Link to="/profile/dua" className="rounded-full  w-7 h-7" >
+      <Link to={`/profile/${username}`} className="rounded-full  w-7 h-7" >
         {" "}
         <img
-          src={PF+"people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"}
+          src={
+            user?.profilePicture
+              ? PF + "/people/" + user.profilePicture
+              : PF + "people/no-image-avatar2.png"
+          }
           alt="profile"
           className=" w-7 h-7 rounded-full object-cover border border-gray-400"
         />{" "}
