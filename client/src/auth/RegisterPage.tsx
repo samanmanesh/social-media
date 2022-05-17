@@ -11,22 +11,27 @@ const RegisterPage = (props: Props) => {
   const password = useRef<HTMLInputElement>(null);
   const confirmPassword = useRef<HTMLInputElement>(null);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { setUser, user } = useAuth();
   
   const { mutate, error, isLoading } = useMutation(registerUser, {
     onSuccess: ({ data }) => {
       console.log("data on success on register", data);
       setUser(data);
-      // redirect();
+      redirect();
     },
   });
 
   //@ts-ignore
-  // const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/";
 
-  // const redirect = () => {
-  //   navigate(from, { replace: true });
-  // };
+  const redirect = () => {
+    navigate(from, { replace: true });
+  };
+
+  
 
 
   const onSubmit = async (e: React.SyntheticEvent) => {
