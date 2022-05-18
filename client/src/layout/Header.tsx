@@ -5,7 +5,7 @@ import Search from "./Search";
 export default function Header() {
   
   return (
-    <div className="sticky inset-x-0 top-0 border-b border-gray-300 bg-white">
+    <div className="sticky inset-x-0 top-0 border-b border-gray-300 bg-white z-10">
       <div className="py-3 container max-w-7xl flex justify-between items-center">
         <Link
           to="/"

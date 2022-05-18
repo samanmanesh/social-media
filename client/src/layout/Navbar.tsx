@@ -51,7 +51,7 @@ export default function Navbar() {
 
       <Menu
         as="div"
-        className="relative inline-block text-left rounded-full w-7 h-7"
+        className="relative inline-block text-left rounded-full w-7 h-7 z-10"
       >
         <Menu.Button>
           <img
@@ -81,7 +81,7 @@ export default function Navbar() {
                   <button
                     className={`${
                       active ? "bg-slate-100" : "text-gray-900"
-                    } group flex w-full items-center px-3 py-2 text-sm space-x-3 `}
+                    } group flex w-full items-center px-3 py-2 text-sm space-x-4 `}
                   >
                     <UserCircleIcon className="w-5 h-5 " />
                     <span>Profile</span>
@@ -93,7 +93,7 @@ export default function Navbar() {
                   <button
                     className={`${
                       active ? "bg-slate-100" : "text-gray-900"
-                    } group flex w-full items-center px-3 py-2 text-sm space-x-3 `}
+                    } group flex w-full items-center px-3 py-2 text-sm space-x-4 `}
                   >
                     <CogIcon className="w-5 h-5 " />
                     <span>Settings</span>
