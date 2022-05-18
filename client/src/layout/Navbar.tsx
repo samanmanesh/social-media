@@ -118,41 +118,6 @@ export default function Navbar() {
           </Menu.Items>
         </Transition>
       </Menu>
-
-      {/* <Menu as="div">
-          <Menu.Button>
-            <img
-              src={
-                user?.profilePicture
-                  ? PF + "/people/" + user.profilePicture
-                  : PF + "people/no-image-avatar2.png"
-              }
-              alt="profile"
-              className=" w-7 h-7 rounded-full object-cover border border-gray-400"
-            />  
-          </Menu.Button>
-          <Menu.Items className="bg-white border rounded w-40 ">
-            <Menu.Item>
-              {({ active }) => <Link to={`/profile/${username}`}>Profile</Link>}
-            </Menu.Item>
-            <Menu.Item>{({ active }) => <button>Settings</button>}</Menu.Item>
-            <hr />
-            <Menu.Item>{({ active }) => <button>Log Out</button>}</Menu.Item>
-          </Menu.Items>
-        </Menu> */}
-      {/* </div> */}
-      {/* <Link to={`/profile/${username}`} className="rounded-full  w-7 h-7" >
-        {" "}
-        <img
-          src={
-            user?.profilePicture
-              ? PF + "/people/" + user.profilePicture
-              : PF + "people/no-image-avatar2.png"
-          }
-          alt="profile"
-          className=" w-7 h-7 rounded-full object-cover border border-gray-400"
-        />{" "}
-      </Link> */}
     </div>
   );
 }
