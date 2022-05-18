@@ -6,7 +6,7 @@ export function Sidebar({ ...props }: Props) {
   const { user } = useAuth();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   return (
-    <div className="h-96 sticky flex-shrink-0 top-20 p-6 hidden lg:block ml-8 w-80">
+    <div className="h-96 sticky flex-shrink-0 top-20 p-6 hidden lg:block ml-8 w-80 z-10">
       <div className="flex space-x-4">
         <img
           src={
