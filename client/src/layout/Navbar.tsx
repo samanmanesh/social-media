@@ -15,7 +15,7 @@ import React from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, handleSignOut } = useAuth();
   const username = user?.username;
 
   const openModal = () => {
@@ -108,6 +108,7 @@ export default function Navbar() {
               <Menu.Item>
                 {({ active }) => (
                   <button
+                    onClick={handleSignOut}
                     className={`${
                       active ? "bg-slate-100" : "text-gray-900"
                     } group flex w-full items-center px-3 py-2 text-sm space-x-3 `}

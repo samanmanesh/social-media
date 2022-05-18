@@ -70,7 +70,6 @@ const ProfilePage = (props: Props) => {
     <div className=" container flex flex-col">
       <ProfileHeader user={userOfProfile} userDetails={userDetails} />
       <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
-      <button onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 };
