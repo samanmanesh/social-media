@@ -51,7 +51,7 @@ export default function Navbar() {
 
       <Menu
         as="div"
-        className="relative inline-block text-left rounded-full w-7 h-7 z-10"
+        className="relative inline-block text-left rounded-full w-7 h-7"
       >
         <Menu.Button>
           <img
@@ -78,14 +78,16 @@ export default function Navbar() {
             <div className=" ">
               <Menu.Item>
                 {({ active }) => (
-                  <button
-                    className={`${
-                      active ? "bg-slate-100" : "text-gray-900"
-                    } group flex w-full items-center px-3 py-2 text-sm space-x-4 `}
-                  >
-                    <UserCircleIcon className="w-5 h-5 " />
-                    <span>Profile</span>
-                  </button>
+                  <Link to={`/profile/${username}`}>
+                    <div
+                      className={`${
+                        active ? "bg-slate-100" : "text-gray-900"
+                      } group flex w-full items-center px-3 py-2 text-sm space-x-4 `}
+                    >
+                      <UserCircleIcon className="w-5 h-5 " />
+                      <span>Profile</span>
+                    </div>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
