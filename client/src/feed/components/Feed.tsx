@@ -12,6 +12,7 @@ export function Feed({ posts, ...props }: Props) {
           <div className="flex justify-center text-medium font-semibold text-gray-500">
             Add a post to see it here
             {/* here needs global state for postShareModal */}
+            {/* I guess we could do it with seperate state: make use state for isOpen and pass it to PostShareModal */}
             {/* <PostShareModal isOpen={isOpen} setIsOpen={setIsOpen} /> */}
           </div>
         </div>
