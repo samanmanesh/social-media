@@ -12,13 +12,13 @@ type Props = {};
 // todo make the num of likes ✔︎
 // todo make the num of comments
 
-// todo check is the user is admin or check if the user is the same as the current user then show the profile related to the user
+// todo check is the user is admin or check if the user is the same as the current user then show the profile related to the user  ✔︎
 
 const ProfilePage = (props: Props) => {
   const params = useParams();
   const [userPosts, setUserPosts] = useState([] as Post[]);
   const [userOfProfile, setUserOfProfile] = useState({} as User);
-  const { handleSignOut, user } = useAuth();
+  const {  user } = useAuth();
   useEffect(() => {
     
     const fetchUserData = async () => {
