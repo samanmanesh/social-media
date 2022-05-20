@@ -14,12 +14,13 @@ const RegisterPage = (props: Props) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  //@ts-ignore
+  const from = location.state?.from?.pathname || "/";
 
-  const { setUser, user } = useAuth();
+  const { setUser } = useAuth();
 
   const { mutate, error, isLoading } = useMutation(registerUser, {
     onSuccess: ({ data }) => {
-      console.log("data on success on register", data);
       setUser(data);
       redirect();
     },
@@ -28,19 +29,12 @@ const RegisterPage = (props: Props) => {
     },
   });
 
-  //@ts-ignore
-  const from = location.state?.from?.pathname || "/";
-
   const redirect = () => {
     navigate(from, { replace: true });
   };
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    console.log("username", username.current?.value);
-    console.log("password", password.current?.value);
-    console.log("email", email.current?.value);
-    console.log("confirmPassword", confirmPassword.current?.value);
 
     if (
       username.current &&
@@ -49,21 +43,15 @@ const RegisterPage = (props: Props) => {
       confirmPassword.current
     ) {
       if (password.current?.value !== confirmPassword.current?.value) {
-        console.log(
-          "password mismatch",
-          password.current?.value,
-          confirmPassword.current?.value
-        );
         // password.current.setCustomValidity("Passwords do not match!");
         confirmPassword.current.setCustomValidity("Passwords do not match!");
       } else {
-        console.log("password match");
+        //Password matched.
         const user = {
           username: username.current.value,
           password: password.current.value,
           email: email.current.value,
         };
-
         mutate(user);
 
         //clean the form
