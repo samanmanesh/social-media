@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { getUser } from "api";
+import { useAuth } from "../../auth/utils";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
@@ -13,6 +14,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export function PostCard({ post, ...props }: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const [user, setUser] = useState({} as User);
+  const { user: currentUser } = useAuth();
   // const [numLikes, setNumLikes] = useState(post.likes.length);
   //todo fist check if you like it or not and then set the icon
   //todo make a list of likes by users
@@ -29,12 +31,17 @@ export function PostCard({ post, ...props }: Props) {
   // }, [isLiked, post])
 
   useEffect(() => {
+    // if post is for current user then dont fetch user otherwise fetch user
     const fetchUser = async () => {
-      const res = await getUser({ userId: post.userId });
-      setUser(res.data);
+      if (currentUser && post.userId === currentUser?._id) {
+        setUser(currentUser);
+      } else {
+        const res = await getUser({ userId: post.userId });
+        setUser(res.data);
+      }
     };
     fetchUser();
-  }, [post.userId]);
+  }, [post.userId, currentUser]);
 
   //getting the user's name and profile picture for each post
   // const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
@@ -77,6 +84,7 @@ export function PostCard({ post, ...props }: Props) {
         <AnnotationIcon className="w-7 h-7" />
       </button>
       <div className="flex flex-col space-y-1 p-2">
+        {/* here needs num of likes and if you like it or not */}
         <span className="">Liked by mohammadgh4907 and others </span>
         <span>
           {user?.username} {post?.desc}
