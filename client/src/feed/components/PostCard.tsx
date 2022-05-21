@@ -20,26 +20,23 @@ export function PostCard({ post, ...props }: Props) {
   const [isLiked, setIsLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
 
-  // const [numLikes, setNumLikes] = useState(post.likes.length);
-  //todo fist check if you like it or not and then set the icon
   //todo make a list of likes by users
   //todo if user click on others it must get an array of users name who liked it
 
   const { mutate, isLoading, error } = useMutation(likePost, {
     onSuccess: (data) => {
       console.log(data);
-      if (data.data.message === "Post liked successfully") {
-        setIsLiked(true);
-        setNumLikes(numLikes + 1);
-      } else {
-        setIsLiked(false);
-        setNumLikes(numLikes - 1);
-      }
-      // setIsLiked(!isLiked);
-      // setNumLikes(data.post.likes.length);
+      // if (data.data.message === "Post liked successfully") {
+      //   setIsLiked(true);
+      //   setNumLikes(numLikes + 1);
+      // } else {
+      //   setIsLiked(false);
+      //   setNumLikes(numLikes - 1);
+      // }
+      setIsLiked(!isLiked);
+      setNumLikes(isLiked ? numLikes - 1 : numLikes + 1);
     },
   });
-
 
   useEffect(() => {
     // if post is for current user then dont fetch user otherwise fetch user
@@ -61,9 +58,6 @@ export function PostCard({ post, ...props }: Props) {
 
   console.log("numLikes", numLikes);
   console.log("isLiked", isLiked);
-
-  //getting the user's name and profile picture for each post
-  // const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
 
   const onClickLike = () => {
     if (currentUser) {
