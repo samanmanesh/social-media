@@ -12,3 +12,8 @@ export const getUserPosts = (
 ): Promise<AxiosResponse<Post[]>> => {
   return instance.get(`posts/profile/${username}`);
 };
+
+export const likePost = (id: string, userId: string):Promise<AxiosResponse> => {
+  return instance.post(`${id}/like/` , {userId});
+
+}
