@@ -13,7 +13,11 @@ export const getUserPosts = (
   return instance.get(`posts/profile/${username}`);
 };
 
-export const likePost = (id: string, userId: string):Promise<AxiosResponse> => {
-  return instance.post(`${id}/like/` , {userId});
+interface likeRequest {
+  postId: string;
+  userId: string;
+}
 
+export const likePost = (params : likeRequest):Promise<AxiosResponse> => {
+  return instance.put(`/posts/${params.postId}/like`, { userId: params.userId });
 }

@@ -6,8 +6,8 @@ import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { getUser } from "api";
 import { useAuth } from "../../auth/utils";
-import { useMutation } from 'react-query';
-import { likePost } from '../../api/posts';
+import { useMutation } from "react-query";
+import { likePost } from "../../api/posts";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
@@ -25,18 +25,15 @@ export function PostCard({ post, ...props }: Props) {
   //todo make a list of likes by users
   //todo if user click on others it must get an array of users name who liked it
 
-  const {mutate, isLoading, error} = useMutation(likePost , {
+  const { mutate, isLoading, error } = useMutation(likePost, {
     onSuccess: (data) => {
       setIsLiked(!isLiked);
     },
-  }) 
+  });
 
-  useEffect(() => {
-    currentUser && setIsLiked( post.likes.includes(currentUser._id));
-    setNumLikes(post.likes.length);
-  }, [currentUser, post]);
-  console.log( "numLikes", numLikes);
+  // useEffect(() => {
 
+  // }, [currentUser, post]);
 
   useEffect(() => {
     // if post is for current user then dont fetch user otherwise fetch user
@@ -49,26 +46,28 @@ export function PostCard({ post, ...props }: Props) {
       }
     };
     fetchUser();
-  }, [post.userId, currentUser]);
+
+    //check if user liked the post
+    currentUser && setIsLiked(post.likes.includes(currentUser._id));
+    //setting num of likes
+    setNumLikes(post.likes.length);
+  }, [post.userId, currentUser, post.likes]);
+
+  console.log("numLikes", numLikes);
+  console.log("isLiked", isLiked);
 
   //getting the user's name and profile picture for each post
   // const user = useMemo(() => Users.find((u) => u.id === post.userId), []);
 
   const onClickLike = () => {
     if (currentUser) {
-      mutate(post._id, userId: currentUser._id);
-    
-
-      if (isLiked) {
-        setNumLikes(numLikes - 1);
-        
-      } else {
-        setNumLikes(numLikes + 1);
-      }
-      setIsLiked(!isLiked);
+      const req = {
+        postId: post._id,
+        userId: currentUser._id,
+      };
+      mutate(req);
     }
   };
-
 
   return (
     <div
@@ -103,7 +102,10 @@ export function PostCard({ post, ...props }: Props) {
           className="object-cover h-full w-full"
         />
       </div>
-      <button onClick={onClick} className="p-2 border-y border-black w-full flex space-x-3">
+      <button
+        onClick={onClickLike}
+        className="p-2 border-y border-black w-full flex space-x-3"
+      >
         {isLiked ? (
           <HeartIcon className="w-7 h-7 fill-red-500 text-red-600" />
         ) : (
@@ -113,7 +115,7 @@ export function PostCard({ post, ...props }: Props) {
       </button>
       <div className="flex flex-col space-y-1 p-2">
         {/* here needs num of likes and if you like it or not */}
-        <span className="">Liked by mohammadgh4907 and others </span>
+        <span className="">Liked by mohammadgh4907 and {numLikes} others </span>
         <span>
           {user?.username} {post?.desc}
           <button className="text-s text-gray-600">more</button>
