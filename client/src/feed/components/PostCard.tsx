@@ -25,14 +25,6 @@ export function PostCard({ post, ...props }: Props) {
 
   const { mutate, isLoading, error } = useMutation(likePost, {
     onSuccess: (data) => {
-      console.log(data);
-      // if (data.data.message === "Post liked successfully") {
-      //   setIsLiked(true);
-      //   setNumLikes(numLikes + 1);
-      // } else {
-      //   setIsLiked(false);
-      //   setNumLikes(numLikes - 1);
-      // }
       setIsLiked(!isLiked);
       setNumLikes(isLiked ? numLikes - 1 : numLikes + 1);
     },
@@ -56,8 +48,8 @@ export function PostCard({ post, ...props }: Props) {
     setNumLikes(post.likes.length);
   }, [post.userId, currentUser, post.likes]);
 
-  console.log("numLikes", numLikes);
-  console.log("isLiked", isLiked);
+  // console.log("numLikes", numLikes);
+  // console.log("isLiked", isLiked);
 
   const onClickLike = () => {
     if (currentUser) {

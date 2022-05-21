@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import FileUploaderHandler from "../utils/FileUploaderHandler";
 
@@ -8,6 +8,8 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
+  const desc = useRef<HTMLInputElement>(null);
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -39,7 +41,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="bg-white rounded-lg relative p-5">
+          <Dialog.Panel className="bg-white rounded-lg relative p-40 ">
             <Dialog.Title className="p-5">Create new post</Dialog.Title>
             <hr/>
 
@@ -69,6 +71,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
               type="text"
               placeholder="Write a caption..."
               className="w-full border "
+              ref={desc}
             />
 
             <button className="text-blue-500 font-semibold">Share</button>
