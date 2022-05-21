@@ -27,13 +27,19 @@ export function PostCard({ post, ...props }: Props) {
 
   const { mutate, isLoading, error } = useMutation(likePost, {
     onSuccess: (data) => {
-      setIsLiked(!isLiked);
+      console.log(data);
+      if (data.data.message === "Post liked successfully") {
+        setIsLiked(true);
+        setNumLikes(numLikes + 1);
+      } else {
+        setIsLiked(false);
+        setNumLikes(numLikes - 1);
+      }
+      // setIsLiked(!isLiked);
+      // setNumLikes(data.post.likes.length);
     },
   });
 
-  // useEffect(() => {
-
-  // }, [currentUser, post]);
 
   useEffect(() => {
     // if post is for current user then dont fetch user otherwise fetch user
