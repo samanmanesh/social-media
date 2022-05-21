@@ -43,10 +43,7 @@ export const deletePost = async (req, res) => {
 };
 
 export const likePost = async (req, res) => {
-
   try {
-    console.debug("server body",req.body);
-    console.debug("server",req.params.id);
     const post = await Post.findById(req.params.id);
     if (!post.likes.includes(req.body.userId)) {
       await post.updateOne({ $push: { likes: req.body.userId } });
@@ -90,7 +87,7 @@ export const getTimeLinePosts = async (req, res) => {
 
 export const getUserPosts = async (req, res) => {
   try {
-    const user = await User.findOne({username: req.params.username });
+    const user = await User.findOne({ username: req.params.username });
     const post = await Post.find({ userId: user._id });
     return res.status(200).json(post);
   } catch (error) {
