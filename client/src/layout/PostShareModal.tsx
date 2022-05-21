@@ -2,6 +2,10 @@ import React, { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import FileUploaderHandler from "../utils/FileUploaderHandler";
 
+
+//TODO: make a drag and drop file uploader for images
+//TODO: on server side use multer to upload files and store them in the cdn and return the url to the client and the address of that url to dbs (check the web final assignment)
+
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
@@ -58,9 +62,9 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
       file:text-sm file:font-semibold
       file:bg-violet-50 file:text-violet-700
       hover:file:bg-violet-100 placeholder:boo"
-            />
+            /> */}
 
-            <div className=" rounded-full w-5 h-5">
+            {/* <div className=" rounded-full w-5 h-5">
               <img
                 src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
                 alt="profile"
