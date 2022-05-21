@@ -41,14 +41,15 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="bg-white rounded-lg relative p-40 ">
-            <Dialog.Title className="p-5">Create new post</Dialog.Title>
-            <hr/>
+          <Dialog.Panel className="bg-white rounded-lg relative ">
+            <Dialog.Title className="font-bold py-3 border-b  w-full text-center">
+              Create new post
+            </Dialog.Title>
+            <hr className=" text-lg text-black" />
 
             <FileUploaderHandler />
 
-            
-            <input
+            {/* <input
               type="file"
               name="Select from computer"
               className=" block w-full text-sm text-slate-500
@@ -74,7 +75,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
               ref={desc}
             />
 
-            <button className="text-blue-500 font-semibold">Share</button>
+            <button className="text-blue-500 font-semibold">Share</button> */}
           </Dialog.Panel>
         </Transition.Child>
       </Dialog>
