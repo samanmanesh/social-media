@@ -35,6 +35,7 @@ export const authenticate = async (req, res) => {
     // const user = await User.findOne({
     //   email: req.body.email,
     // });
+    console.log(req.body);
     const user = await User.findOne({
       username: req.body.username,
     });

@@ -3,6 +3,7 @@ import { useMutation } from "react-query";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { login } from "../api/login";
 import { useAuth } from "auth";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -43,6 +44,10 @@ const LoginPage = (props: Props) => {
       setUser(data);
       redirect();
     },
+    onError: (err: any) => {
+      if (err.message === "Request failed with status code 500")
+        toast.error("Server error. Please try again later.");
+    },
   });
 
   let username = useRef<HTMLInputElement>(null);
@@ -50,8 +55,8 @@ const LoginPage = (props: Props) => {
 
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    // console.log("username", username.current?.value);
-    // console.log("password", password.current?.value);
+    console.log("username", username.current?.value);
+    console.log("password", password.current?.value);
     if (username.current && password.current) {
       mutate({
         username: username.current?.value ?? "",
@@ -60,8 +65,10 @@ const LoginPage = (props: Props) => {
       });
 
       //clear the input fields
-      username.current.value = "";
-      password.current.value = "";
+      if (!error) {
+        username.current.value = "";
+        password.current.value = "";
+      }
     }
   };
 
@@ -88,7 +95,7 @@ const LoginPage = (props: Props) => {
               ref={password}
               required
               minLength={6}
-              className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-200"
+              className="border rounded-[2px] border-gray-300 p-1 bg-gray-200"
             />
             <button
               type="submit"

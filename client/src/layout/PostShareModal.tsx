@@ -1,6 +1,6 @@
-import React, { Fragment, useRef } from "react";
+import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import FileUploaderHandler from "../utils/FileUploaderHandler";
+// import FileUploaderHandler from "../utils/FileUploaderHandler";
 
 
 //TODO: make a drag and drop file uploader for images
@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
-  const desc = useRef<HTMLInputElement>(null);
+  // const desc = useRef<HTMLInputElement>(null);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -51,7 +51,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
             </Dialog.Title>
             <hr className=" text-lg text-black" />
 
-            <FileUploaderHandler />
+            {/* <FileUploaderHandler /> */}
 
             {/* <input
               type="file"
