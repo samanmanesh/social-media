@@ -8,9 +8,7 @@ import cors from "cors";
 import userRoutes from "./routes/users.js";
 import authRoute from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
-import multer from "multer";
-import strreamifier from "streamifier";
-import cloudinary from "cloudinary";
+
 
 const app = express();
 const port = process.env.port || 8800;
@@ -29,14 +27,7 @@ mongoose
   });
 
 
-  cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET,
-    secure: true,
-  });
-
-  const upload = multer(); // no {storage:storage} since we are not using diskStorage
+  
 
 //Middlewares
 

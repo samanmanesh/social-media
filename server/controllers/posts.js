@@ -1,84 +1,107 @@
 import Post from "../models/post.js";
 import User from "../models/user.js";
+import multer from "multer";
+import streamifier from "streamifier";
+import cloudinary from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  secure: true,
+});
 
 //--------------
-app.post(
-  "/posts/add",
-  ensureLogin,
-  upload.single("featureImage"),
-  (req, res) => {
-    if (req.file) {
-      let streamUpload = (req) => {
-        return new Promise((resolve, reject) => {
-          let stream =
-            cloudinary.uploader.upload_stream(
-              (error, result) => {
-                if (result) {
-                  resolve(result);
-                } else {
-                  reject(error);
-                }
-              }
-            );
-          streamifier
-            .createReadStream(req.file.buffer)
-            .pipe(stream);
-        });
-      };
-      async function upload(req) {
-        let result = await streamUpload(req);
-        console.log(result);
-        return result;
-      }
-      upload(req).then((uploaded) => {
-        processPost(uploaded.url);
-      });
-    } else {
-      processPost("");
-    }
-    function processPost(imageUrl) {
-      req.body.featureImage = imageUrl;
-      blogService
-        .addPost(req.body)
-        .then((post) => {
-          res.redirect("/posts");
-        });
-    }
-  }
-);
+// sample code from web322 assignment
+// app.post(
+//   "/posts/add",
+//   ensureLogin,
+//   upload.single("featureImage"),
+//   (req, res) => {
+//     if (req.file) {
+//       let streamUpload = (req) => {
+//         return new Promise((resolve, reject) => {
+//           let stream = cloudinary.uploader.upload_stream((error, result) => {
+//             if (result) {
+//               resolve(result);
+//             } else {
+//               reject(error);
+//             }
+//           });
+//           streamifier.createReadStream(req.file.buffer).pipe(stream);
+//         });
+//       };
+//       async function upload(req) {
+//         let result = await streamUpload(req);
+//         console.log(result);
+//         return result;
+//       }
+//       upload(req).then((uploaded) => {
+//         processPost(uploaded.url);
+//       });
+//     } else {
+//       processPost("");
+//     }
+//     function processPost(imageUrl) {
+//       req.body.featureImage = imageUrl;
+//       blogService.addPost(req.body).then((post) => {
+//         res.redirect("/posts");
+//       });
+//     }
+//   }
+// );
 //--------------
 export const createPost = async (req, res) => {
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  const newPost = new Post(req.body);
-  try {
-    const savedPost = await newPost.save();
-    return res.status(200).json(savedPost);
-  } catch (error) {
-    return res.status(500).json(error);
+  if (req.file) {
+    let streamUpload = (req) => {
+      return new Promise((resolve, reject) => {
+        let stream = cloudinary.uploader.upload_stream((error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
+          }
+        });
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+    };
+
+    async function upload(req) {
+      let result = await streamUpload(req);
+      console.log(result);
+      return result;
+    }
+
+    upload(req).then((uploaded) => {
+      processPost(uploaded.url);
+    });
+
+  } else {
+    processPost("");
   }
+
+  function processPost(imageUrl) {
+    req.body.img = imageUrl;
+    // blogService.addPost(req.body).then((post) => {
+    //   res.redirect("/posts");
+    // });
+    const newPost = new Post(req.body);
+    try {
+      const savedPost = await newPost.save();
+      return res.status(200).json(savedPost);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  }
+
+  //! the previous code
+  // const newPost = new Post(req.body);
+  // try {
+  //   const savedPost = await newPost.save();
+  //   return res.status(200).json(savedPost);
+  // } catch (error) {
+  //   return res.status(500).json(error);
+  // }
 };
 
 export const updatePost = async (req, res) => {

@@ -8,8 +8,14 @@ import {
   getTimeLinePosts,
   getUserPosts
 } from "../controllers/posts.js";
+import multer from "multer";
+
+
 
 const router = express.Router();
+
+
+const upload = multer(); // no {storage:storage} since we are not using diskStorage
 
 //create a post
 router.post("/", upload.single("file"), createPost);
