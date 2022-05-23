@@ -8,7 +8,7 @@ import { createPost, uploadPost } from "api";
 
 //TODO: make a drag and drop file uploader for images
 //TODO: on server side use multer to upload files and store them in the cdn and return the url to the client and the address of that url to dbs (check the web final assignment)
-
+//TODO: there is problem that could'nt use two use mutate in one component, I want to use one for uploading img in cloudinary in backend with request and another for create post with the url of the img for first request
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
