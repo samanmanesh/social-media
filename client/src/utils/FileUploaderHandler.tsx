@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 // import { FileUploader } from "react-drag-drop-files";
 
-type Props = {};
+type Props = {
+  file : string | null;
+  setFile : React.Dispatch<React.SetStateAction<null>>;
+};
 
-export default function FileUploaderHandler({}: Props) {
+export default function FileUploaderHandler({file, setFile}: Props) {
   const fileTypes = ["JPG", "PNG", "GIF"];
-  const [file, setFile] = useState(null);
-  const [image, setImage] = useState("");
+  
+  // const [image, setImage] = useState("");
 
   const handleChange = (e: any) => {
     e.preventDefault();

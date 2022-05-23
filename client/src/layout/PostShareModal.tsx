@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import FileUploaderHandler from "utils/FileUploaderHandler";
 // import FileUploaderHandler from "../utils/FileUploaderHandler";
@@ -14,10 +14,18 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   // const desc = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState(null);
 
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // console.log(desc.current?.value);
+    // console.log(file);
+  };
+  
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -52,7 +60,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
             </Dialog.Title>
             <hr className=" text-lg text-black" />
 
-            <FileUploaderHandler />
+            <FileUploaderHandler file={file} setFile={setFile}/>
 
             {/* <input
               type="file"
@@ -65,7 +73,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
       hover:file:bg-violet-100 placeholder:boo"
             /> */}
 
-            {/* <div className=" rounded-full w-5 h-5">
+            <div className=" rounded-full w-5 h-5">
               <img
                 src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
                 alt="profile"
@@ -80,7 +88,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
               ref={desc}
             />
 
-            <button className="text-blue-500 font-semibold">Share</button> */}
+            <button className="text-blue-500 font-semibold">Share</button>
           </Dialog.Panel>
         </Transition.Child>
       </Dialog>
