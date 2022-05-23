@@ -1,8 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import FileUploaderHandler from "utils/FileUploaderHandler";
 // import FileUploaderHandler from "../utils/FileUploaderHandler";
-
+import { useAuth } from "auth";
+import { useMutation } from "react-query";
+import { createPost } from "api";
 
 //TODO: make a drag and drop file uploader for images
 //TODO: on server side use multer to upload files and store them in the cdn and return the url to the client and the address of that url to dbs (check the web final assignment)
@@ -13,8 +15,16 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
-  // const desc = useRef<HTMLInputElement>(null);
+  const desc = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState(null);
+  const { mutate, isLoading, error } = useMutation(createPost, {
+    onSuccess: (data) => {
+      console.log("data", data);
+      // setIsOpen(false);
+    },
+  });
+
+  const { user } = useAuth();
 
   const closeModal = () => {
     setIsOpen(false);
@@ -24,8 +34,16 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
     e.preventDefault();
     // console.log(desc.current?.value);
     // console.log(file);
+    if (user && file) {
+      const newPost = {
+        userId: user._id,
+        desc: desc.current?.value,
+        img: file,
+      };
+      mutate(newPost);
+    }
+    
   };
-  
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -60,18 +78,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
             </Dialog.Title>
             <hr className=" text-lg text-black" />
 
-            <FileUploaderHandler file={file} setFile={setFile}/>
-
-            {/* <input
-              type="file"
-              name="Select from computer"
-              className=" block w-full text-sm text-slate-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-full file:border-0
-      file:text-sm file:font-semibold
-      file:bg-violet-50 file:text-violet-700
-      hover:file:bg-violet-100 placeholder:boo"
-            /> */}
+            <FileUploaderHandler file={file} setFile={setFile} />
 
             <div className=" rounded-full w-5 h-5">
               <img

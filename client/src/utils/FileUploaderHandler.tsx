@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 type Props = {
   file : string | null;
-  setFile : React.Dispatch<React.SetStateAction<null>>;
+  setFile : any;
 };
 
 export default function FileUploaderHandler({file, setFile}: Props) {
@@ -14,7 +14,6 @@ export default function FileUploaderHandler({file, setFile}: Props) {
   const handleChange = (e: any) => {
     e.preventDefault();
     setFile(e.target.files[0]);
-    // setFile(file);
   };
   // // read file
   // const readFile = (file: any) => {

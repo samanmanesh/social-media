@@ -1,6 +1,16 @@
 import { AxiosResponse } from "axios";
 import { instance } from "./index";
 
+interface likeRequest {
+  postId: string;
+  userId: string;
+}
+
+interface postRequest {
+  userId : string;
+  desc: string | undefined;
+  img: string | undefined;
+}
 export const getTimelinePosts = (
   userId: string
 ): Promise<AxiosResponse<Post[]>> => {
@@ -13,11 +23,13 @@ export const getUserPosts = (
   return instance.get(`posts/profile/${username}`);
 };
 
-interface likeRequest {
-  postId: string;
-  userId: string;
-}
+export const likePost = (params: likeRequest): Promise<AxiosResponse> => {
+  return instance.put(`/posts/${params.postId}/like`, {
+    userId: params.userId,
+  });
+};
 
-export const likePost = (params : likeRequest):Promise<AxiosResponse> => {
-  return instance.put(`/posts/${params.postId}/like`, { userId: params.userId });
+
+export const createPost = (post: postRequest): Promise<AxiosResponse> => {
+  return instance.post("/posts", post);
 }
