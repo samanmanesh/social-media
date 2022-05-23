@@ -51,11 +51,12 @@ import cloudinary from "cloudinary";
 //   }
 // );
 //--------------
-export const createPost = async (req, res) => {
+export const uploadPost = async (req, res) => {
   console.log("createPost", req.file);
+
   if (req.file) {
     //version promise
-    let streamUpload = (req) => {
+    const streamUpload = (req) => {
       return new Promise((resolve, reject) => {
         let stream = cloudinary.uploader.upload_stream((error, result) => {
           if (result) {
@@ -90,42 +91,46 @@ export const createPost = async (req, res) => {
         return error;
       }
     }
-
     upload(req)
       .then((uploaded) => {
-        processPost(uploaded.url);
+        // processPost(uploaded.url);
+        return res.status(200).send(uploaded.url);
       })
       .catch((error) => {
         console.log(error);
+        return res.status(500).send(error);
       });
   } else {
-    processPost("");
+    // processPost("");
+    return res.status(400).send("No file uploaded");
   }
 
-  async function processPost(imageUrl) {
-    req.body.img = imageUrl;
-    // blogService.addPost(req.body).then((post) => {
-    //   res.redirect("/posts");
-    // });
-    console.log("req.body", req.body);
-    const newPost = new Post(req.body);
-    try {
-      const savedPost = await newPost.save();
-      return res.status(200).json(savedPost);
-    } catch (error) {
-      console.log("hit error in processPost", error);
-      return res.status(500).json(error);
-    }
-  }
-
-  //! the previous code
-  // const newPost = new Post(req.body);
-  // try {
-  //   const savedPost = await newPost.save();
-  //   return res.status(200).json(savedPost);
-  // } catch (error) {
-  //   return res.status(500).json(error);
+  // async function processPost(imageUrl) {
+  //   req.body.img = imageUrl;
+  //   // blogService.addPost(req.body).then((post) => {
+  //   //   res.redirect("/posts");
+  //   // });
+  //   console.log("req.body", req.body);
+  //   const newPost = new Post(req.body);
+  //   try {
+  //     const savedPost = await newPost.save();
+  //     return res.status(200).json(savedPost);
+  //   } catch (error) {
+  //     console.log("hit error in processPost", error);
+  //     return res.status(500).json(error);
+  //   }
   // }
+};
+
+export const createPost = async (req, res) => {
+
+  const newPost = new Post(req.body);
+  try {
+    const savedPost = await newPost.save();
+    return res.status(200).json(savedPost);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 };
 
 export const updatePost = async (req, res) => {
