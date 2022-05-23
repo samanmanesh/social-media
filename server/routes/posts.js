@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 
 //create a post
-router.post("/", createPost);
+router.post("/", upload.single("file"), createPost);
 
 //update a post
 router.put("/:id", updatePost);
@@ -37,3 +37,4 @@ router.get("/profile/:username", getUserPosts);
 // });
 
 export default router;
+

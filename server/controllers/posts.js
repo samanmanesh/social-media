@@ -1,7 +1,77 @@
 import Post from "../models/post.js";
 import User from "../models/user.js";
 
+//--------------
+app.post(
+  "/posts/add",
+  ensureLogin,
+  upload.single("featureImage"),
+  (req, res) => {
+    if (req.file) {
+      let streamUpload = (req) => {
+        return new Promise((resolve, reject) => {
+          let stream =
+            cloudinary.uploader.upload_stream(
+              (error, result) => {
+                if (result) {
+                  resolve(result);
+                } else {
+                  reject(error);
+                }
+              }
+            );
+          streamifier
+            .createReadStream(req.file.buffer)
+            .pipe(stream);
+        });
+      };
+      async function upload(req) {
+        let result = await streamUpload(req);
+        console.log(result);
+        return result;
+      }
+      upload(req).then((uploaded) => {
+        processPost(uploaded.url);
+      });
+    } else {
+      processPost("");
+    }
+    function processPost(imageUrl) {
+      req.body.featureImage = imageUrl;
+      blogService
+        .addPost(req.body)
+        .then((post) => {
+          res.redirect("/posts");
+        });
+    }
+  }
+);
+//--------------
 export const createPost = async (req, res) => {
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   const newPost = new Post(req.body);
   try {
     const savedPost = await newPost.save();
