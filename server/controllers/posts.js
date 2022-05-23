@@ -4,12 +4,12 @@ import multer from "multer";
 import streamifier from "streamifier";
 import cloudinary from "cloudinary";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-  secure: true,
-});
+// cloudinary.config({
+//   cloud_name: process.env.CLOUD_NAME,
+//   api_key: process.env.API_KEY,
+//   api_secret: process.env.API_SECRET,
+//   secure: true,
+// });
 
 //--------------
 // sample code from web322 assignment
@@ -52,7 +52,9 @@ cloudinary.config({
 // );
 //--------------
 export const createPost = async (req, res) => {
+  console.log("createPost", req.file);
   if (req.file) {
+    //version promise
     let streamUpload = (req) => {
       return new Promise((resolve, reject) => {
         let stream = cloudinary.uploader.upload_stream((error, result) => {
@@ -65,31 +67,53 @@ export const createPost = async (req, res) => {
         streamifier.createReadStream(req.file.buffer).pipe(stream);
       });
     };
+    // //version async await
+    // const streamUpload = async (req)  => {
+
+    //     let stream = await cloudinary.uploader.upload_stream((error, result) => {
+    //       if (result) {
+    //         return result;
+    //       } else {
+    //         return error;
+    //       }
+    //     });
+    //     streamifier.createReadStream(req.file.buffer).pipe(stream);
+    // }
 
     async function upload(req) {
-      let result = await streamUpload(req);
-      console.log(result);
-      return result;
+      try {
+        let result = await streamUpload(req);
+        console.log("result from streamUpload", result);
+        return result;
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
     }
 
-    upload(req).then((uploaded) => {
-      processPost(uploaded.url);
-    });
-
+    upload(req)
+      .then((uploaded) => {
+        processPost(uploaded.url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   } else {
     processPost("");
   }
 
-  function processPost(imageUrl) {
+  async function processPost(imageUrl) {
     req.body.img = imageUrl;
     // blogService.addPost(req.body).then((post) => {
     //   res.redirect("/posts");
     // });
+    console.log("req.body", req.body);
     const newPost = new Post(req.body);
     try {
       const savedPost = await newPost.save();
       return res.status(200).json(savedPost);
     } catch (error) {
+      console.log("hit error in processPost", error);
       return res.status(500).json(error);
     }
   }

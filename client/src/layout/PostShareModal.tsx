@@ -36,13 +36,18 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
     // console.log(desc.current?.value);
     // console.log(file);
     if (user && file) {
-      const newPost = {
-        userId: user._id,
-        desc: desc.current?.value,
-        img: file,
-      };
-      // mutate(newPost);
-      console.log("newPost", newPost);
+      const formData = new FormData();
+      formData.append('file', file);
+      // formData.append("description", desc.current?.value || "");
+      // formData.append("userId", user._id);
+      // const newPost = {
+      //   userId: user._id,
+      //   desc: desc.current?.value,
+      //   img:
+      // };
+      console.log("formData", formData.getAll("file"));
+      mutate(formData);
+      // console.log("newPost", newPost);
     }
   };
 
@@ -96,7 +101,9 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
                 ref={desc}
               />
 
-              <button type="submit" className="text-blue-500 font-semibold">Share</button>
+              <button type="submit" className="text-blue-500 font-semibold">
+                Share
+              </button>
             </form>
           </Dialog.Panel>
         </Transition.Child>

@@ -6,10 +6,13 @@ interface likeRequest {
   userId: string;
 }
 
-interface postRequest {
-  userId : string;
-  desc: string | undefined;
-  img: string | undefined;
+// interface postRequest {
+//   userId : string;
+//   desc: string | undefined;
+//   img: string | undefined;
+// }
+interface postFileRequest {
+  file: FormData;
 }
 export const getTimelinePosts = (
   userId: string
@@ -30,6 +33,6 @@ export const likePost = (params: likeRequest): Promise<AxiosResponse> => {
 };
 
 
-export const createPost = (post: postRequest): Promise<AxiosResponse> => {
+export const createPost = (post: any): Promise<AxiosResponse> => {
   return instance.post("/posts", post);
 }
