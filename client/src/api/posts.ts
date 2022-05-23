@@ -33,6 +33,11 @@ export const likePost = (params: likeRequest): Promise<AxiosResponse> => {
 };
 
 
+
 export const createPost = (post: any): Promise<AxiosResponse> => {
   return instance.post("/posts", post);
+}
+
+export const uploadPost = (post: any): Promise<AxiosResponse> => {
+  return instance.post("/posts/upload", post);
 }

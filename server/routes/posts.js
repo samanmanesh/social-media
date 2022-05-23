@@ -2,6 +2,7 @@ import express from "express";
 import {
   createPost,
   updatePost,
+  uploadPost,
   deletePost,
   likePost,
   getPost,
@@ -18,7 +19,10 @@ const router = express.Router();
 const upload = multer(); // no {storage:storage} since we are not using diskStorage
 
 //create a post
-router.post("/", upload.single("file"), createPost);
+router.post("/",  createPost);
+
+//upload a post
+router.post("/upload", upload.single("file"), uploadPost);
 
 //update a post
 router.put("/:id", updatePost);

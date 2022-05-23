@@ -4,7 +4,7 @@ import FileUploaderHandler from "utils/FileUploaderHandler";
 // import FileUploaderHandler from "../utils/FileUploaderHandler";
 import { useAuth } from "auth";
 import { useMutation } from "react-query";
-import { createPost } from "api";
+import { createPost, uploadPost } from "api";
 
 //TODO: make a drag and drop file uploader for images
 //TODO: on server side use multer to upload files and store them in the cdn and return the url to the client and the address of that url to dbs (check the web final assignment)
@@ -17,7 +17,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   const desc = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState(null);
-  const { mutate, isLoading, error } = useMutation(createPost, {
+  const { mutate, isLoading, error } = useMutation(uploadPost, {
     onSuccess: (data) => {
       console.log("data", data);
       // setIsOpen(false);

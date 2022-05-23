@@ -4,13 +4,6 @@ import multer from "multer";
 import streamifier from "streamifier";
 import cloudinary from "cloudinary";
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.API_KEY,
-//   api_secret: process.env.API_SECRET,
-//   secure: true,
-// });
-
 //--------------
 // sample code from web322 assignment
 // app.post(
@@ -58,10 +51,11 @@ export const uploadPost = async (req, res) => {
     //version promise
     const streamUpload = (req) => {
       return new Promise((resolve, reject) => {
-        let stream = cloudinary.uploader.upload_stream((error, result) => {
+        let stream = cloudinary.v2.uploader.upload_stream((error, result) => {
           if (result) {
             resolve(result);
           } else {
+            // console.log("error on cloudinary", error);
             reject(error);
           }
         });
@@ -84,14 +78,14 @@ export const uploadPost = async (req, res) => {
     async function upload(req) {
       try {
         let result = await streamUpload(req);
-        console.log("result from streamUpload", result);
         return result;
       } catch (error) {
-        console.log(error);
+        // console.log("error from streamUpload", error);
         return error;
       }
     }
-    upload(req)
+
+    await upload(req)
       .then((uploaded) => {
         // processPost(uploaded.url);
         return res.status(200).send(uploaded.url);
@@ -123,7 +117,6 @@ export const uploadPost = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-
   const newPost = new Post(req.body);
   try {
     const savedPost = await newPost.save();
