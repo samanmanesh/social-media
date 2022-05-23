@@ -24,6 +24,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
     },
   });
 
+  console.log("file", file);
   const { user } = useAuth();
 
   const closeModal = () => {
@@ -40,9 +41,9 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
         desc: desc.current?.value,
         img: file,
       };
-      mutate(newPost);
+      // mutate(newPost);
+      console.log("newPost", newPost);
     }
-    
   };
 
   return (
@@ -87,15 +88,16 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
                 className=" w-5 h-5 rounded-full bg-cover"
               />
             </div>
+            <form action="" onSubmit={onSubmit}>
+              <input
+                type="text"
+                placeholder="Write a caption..."
+                className="w-full border "
+                ref={desc}
+              />
 
-            <input
-              type="text"
-              placeholder="Write a caption..."
-              className="w-full border "
-              ref={desc}
-            />
-
-            <button className="text-blue-500 font-semibold">Share</button>
+              <button type="submit" className="text-blue-500 font-semibold">Share</button>
+            </form>
           </Dialog.Panel>
         </Transition.Child>
       </Dialog>
