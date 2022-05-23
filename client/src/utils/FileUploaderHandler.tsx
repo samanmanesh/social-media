@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FileUploader } from "react-drag-drop-files";
+// import { FileUploader } from "react-drag-drop-files";
 
 type Props = {};
 

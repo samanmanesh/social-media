@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import FileUploaderHandler from "utils/FileUploaderHandler";
 // import FileUploaderHandler from "../utils/FileUploaderHandler";
 
 
@@ -51,7 +52,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
             </Dialog.Title>
             <hr className=" text-lg text-black" />
 
-            {/* <FileUploaderHandler /> */}
+            <FileUploaderHandler />
 
             {/* <input
               type="file"
