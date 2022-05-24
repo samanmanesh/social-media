@@ -17,7 +17,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const desc = useRef<HTMLInputElement>(null);
+  const desc = useRef<HTMLTextAreaElement>(null);
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null as any);
   const { user } = useAuth();
@@ -54,6 +54,9 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    console.log("onSubmit clicked", file);
+
     if (user && file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -88,7 +91,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="absolute inset-0 bg-black bg-opacity-50" />
+          <Dialog.Overlay className="absolute inset-0 bg-black bg-opacity-80" />
         </Transition.Child>
         <Transition.Child
           as="div"
@@ -100,20 +103,31 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
           leaveTo="opacity-0"
         >
           <Dialog.Panel className="bg-white rounded-lg relative">
-            <Dialog.Title className="font-bold py-3 border-b w-full text-center flex justify-between">
-              <ArrowLeftIcon
-                className="w-4 mx-3 cursor-pointer"
-                onClick={onClickReturnButton}
-              />
+            <Dialog.Title
+              className={`font-bold py-3 border-b w-full text-center  ${
+                file && "flex justify-between"
+              } `}
+            >
+              {file && (
+                <ArrowLeftIcon
+                  className="w-4 mx-3 cursor-pointer"
+                  onClick={onClickReturnButton}
+                />
+              )}
               <span>Create new post</span>
-              <button
-                type="submit"
-                className="text-blue-500 font-semibold mx-3"
-              >
-                Share
-              </button>
+              {file && (
+                //!there is a bug here share button should be inside form to work but I want it to be here
+                // <button
+                //   type="submit"
+                //   className=" text-sm text-blue-500 font-semibold mx-3 "
+                // >
+                //   Share
+                // </button>
+                <></>
+              )}
             </Dialog.Title>
             <hr className=" text-lg text-black" />
+
             {!file && !image ? (
               <FileUploaderHandler file={file} setFile={setFile} />
             ) : (
@@ -125,10 +139,14 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
                     className=" object-cover col-span-2 h-full w-full"
                   />
                 )}
-                <div className="p-3 space-y-4">
+                <div className="px-2 py-4   ">
                   <div className="flex space-x-4">
                     <img
-                      src={user?.profilePicture ? user.profilePicture : PF + "people/no-image-avatar2.png"}
+                      src={
+                        user?.profilePicture
+                          ? user.profilePicture
+                          : PF + "people/no-image-avatar2.png"
+                      }
                       alt="profile"
                       className="w-8 h-8 rounded-full object-cover"
                     />
@@ -138,12 +156,17 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
                   </div>
 
                   <form action="" onSubmit={onSubmit}>
-                    <input
-                      type="text"
+                    <textarea
                       placeholder="Write a caption..."
-                      className="w-full  whitespace-pre-wrap my-4"
+                      className="appearance-none resize-none w-full outline-none  rounded my-4 min-h-[15ch] p-1 "
                       ref={desc}
                     />
+                    <button
+                      type="submit"
+                      className=" text-sm text-blue-500 font-semibold mx-3 "
+                    >
+                      Share
+                    </button>
                   </form>
                 </div>
               </div>
