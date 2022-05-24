@@ -17,31 +17,30 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   const desc = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState(null);
+  // const [uploadedData, setUploadedData] = useState(null as any);
+
   const { mutate, isLoading, error , data} = useMutation(uploadPost, {
     onSuccess: (data) => {
       console.log("data", data);
-      
-
-      // setIsOpen(false);
+      // setUploadedData(data);
+      createPostMutation(data);
+    },
+  });
+  
+  const { mutate: createPostMutation } = useMutation(createPost, {
+    onSuccess: (data) => {
+      console.log("data in createPost", data);
+      setIsOpen(false);
     },
   });
 
 
+
   console.log("data1", data);
-  // const newPost = {
-  //   userId: desc.current.value,
-  //   desc : desc.current.value,
-  //   img: data,        
-  //   };
+  
 
-  // const {  isLoading, error } = useMutation(createPost, {
-  //   onSuccess: (data) => {
-  //     console.log("data", data);
-  //     // setIsOpen(false);
-  //   },
-  // });
-
-
+  
+  
   console.log("file", file);
   const { user } = useAuth();
 
