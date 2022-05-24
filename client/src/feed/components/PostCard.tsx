@@ -115,7 +115,7 @@ export function PostCard({ post, ...props }: Props) {
         <span className="text-s text-gray-600">View all 1,8,932 comments</span>
         <span className="text-gray-800 text-sm">{format(post.createdAt)}</span>
       </div>
-      <div className="border-t  w-full p-4 flex justify-between">
+      <div className="border-t w-full p-4 flex justify-between">
         <input type="text" placeholder="Add a comment..." className="w-full" />
         <button className="text-blue-500">Post</button>
       </div>

@@ -100,7 +100,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
         >
           <Dialog.Panel className="bg-white rounded-lg relative">
             <Dialog.Title className="font-bold py-3 border-b w-full text-center flex justify-between">
-              <ArrowLeftIcon className="w-4 mx-3" onClick={onClickReturnButton} />
+              <ArrowLeftIcon className="w-4 mx-3 cursor-pointer" onClick={onClickReturnButton} />
               <span>Create new post</span>
 
               <button
@@ -118,12 +118,12 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
                 setImage={setImage}
               />
             ) : (
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-4 lg:max-w-6xl h-screen max-h-[45rem]">
                 {image && (
                   <img
                     src={image}
                     alt=""
-                    className=" object-cover col-span-2"
+                    className=" object-cover col-span-2 h-full w-full"
                   />
                 )}
                 <div className="p-3 space-y-4">

@@ -38,7 +38,7 @@ export default function FileUploaderHandler({file, setFile, setImage}: Props) {
   }, [file]);
 
   return (
-    <div className="lg:px-52 lg:py-60 flex flex-col items-center space-y-4 ">
+    <div className="p-20 md:px-60 lg:py-60 flex flex-col items-center space-y-4 ">
       <div className="">
         <svg
           aria-label="Icon to represent media such as images or videos"
@@ -67,11 +67,11 @@ export default function FileUploaderHandler({file, setFile, setImage}: Props) {
       <span className="font-medium">Drag Photos here </span>
       {/* <FileUploader handleChange={handleChange} name="file" types={fileTypes}   /> */}
 
-      <div className="px-16 py-2 border "></div>
+      {/* <div className="px-16 py-2 border "></div> */}
       
         <label
           htmlFor="file"
-          className="block p-2 border rounded  cursor-pointer bg-blue-500  text-white font-extrabold text-xs"
+          className="block p-2 border rounded cursor-pointer bg-blue-500 text-white font-extrabold text-xs"
         >
           Select from computer
         </label>
