@@ -89,7 +89,7 @@ export function PostCard({ post, ...props }: Props) {
       </div>
       <div className="aspect-square w-full">
         <img
-          src={PF + "/post/" + post.img}
+          src={post.img}
           alt="postImage"
           className="object-cover h-full w-full"
         />
