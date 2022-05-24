@@ -5,6 +5,8 @@ import FileUploaderHandler from "utils/FileUploaderHandler";
 import { useAuth } from "auth";
 import { useMutation } from "react-query";
 import { createPost, uploadPost } from "api";
+import toast from "react-hot-toast";
+import { ArrowLeftIcon } from "@heroicons/react/solid";
 
 //TODO: make a drag and drop file uploader for images
 //TODO: on server side use multer to upload files and store them in the cdn and return the url to the client and the address of that url to dbs (check the web final assignment)
@@ -19,11 +21,9 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null as any);
   const { user } = useAuth();
-  // const [uploadedData, setUploadedData] = useState(null as any);
   const { mutate, isLoading, error, data } = useMutation(uploadPost, {
     onSuccess: (data) => {
       console.log("data", data.data);
-      // setUploadedData(data);
       if (user) {
         const newPost = {
           userId: user._id,
@@ -33,6 +33,9 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
         console.log("newPost", newPost);
         createPostMutation(newPost);
       }
+    },
+    onError: (err: any) => {
+      toast.error(err.message);
     },
   });
 
@@ -49,24 +52,12 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log(desc.current?.value);
-    // console.log(file);
     if (user && file) {
       const formData = new FormData();
       formData.append("file", file);
-      // formData.append("description", desc.current?.value || "");
-      // formData.append("userId", user._id);
-      // const newPost = {
-      //   userId: user._id,
-      //   desc: desc.current?.value,
-      //   img:
-      // };
+
       console.log("formData", formData.getAll("file"));
-
-      //display the uploaded image
-
       mutate(formData);
-      // console.log("newPost", newPost);
     }
   };
 
@@ -101,9 +92,14 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="bg-white rounded-lg relative ">
-            <Dialog.Title className="font-bold py-3 border-b  w-full text-center">
-              Create new post
+          <Dialog.Panel className="bg-white rounded-lg relative">
+            <Dialog.Title className="font-bold py-3 border-b w-full text-center flex justify-between">
+              <ArrowLeftIcon className="w-4 mx-3"/>
+              <span>Create new post</span>
+
+              <button type="submit" className="text-blue-500 font-semibold mx-3">
+                Share
+              </button>
             </Dialog.Title>
             <hr className=" text-lg text-black" />
             {!file && !image ? (
@@ -113,30 +109,31 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
                 setImage={setImage}
               />
             ) : (
-              <div className="flex justify-center">
-                {image && <img src={image} alt="" />}
-                <div>
-                  <div className=" rounded-full w-5 h-5">
+              <div className="grid grid-cols-3 gap-4">
+                {image && (
+                  <img
+                    src={image}
+                    alt=""
+                    className=" object-cover col-span-2"
+                  />
+                )}
+                <div className="p-3 space-y-4">
+                  <div className="flex space-x-4">
                     <img
                       src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
                       alt="profile"
-                      className=" w-5 h-5 rounded-full bg-cover"
+                      className="w-8 h-8 rounded-full object-cover"
                     />
+                    <span className="text-lg font-semibold">{user?.username}</span>
                   </div>
+
                   <form action="" onSubmit={onSubmit}>
                     <input
                       type="text"
                       placeholder="Write a caption..."
-                      className="w-full border "
+                      className="w-full  whitespace-pre-wrap my-4"
                       ref={desc}
                     />
-
-                    <button
-                      type="submit"
-                      className="text-blue-500 font-semibold"
-                    >
-                      Share
-                    </button>
                   </form>
                 </div>
               </div>
