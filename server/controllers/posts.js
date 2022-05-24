@@ -117,6 +117,7 @@ export const uploadPost = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
+  console.log("createPost", req.body.data);
   const newPost = new Post(req.body);
   try {
     const savedPost = await newPost.save();

@@ -17,32 +17,32 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   const desc = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState(null);
+  const { user } = useAuth();
   // const [uploadedData, setUploadedData] = useState(null as any);
 
-  const { mutate, isLoading, error , data} = useMutation(uploadPost, {
+  const { mutate, isLoading, error, data } = useMutation(uploadPost, {
     onSuccess: (data) => {
-      console.log("data", data);
+      console.log("data", data.data);
       // setUploadedData(data);
-      createPostMutation(data);
+      if (user) {
+        const newPost = {
+          userId: user._id,
+          desc: desc.current?.value,
+          img: data.data,
+        };
+        console.log("newPost", newPost);
+        createPostMutation(newPost);
+        
+      }
     },
   });
-  
+
   const { mutate: createPostMutation } = useMutation(createPost, {
     onSuccess: (data) => {
       console.log("data in createPost", data);
       setIsOpen(false);
     },
   });
-
-
-
-  console.log("data1", data);
-  
-
-  
-  
-  console.log("file", file);
-  const { user } = useAuth();
 
   const closeModal = () => {
     setIsOpen(false);
@@ -54,7 +54,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
     // console.log(file);
     if (user && file) {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
       // formData.append("description", desc.current?.value || "");
       // formData.append("userId", user._id);
       // const newPost = {
