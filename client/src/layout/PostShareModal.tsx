@@ -48,6 +48,8 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
 
   const closeModal = () => {
     setIsOpen(false);
+    setFile(null);
+    setImage(null);
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
