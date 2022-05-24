@@ -65,6 +65,12 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
     if (file) setImage(URL.createObjectURL(file));
   }, [file]);
 
+
+  const onClickReturnButton = () => {
+    setIsOpen(false);
+    setFile(null);
+    setImage(null);
+  };
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -94,10 +100,13 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
         >
           <Dialog.Panel className="bg-white rounded-lg relative">
             <Dialog.Title className="font-bold py-3 border-b w-full text-center flex justify-between">
-              <ArrowLeftIcon className="w-4 mx-3"/>
+              <ArrowLeftIcon className="w-4 mx-3" onClick={onClickReturnButton} />
               <span>Create new post</span>
 
-              <button type="submit" className="text-blue-500 font-semibold mx-3">
+              <button
+                type="submit"
+                className="text-blue-500 font-semibold mx-3"
+              >
                 Share
               </button>
             </Dialog.Title>
@@ -124,7 +133,9 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
                       alt="profile"
                       className="w-8 h-8 rounded-full object-cover"
                     />
-                    <span className="text-lg font-semibold">{user?.username}</span>
+                    <span className="text-lg font-semibold">
+                      {user?.username}
+                    </span>
                   </div>
 
                   <form action="" onSubmit={onSubmit}>
