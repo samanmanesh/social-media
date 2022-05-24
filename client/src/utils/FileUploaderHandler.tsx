@@ -1,41 +1,18 @@
-import React, { useEffect, useState } from "react";
-// import { FileUploader } from "react-drag-drop-files";
-
 type Props = {
-  file : any;
-  setFile : any;
-  setImage : any;
+  file: any;
+  setFile: any;
 };
 
-export default function FileUploaderHandler({file, setFile, setImage}: Props) {
-  const fileTypes = ["JPG", "PNG", "GIF"];
-  
-  // const [image, setImage] = useState("");
-
+export default function FileUploaderHandler({
+  file,
+  setFile,
+}: Props) {
   const handleChange = (e: any) => {
     e.preventDefault();
-    if(e.target.files[0]) {
-    setFile(e.target.files[0]);
-    
-    // setImage(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
     }
-
   };
-  // // read file
-  // const readFile = (file: any) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onload = () => {
-  //     console.log("read:", reader.result);
-  //     setImage(reader.result as string);
-  //   };
-  // };
-
-  useEffect(() => {
-    if (file) {
-      // readFile(file);
-    }
-  }, [file]);
 
   return (
     <div className="p-20 md:px-60 lg:py-60 flex flex-col items-center space-y-4 ">
@@ -65,25 +42,23 @@ export default function FileUploaderHandler({file, setFile, setImage}: Props) {
         </svg>
       </div>
       <span className="font-medium">Drag Photos here </span>
-      {/* <FileUploader handleChange={handleChange} name="file" types={fileTypes}   /> */}
 
       {/* <div className="px-16 py-2 border "></div> */}
-      
-        <label
-          htmlFor="file"
-          className="block p-2 border rounded cursor-pointer bg-blue-500 text-white font-extrabold text-xs"
-        >
-          Select from computer
-        </label>
-        <input
-          type="file"
-          name="file"
-          id="file"
-          onChange={handleChange}
-          accept=".JPG,.PNG,.JPEG"
-          className="hidden "
-        />
-      {/* <img src={image} alt="uploaded" /> */}
+
+      <label
+        htmlFor="file"
+        className="block p-2 border rounded cursor-pointer bg-blue-500 text-white font-extrabold text-xs"
+      >
+        Select from computer
+      </label>
+      <input
+        type="file"
+        name="file"
+        id="file"
+        onChange={handleChange}
+        accept=".JPG,.PNG,.JPEG"
+        className="hidden "
+      />
     </div>
   );
 }

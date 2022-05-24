@@ -115,7 +115,6 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
               <FileUploaderHandler
                 file={file}
                 setFile={setFile}
-                setImage={setImage}
               />
             ) : (
               <div className="grid grid-cols-3 gap-4 lg:max-w-6xl h-screen max-h-[45rem]">
