@@ -4,16 +4,22 @@ import React, { useEffect, useState } from "react";
 type Props = {
   file : any;
   setFile : any;
+  setImage : any;
 };
 
-export default function FileUploaderHandler({file, setFile}: Props) {
+export default function FileUploaderHandler({file, setFile, setImage}: Props) {
   const fileTypes = ["JPG", "PNG", "GIF"];
   
   // const [image, setImage] = useState("");
 
   const handleChange = (e: any) => {
     e.preventDefault();
+    if(e.target.files[0]) {
     setFile(e.target.files[0]);
+    
+    // setImage(URL.createObjectURL(e.target.files[0]));
+    }
+
   };
   // // read file
   // const readFile = (file: any) => {

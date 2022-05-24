@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import FileUploaderHandler from "utils/FileUploaderHandler";
 // import FileUploaderHandler from "../utils/FileUploaderHandler";
@@ -17,9 +17,9 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   const desc = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState(null);
+  const [image, setImage] = useState(null as any);
   const { user } = useAuth();
   // const [uploadedData, setUploadedData] = useState(null as any);
-
   const { mutate, isLoading, error, data } = useMutation(uploadPost, {
     onSuccess: (data) => {
       console.log("data", data.data);
@@ -32,7 +32,6 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
         };
         console.log("newPost", newPost);
         createPostMutation(newPost);
-        
       }
     },
   });
@@ -63,10 +62,17 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
       //   img:
       // };
       console.log("formData", formData.getAll("file"));
+
+      //display the uploaded image
+
       mutate(formData);
       // console.log("newPost", newPost);
     }
   };
+
+  useEffect(() => {
+    if (file) setImage(URL.createObjectURL(file));
+  }, [file]);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -100,28 +106,41 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
               Create new post
             </Dialog.Title>
             <hr className=" text-lg text-black" />
-
-            <FileUploaderHandler file={file} setFile={setFile} />
-
-            <div className=" rounded-full w-5 h-5">
-              <img
-                src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
-                alt="profile"
-                className=" w-5 h-5 rounded-full bg-cover"
+            {!file && !image ? (
+              <FileUploaderHandler
+                file={file}
+                setFile={setFile}
+                setImage={setImage}
               />
-            </div>
-            <form action="" onSubmit={onSubmit}>
-              <input
-                type="text"
-                placeholder="Write a caption..."
-                className="w-full border "
-                ref={desc}
-              />
+            ) : (
+              <div className="flex justify-center">
+                {image && <img src={image} alt="" />}
+                <div>
+                  <div className=" rounded-full w-5 h-5">
+                    <img
+                      src="./assets/people/jan-kopriva-GUNKCYNYXHA-unsplash.jpg"
+                      alt="profile"
+                      className=" w-5 h-5 rounded-full bg-cover"
+                    />
+                  </div>
+                  <form action="" onSubmit={onSubmit}>
+                    <input
+                      type="text"
+                      placeholder="Write a caption..."
+                      className="w-full border "
+                      ref={desc}
+                    />
 
-              <button type="submit" className="text-blue-500 font-semibold">
-                Share
-              </button>
-            </form>
+                    <button
+                      type="submit"
+                      className="text-blue-500 font-semibold"
+                    >
+                      Share
+                    </button>
+                  </form>
+                </div>
+              </div>
+            )}
           </Dialog.Panel>
         </Transition.Child>
       </Dialog>
