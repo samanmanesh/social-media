@@ -21,7 +21,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null as any);
   const { user } = useAuth();
-  
+
   const { mutate, isLoading, error, data } = useMutation(uploadPost, {
     onSuccess: (data) => {
       console.log("data in uploadPost on success", data);
@@ -117,7 +117,6 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
               )}
               <span>Create new post</span>
               {file && (
-                //!there is a bug here share button should be inside form to work but I want it to be here
                 <button
                   type="submit"
                   form="submitForm"
