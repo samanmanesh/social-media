@@ -6,9 +6,10 @@ type Props = {
 };
 
 export default function FileUploaderHandler({ file, setFile }: Props) {
+  const MAX_FILE_SIZE = 10485760;
   const handleChange = (e: any) => {
     e.preventDefault();
-    if (e.target.files[0].size > 10485760) {
+    if (e.target.files[0].size > MAX_FILE_SIZE) {
       toast.error("File size should be less than 10MB");
       setFile(null);
       return;

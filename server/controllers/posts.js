@@ -4,6 +4,8 @@ import multer from "multer";
 import streamifier from "streamifier";
 import cloudinary from "cloudinary";
 
+const MAX_FILE_SIZE = 10485760;
+
 export const uploadPost = async (req, res) => {
   console.log("createPost", req.file);
 
@@ -32,7 +34,7 @@ export const uploadPost = async (req, res) => {
     }
 
     // if size of file is greater than 10mb then reject
-    if (req.file.size > 10485760) {
+    if (req.file.size > MAX_FILE_SIZE) {
       return res.status(400).send({
         message: "File size is too large",
       });
