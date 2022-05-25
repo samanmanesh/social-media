@@ -7,7 +7,12 @@ export const useFeed = () => {
 
   const fetchTimelinePosts = async () => {
     const { data } = await getTimelinePosts(user?._id || "");
-    return data;
+    //sort by date
+    return data.sort((a, b) => {
+      //@ts-ignore
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+    // return data;
   };
   const { data, status } = useQuery(["feed", user?._id], fetchTimelinePosts);
 
