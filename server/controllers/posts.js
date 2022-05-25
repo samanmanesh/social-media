@@ -4,46 +4,6 @@ import multer from "multer";
 import streamifier from "streamifier";
 import cloudinary from "cloudinary";
 
-//--------------
-// sample code from web322 assignment
-// app.post(
-//   "/posts/add",
-//   ensureLogin,
-//   upload.single("featureImage"),
-//   (req, res) => {
-//     if (req.file) {
-//       let streamUpload = (req) => {
-//         return new Promise((resolve, reject) => {
-//           let stream = cloudinary.uploader.upload_stream((error, result) => {
-//             if (result) {
-//               resolve(result);
-//             } else {
-//               reject(error);
-//             }
-//           });
-//           streamifier.createReadStream(req.file.buffer).pipe(stream);
-//         });
-//       };
-//       async function upload(req) {
-//         let result = await streamUpload(req);
-//         console.log(result);
-//         return result;
-//       }
-//       upload(req).then((uploaded) => {
-//         processPost(uploaded.url);
-//       });
-//     } else {
-//       processPost("");
-//     }
-//     function processPost(imageUrl) {
-//       req.body.featureImage = imageUrl;
-//       blogService.addPost(req.body).then((post) => {
-//         res.redirect("/posts");
-//       });
-//     }
-//   }
-// );
-//--------------
 export const uploadPost = async (req, res) => {
   console.log("createPost", req.file);
 
@@ -55,39 +15,31 @@ export const uploadPost = async (req, res) => {
           if (result) {
             resolve(result);
           } else {
-            // console.log("error on cloudinary", error);
             reject(error);
           }
         });
         streamifier.createReadStream(req.file.buffer).pipe(stream);
       });
     };
-    // //version async await
-    // const streamUpload = async (req)  => {
-
-    //     let stream = await cloudinary.uploader.upload_stream((error, result) => {
-    //       if (result) {
-    //         return result;
-    //       } else {
-    //         return error;
-    //       }
-    //     });
-    //     streamifier.createReadStream(req.file.buffer).pipe(stream);
-    // }
 
     async function upload(req) {
       try {
         let result = await streamUpload(req);
         return result;
       } catch (error) {
-        // console.log("error from streamUpload", error);
         return error;
       }
     }
 
+    // if size of file is greater than 10mb then reject
+    if (req.file.size > 10485760) {
+      return res.status(400).send({
+        message: "File size is too large",
+      });
+    }
+
     await upload(req)
       .then((uploaded) => {
-        // processPost(uploaded.url);
         return res.status(200).send(uploaded.url);
       })
       .catch((error) => {
@@ -95,25 +47,8 @@ export const uploadPost = async (req, res) => {
         return res.status(500).send(error);
       });
   } else {
-    // processPost("");
     return res.status(400).send("No file uploaded");
   }
-
-  // async function processPost(imageUrl) {
-  //   req.body.img = imageUrl;
-  //   // blogService.addPost(req.body).then((post) => {
-  //   //   res.redirect("/posts");
-  //   // });
-  //   console.log("req.body", req.body);
-  //   const newPost = new Post(req.body);
-  //   try {
-  //     const savedPost = await newPost.save();
-  //     return res.status(200).json(savedPost);
-  //   } catch (error) {
-  //     console.log("hit error in processPost", error);
-  //     return res.status(500).json(error);
-  //   }
-  // }
 };
 
 export const createPost = async (req, res) => {

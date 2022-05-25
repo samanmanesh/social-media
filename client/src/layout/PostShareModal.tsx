@@ -21,10 +21,11 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
   const [file, setFile] = useState(null);
   const [image, setImage] = useState(null as any);
   const { user } = useAuth();
+  
   const { mutate, isLoading, error, data } = useMutation(uploadPost, {
     onSuccess: (data) => {
-      console.log("data", data.data);
-      if (user) {
+      console.log("data in uploadPost on success", data);
+      if (user && data.data) {
         const newPost = {
           userId: user._id,
           desc: desc.current?.value,
@@ -32,6 +33,8 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
         };
         console.log("newPost", newPost);
         createPostMutation(newPost);
+      }else{
+        toast.error("Error in uploading post");
       }
     },
     onError: (err: any) => {
@@ -56,11 +59,9 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
     e.preventDefault();
 
     console.log("onSubmit clicked", file);
-
     if (user && file) {
       const formData = new FormData();
       formData.append("file", file);
-
       console.log("formData", formData.getAll("file"));
       mutate(formData);
     }
@@ -117,13 +118,13 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
               <span>Create new post</span>
               {file && (
                 //!there is a bug here share button should be inside form to work but I want it to be here
-                // <button
-                //   type="submit"
-                //   className=" text-sm text-blue-500 font-semibold mx-3 "
-                // >
-                //   Share
-                // </button>
-                <></>
+                <button
+                  type="submit"
+                  form="submitForm"
+                  className=" text-sm text-blue-500 font-semibold mx-3 "
+                >
+                  Share
+                </button>
               )}
             </Dialog.Title>
             <hr className=" text-lg text-black" />
@@ -155,18 +156,18 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
                     </span>
                   </div>
 
-                  <form action="" onSubmit={onSubmit}>
+                  <form action="" onSubmit={onSubmit} id="submitForm">
                     <textarea
                       placeholder="Write a caption..."
                       className="appearance-none resize-none w-full outline-none  rounded my-4 min-h-[15ch] p-1 "
                       ref={desc}
                     />
-                    <button
+                    {/* <button
                       type="submit"
                       className=" text-sm text-blue-500 font-semibold mx-3 "
                     >
                       Share
-                    </button>
+                    </button> */}
                   </form>
                 </div>
               </div>

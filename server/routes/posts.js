@@ -7,19 +7,16 @@ import {
   likePost,
   getPost,
   getTimeLinePosts,
-  getUserPosts
+  getUserPosts,
 } from "../controllers/posts.js";
 import multer from "multer";
 
-
-
 const router = express.Router();
-
 
 const upload = multer(); // no {storage:storage} since we are not using diskStorage
 
 //create a post
-router.post("/",  createPost);
+router.post("/", createPost);
 
 //upload a post
 router.post("/upload", upload.single("file"), uploadPost);
@@ -47,4 +44,3 @@ router.get("/profile/:username", getUserPosts);
 // });
 
 export default router;
-

@@ -1,15 +1,18 @@
+import toast from "react-hot-toast";
+
 type Props = {
   file: any;
   setFile: any;
 };
 
-export default function FileUploaderHandler({
-  file,
-  setFile,
-}: Props) {
+export default function FileUploaderHandler({ file, setFile }: Props) {
   const handleChange = (e: any) => {
     e.preventDefault();
-    if (e.target.files[0]) {
+    if (e.target.files[0].size > 10485760) {
+      toast.error("File size should be less than 10MB");
+      setFile(null);
+      return;
+    } else if (e.target.files[0]) {
       setFile(e.target.files[0]);
     }
   };
@@ -43,14 +46,16 @@ export default function FileUploaderHandler({
       </div>
       <span className="font-medium">Drag Photos here </span>
 
-      {/* <div className="px-16 py-2 border "></div> */}
+      {/*its not support when you Tap and Enter cause its a label, fix it */}
+      <button className=" focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50  ">
+        <label
+          htmlFor="file"
+          className="block p-2 border rounded cursor-pointer bg-blue-500 text-white font-extrabold text-xs"
+        >
+          Select from computer
+        </label>
+      </button>
 
-      <label
-        htmlFor="file"
-        className="block p-2 border rounded cursor-pointer bg-blue-500 text-white font-extrabold text-xs"
-      >
-        Select from computer
-      </label>
       <input
         type="file"
         name="file"
