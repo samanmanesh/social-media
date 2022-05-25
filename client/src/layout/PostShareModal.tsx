@@ -31,7 +31,7 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
         };
         console.log("newPost", newPost);
         createPostMutation(newPost);
-      }else{
+      } else {
         toast.error("Error in uploading post");
       }
     },
@@ -44,6 +44,20 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
     onSuccess: (data) => {
       console.log("data in createPost", data);
       setIsOpen(false);
+      toast((t) => (
+        <span>
+          Click to see the{" "}
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              window.location.reload();
+            }}
+            className="font-semibold "
+          >
+            New Posts
+          </button>
+        </span>
+      ));
     },
   });
 
