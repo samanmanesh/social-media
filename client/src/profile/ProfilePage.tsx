@@ -18,9 +18,9 @@ const ProfilePage = (props: Props) => {
   const params = useParams();
   const [userPosts, setUserPosts] = useState([] as Post[]);
   const [userOfProfile, setUserOfProfile] = useState({} as User);
-  const {  user } = useAuth();
+  const { user } = useAuth();
+
   useEffect(() => {
-    
     const fetchUserData = async () => {
       if (user && params.username === user?.username) {
         setUserOfProfile(user);
@@ -29,16 +29,30 @@ const ProfilePage = (props: Props) => {
         const { data: userData } = await getUser({ username: params.username });
         setUserOfProfile(userData);
       }
-      //user posts
-      
-      const { data: posts } = await getUserPosts(userOfProfile.username);
-      // setUserOfProfile(userData);
-      setUserPosts(posts);
+      // //user posts
+      // console.log("user of profile", userOfProfile);
+      // const { data: posts } = await getUserPosts(userOfProfile.username);
+      // // setUserOfProfile(userData);
+      // setUserPosts(posts);
     };
 
     fetchUserData();
-
   }, [params.username]);
+
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      //user posts
+      console.log("user of profile", userOfProfile);
+      const { data: posts } = await getUserPosts(userOfProfile.username);
+      posts.sort((a, b) => {
+        //@ts-ignore
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      // setUserOfProfile(userData);
+      setUserPosts(posts);
+    };
+    if (userOfProfile) fetchUserPosts();
+  }, [userOfProfile]);
 
   console.log("userOfProfile", userOfProfile);
   console.log("userPosts", userPosts);
@@ -70,6 +84,9 @@ const ProfilePage = (props: Props) => {
     <div className=" container flex flex-col">
       <ProfileHeader user={userOfProfile} userDetails={userDetails} />
       <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
+      <div className="p-8 flex items-center justify-center ">
+        © 2022 Hilarion By Saman Manesh  
+      </div>
     </div>
   );
 };

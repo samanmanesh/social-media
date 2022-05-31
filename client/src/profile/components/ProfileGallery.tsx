@@ -19,11 +19,11 @@ const ProfileGallery = ({ userPosts, userDetails }: Props) => {
     <div className="flex justify-center">
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl flex-1 mt-6">
         {userPosts.map((p, index) => (
-          <div key={index} className=" aspect-square">
+          <div key={index} className={`aspect-square cursor-pointer hover:brightness-75 `}>
             <img
-              src={PF + "/post/" + p.img}
+              src={p.img}
               alt="post"
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full "
             />
           </div>
         ))}
