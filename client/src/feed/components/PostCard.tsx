@@ -67,7 +67,7 @@ export function PostCard({ post, ...props }: Props) {
       className="bg-white border rounded-[2px] border-gray-400 w-full"
     >
       <div className="p-2 border-b border-black flex items-center justify-between">
-        <div className="flex">
+        <div className="flex items-center space-x-1">
           <Link to={`/profile/${user.username}`}>
             <img
               src={
@@ -80,7 +80,7 @@ export function PostCard({ post, ...props }: Props) {
             />
           </Link>
           <Link to={`/profile/${user.username}`}>
-            <span className="pl-2 font-semibold">{user?.username}</span>
+            <span className="pl-2 font-semibold ">{user?.username}</span>
           </Link>
         </div>
         <button>
