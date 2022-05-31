@@ -6,6 +6,7 @@ import { useMutation } from "react-query";
 import { createPost, uploadPost } from "api";
 import toast from "react-hot-toast";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
+import { RefreshIcon } from "@heroicons/react/outline";
 
 //TODO: make a drag and drop file uploader for images
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
@@ -45,18 +46,15 @@ export default function PostShareModal({ isOpen, setIsOpen }: Props) {
       console.log("data in createPost", data);
       setIsOpen(false);
       toast((t) => (
-        <span>
-          Click to see the{" "}
-          <button
-            onClick={() => {
-              toast.dismiss(t.id);
-              window.location.reload();
-            }}
-            className="font-semibold "
-          >
-            New Posts
-          </button>
-        </span>
+        <button
+          onClick={() => {
+            toast.dismiss(t.id);
+            window.location.reload();
+          }}
+          className="font-semibold flex items-center"
+        >
+          Refresh Posts{" "} <RefreshIcon className="w-4 h-4 ml-1" />
+        </button>
       ));
     },
   });
