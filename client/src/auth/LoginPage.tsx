@@ -1,9 +1,10 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { login } from "../api/login";
 import { useAuth } from "auth";
 import toast from "react-hot-toast";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 
 type Props = {};
 
@@ -26,6 +27,7 @@ const LoginPage = (props: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setUser, user } = useAuth();
+  const [showPassword, setShowPassword] = useState(true);
 
   // If the user is already logged in, redirect them to the home page
   useEffect(() => {
@@ -47,6 +49,11 @@ const LoginPage = (props: Props) => {
     onError: (err: any) => {
       if (err.message === "Request failed with status code 500")
         toast.error("Server error. Please try again later.");
+      else if (
+        err.message === "Request failed with status code 400" ||
+        err.message === "Request failed with status code 401"
+      )
+        toast.error("Invalid email or password");
     },
   });
 
@@ -71,6 +78,9 @@ const LoginPage = (props: Props) => {
       }
     }
   };
+  const showPasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="w-full h-screen">
@@ -89,14 +99,27 @@ const LoginPage = (props: Props) => {
               className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-200 "
               required
             />
-            <input
-              type="password"
-              placeholder="Password"
-              ref={password}
-              required
-              minLength={6}
-              className="border rounded-[2px] border-gray-300 p-1 bg-gray-200"
-            />
+            <div className=" relative flex items-center justify-end ">
+              <input
+                type={showPassword ? `password` : `text`}
+                placeholder="Password"
+                ref={password}
+                required
+                minLength={6}
+                className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100 w-full"
+              />
+              {showPassword ? (
+                <EyeIcon
+                  onClick={() => showPasswordToggle()}
+                  className="h-4 w-4 cursor-pointer absolute mx-2"
+                />
+              ) : (
+                <EyeOffIcon
+                  onClick={() => showPasswordToggle()}
+                  className="h-4 w-4 cursor-pointer absolute mx-2"
+                />
+              )}
+            </div>
             <button
               type="submit"
               className="border p-0.5 bg-blue-500 text-white font-medium rounded-[4px] drop-shadow-lg "

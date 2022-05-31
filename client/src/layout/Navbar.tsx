@@ -24,6 +24,8 @@ export default function Navbar() {
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
+  //todo change the icon solid and outline based on the current page user is on
+
   return (
     <div className="flex items-center space-x-5 mx-2">
       <Link to="/">
@@ -31,11 +33,11 @@ export default function Navbar() {
       </Link>
 
       <button>
-        <ChatAltIcon className="w-7 h-7" />
+        <ChatAltIcon className="w-7 h-7   " />
       </button>
 
       <button onClick={openModal}>
-        <PlusIcon className="w-7 h-7" />
+        <PlusIcon className="w-6 h-6 border-2 border-black rounded-lg" />
       </button>
       <PostShareModal isOpen={isOpen} setIsOpen={setIsOpen} />
 

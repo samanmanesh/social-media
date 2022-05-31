@@ -1,5 +1,6 @@
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import { registerUser } from "api/register";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useMutation } from "react-query";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ const RegisterPage = (props: Props) => {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const confirmPassword = useRef<HTMLInputElement>(null);
+  const [showPassword, setShowPassword] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -63,6 +65,11 @@ const RegisterPage = (props: Props) => {
     }
   };
 
+  const showPasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
+
   return (
     <div className="w-full h-screen">
       <div className="grid h-[90%]">
@@ -80,34 +87,49 @@ const RegisterPage = (props: Props) => {
               type="email"
               placeholder="Email"
               ref={email}
-              className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-100 "
+              className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-100"
               required
             />
             <input
               type="text"
               placeholder="Username"
               ref={username}
-              className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-100 "
+              className="border rounded-[2px] border-gray-300 w-full h-full p-1.5 bg-gray-100"
               required
             />
+             <div className=" relative flex items-center justify-end ">
             <input
-              type="password"
+              type={showPassword ? `password` : `text`}
               placeholder="Password"
               ref={password}
-              className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100"
+              className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100 w-full"
               required
               minLength={6}
               defaultValue="password"
             />
-            <input
-              type="password"
-              placeholder="Password Confirmation"
-              ref={confirmPassword}
-              className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100"
-              required
-              minLength={6}
-              defaultValue="password"
-            />
+              {showPassword ? (
+                <EyeIcon onClick={() => showPasswordToggle()} className="h-4 w-4 cursor-pointer absolute mx-2" />
+                ) : (
+                  <EyeOffIcon onClick={() => showPasswordToggle()} className="h-4 w-4 cursor-pointer absolute mx-2" />
+              )}               
+            </div>
+            <div className=" relative flex items-center justify-end ">
+              <input
+                type={showPassword ? `password` : `text`}
+                placeholder="Password Confirmation"
+                ref={confirmPassword}
+                className="border rounded-[2px] border-gray-300 p-1.5 bg-gray-100 w-full"
+                required
+                minLength={6}
+                defaultValue="password"
+              />
+              {showPassword ? (
+                <EyeIcon onClick={() => showPasswordToggle()} className="h-4 w-4 cursor-pointer absolute mx-2" />
+                ) : (
+                  <EyeOffIcon onClick={() => showPasswordToggle()} className="h-4 w-4 cursor-pointer absolute mx-2" />
+              )}                
+            </div>
+
             {isLoading ? (
               <span className="flex justify-center items-center space-x-2">
                 <span>Loading</span>
