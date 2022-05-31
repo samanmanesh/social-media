@@ -26,9 +26,6 @@ export function Feed({ posts, ...props }: Props) {
               <PlusIcon className="w-6 h-6 border-2 border-black rounded-lg mx-2" />
             </button>
             <PostShareModal isOpen={isOpen} setIsOpen={setIsOpen} />
-            {/* here needs global state for postShareModal */}
-            {/* I guess we could do it with seperate state: make use state for isOpen and pass it to PostShareModal */}
-            {/* <PostShareModal isOpen={isOpen} setIsOpen={setIsOpen} /> */}
           </div>
         </div>
       )}
