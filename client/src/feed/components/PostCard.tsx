@@ -84,7 +84,7 @@ export function PostCard({ post, ...props }: Props) {
           </Link>
         </div>
         <button>
-          <DotsHorizontalIcon className="w-3 h-3" />
+          <DotsHorizontalIcon className="w-4 h-4" />
         </button>
       </div>
       <div className="aspect-square w-full">
@@ -106,13 +106,30 @@ export function PostCard({ post, ...props }: Props) {
         <AnnotationIcon className="w-7 h-7" />
       </button>
       <div className="flex flex-col space-y-1 p-2">
-        {/* here needs num of likes and if you like it or not */}
-        <span className="">Liked by mohammadgh4907 and {numLikes} others </span>
-        <span>
-          {user?.username} {post?.desc}
-          <button className="text-s text-gray-600">more</button>
-        </span>
-        <span className="text-s text-gray-600">View all 1,8,932 comments</span>
+        {/* here needs for "the like by" to have a list of followers that likes each post */}
+
+        {numLikes === 1 ? (
+          <span className="">Liked by a person </span>
+        ) : numLikes > 1 ? (
+          <span className="">
+            Liked by mohammadgh4907 and {numLikes} others{" "}
+          </span>
+        ) : (
+          <span className="">Liked by {numLikes} people</span>
+        )}
+
+        {/* needs for "more" if it's more than a numbers of words then expand more button appears */}
+        <div className="space-x-2">
+          <span className="font-medium cursor-pointer hover:underline underline-offset-4 ">{user?.username}</span>
+          <span>
+            {post?.desc?.length > 100 ? (
+              <button className="text-s text-gray-600"> more</button>
+            ) : (
+              <span>{post?.desc}</span>
+            )}
+          </span>
+        </div>
+        <span className="text-s text-gray-600">View all 1,932 comments</span>
         <span className="text-gray-800 text-sm">{format(post.createdAt)}</span>
       </div>
       <div className="border-t w-full p-4 flex justify-between">
