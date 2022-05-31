@@ -68,6 +68,9 @@ const ProfilePage = (props: Props) => {
       numOfPosts = userPosts ? userPosts?.length : 0;
       numOfFollowers = user ? user.followers?.length : 0;
       numOfFollowing = user ? user.following?.length : 0;
+      numOfLikes = userPosts ? userPosts.reduce((acc, curr) => {
+        return acc + curr.likes.length;
+      }, 0) : 0;
     };
 
     getDetails(userOfProfile);
@@ -84,7 +87,7 @@ const ProfilePage = (props: Props) => {
     <div className=" container flex flex-col">
       <ProfileHeader user={userOfProfile} userDetails={userDetails} />
       <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
-      <div className="p-8 flex items-center justify-center ">
+      <div className="p-8 flex items-center justify-center text-sm text-slate-600">
         © 2022 Hilarion By Saman Manesh  
       </div>
     </div>
