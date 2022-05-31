@@ -33,7 +33,7 @@ export default function Navbar() {
       </Link>
 
       <button>
-        <ChatAltIcon className="w-7 h-7   " />
+        <ChatAltIcon className="w-7 h-7 " />
       </button>
 
       <button onClick={openModal}>
