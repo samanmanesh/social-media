@@ -160,8 +160,6 @@ export const unfollowUser = async (req, res) => {
 };
 
 export const getFriends = async (req, res) => {
-  console.log("get friends");
-
   //solution 1 is
   // get the user following with the user id provided by the client
   // then go through the following list and get the user with the user id in the following list
@@ -176,7 +174,6 @@ export const getFriends = async (req, res) => {
       const friends = users.filter((user) => {
         return !curUser.following.includes(user._id);
       });
-      console.log("friends", friends);
       let friendsListSummary = [];
       friends.forEach((friend) => {
         const { _id, username, profilePicture } = friend;
@@ -192,21 +189,6 @@ export const getFriends = async (req, res) => {
         message: "User not found",
       });
     }
-    // const friends = await Promise.all(
-    //   user.following.map((friendID) => User.findById(friendID))
-    // );
-
-    // let friendsListSummary = [];
-
-    // friends.map((friend) => {
-    //   const [_id, username, profilePicture] = friend;
-    //   friendsList.push({
-    //     _id,
-    //     username,
-    //     profilePicture,
-    //   });
-    // });
-    // res.status(200).json(friendsListSummary);
   } catch (error) {
     console.log(error);
     return res.status(500).json(error);
