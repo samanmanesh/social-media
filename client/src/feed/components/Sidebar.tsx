@@ -5,6 +5,9 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 export function Sidebar({ ...props }: Props) {
   const { user } = useAuth();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
+
+  
+
   return (
     <div className="h-96 sticky flex-shrink-0 top-28 p-6 hidden lg:block ml-8 w-80">
       <div className="flex space-x-4">
@@ -27,7 +30,7 @@ export function Sidebar({ ...props }: Props) {
         <button className="">See All</button>
       </div>
       <div className="flex flex-col space-y-4 p-3">
-        
+
         <FriendSuggestion />
       </div>
       <div className="text-gray-400 text-xs font-medium p-3">

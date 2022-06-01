@@ -1,9 +1,18 @@
 import React from 'react'
+import { useEffect } from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const FriendSuggestion = ({...props}: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
+
+  useEffect(() => {
+    console.log('FriendSuggestion');
+    const getPeople = async () => {
+      
+    }
+  }, []);
+
 
   return (
     <div className="flex justify-between ">
