@@ -19,15 +19,43 @@ const ProfilePage = (props: Props) => {
   const [userPosts, setUserPosts] = useState([] as Post[]);
   const [userOfProfile, setUserOfProfile] = useState({} as User);
   const { user } = useAuth();
+  const [userStatus, setUserStatus] = useState({
+    isCurrentUser: false,
+    isFollowing: false,
+    isRandomProfile: false,
+  });
+
+  //user is current user
+  //user is random user
+  //user is user we followed
+
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (user && params.username === user?.username) {
         setUserOfProfile(user);
+        setUserStatus({
+          isCurrentUser: true,
+          isFollowing: false,
+          isRandomProfile: false,
+        });
       } else {
         //user data
         const { data: userData } = await getUser({ username: params.username });
         setUserOfProfile(userData);
+        if(user?.following.includes(userData.username)) {
+          setUserStatus({
+            isCurrentUser: false,
+            isFollowing: true,
+            isRandomProfile: false,
+          });
+        }else {
+          setUserStatus({
+            isCurrentUser: false,
+            isFollowing: false,
+            isRandomProfile: true,
+          });
+        }
       }
       // //user posts
       // console.log("user of profile", userOfProfile);
@@ -85,7 +113,7 @@ const ProfilePage = (props: Props) => {
 
   return (
     <div className=" container flex flex-col">
-      <ProfileHeader user={userOfProfile} userDetails={userDetails} />
+      <ProfileHeader user={userOfProfile} userDetails={userDetails} userStatus={userStatus} />
       <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
       <div className="p-8 flex items-center justify-center text-sm text-slate-600">
         © 2022 Hilarion By Saman Manesh  

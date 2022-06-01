@@ -1,17 +1,25 @@
-interface UserDetails{
+import { UserRemoveIcon } from "@heroicons/react/solid";
+
+interface UserDetails {
   numOfPosts: number;
-      numOfLikes  : number;
-      numOfComments : number;
-      numOfFollowers : number;
-      numOfFollowing : number;
+  numOfLikes: number;
+  numOfComments: number;
+  numOfFollowers: number;
+  numOfFollowing: number;
+}
+interface UserStatus {
+  isCurrentUser: boolean;
+  isFollowing: boolean;
+  isRandomProfile: boolean;
 }
 
 type Props = {
   user: User;
   userDetails: UserDetails;
+  userStatus: UserStatus;
 };
 
-const ProfileHeader = ({user, userDetails}: Props) => {
+const ProfileHeader = ({ user, userDetails, userStatus }: Props) => {
   console.log("user", user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
@@ -22,7 +30,7 @@ const ProfileHeader = ({user, userDetails}: Props) => {
           <img
             src={
               user?.profilePicture
-                 ? user.profilePicture
+                ? user.profilePicture
                 : PF + "people/no-image-avatar2.png"
             }
             alt="profileImage"
@@ -32,14 +40,30 @@ const ProfileHeader = ({user, userDetails}: Props) => {
         <div className="flex-1">
           {/* Username Section */}
           <div className="flex flex-col sm:flex-row  items-start mb-4">
-            <h1 title={user.username} className="font-medium text-2xl overflow-hidden whitespace-nowrap text-ellipsis w-40 sm:w-56 cursor-default">
+            <h1
+              title={user.username}
+              className="font-medium text-2xl overflow-hidden whitespace-nowrap text-ellipsis w-40 sm:w-56 cursor-default"
+            >
               {user.username}
             </h1>
 
-            
-            <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-semibold text-sm whitespace-nowrap rounded">
-              Edit Profile
-            </button>
+            {/* here for button we need to show it based on if its current user?, a random profile, or a profile we followed  */}
+            {userStatus.isFollowing ? (
+              <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded">
+                Edit Profile
+              </button>
+            ) : userStatus.isRandomProfile ? (
+              <>
+                <button className="w-full sm:w-max my-2 sm:mx-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded ">
+                  Message
+                </button>
+                <UserRemoveIcon className="w-16 h-[1.8rem] rounded border p-0.5 cursor-pointer" />
+              </>
+            ) : (
+              <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2  px-2 py-1 text-white font-bold text-sm whitespace-nowrap rounded bg-blue-500">
+                Follow
+              </button>
+            )}
           </div>
           <div className="hidden sm:block space-x-4 md:space-x-10 font-medium">
             <span>
@@ -53,7 +77,6 @@ const ProfileHeader = ({user, userDetails}: Props) => {
             </span>
           </div>
           <div className="mt-2">
-
             {/* <p className="font-medium">Name</p>
             <p>bio what ever they want put here</p> */}
             {user.desc}
