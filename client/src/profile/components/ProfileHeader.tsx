@@ -22,7 +22,7 @@ const ProfileHeader = ({user, userDetails}: Props) => {
           <img
             src={
               user?.profilePicture
-                ? PF + "/people/" + user.profilePicture
+                 ? user.profilePicture
                 : PF + "people/no-image-avatar2.png"
             }
             alt="profileImage"
