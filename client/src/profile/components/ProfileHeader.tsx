@@ -31,11 +31,11 @@ const ProfileHeader = ({user, userDetails}: Props) => {
         </div>
         <div className="flex-1">
           {/* Username Section */}
-          <div className="flex flex-col sm:flex-row justify-between items-start mb-4">
+          <div className="flex flex-col sm:flex-row  items-start mb-4">
             <h1 title={user.username} className="font-medium text-2xl overflow-hidden whitespace-nowrap text-ellipsis w-56 sm:w-64 cursor-default">
               {user.username}
             </h1>
-            <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-medium whitespace-nowrap rounded">
+            <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-1 py-1 text-neutral-700 font-semibold text-sm whitespace-nowrap rounded">
               Edit Profile
             </button>
           </div>
