@@ -158,3 +158,57 @@ export const unfollowUser = async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 };
+
+export const getFriends = async (req, res) => {
+  console.log("get friends");
+
+  //solution 1 is
+  // get the user following with the user id provided by the client
+  // then go through the following list and get the user with the user id in the following list
+  // then get the users following data and return it to the client // it will cost a lot
+  //solution 2 is
+  // fetch all the users and then filter the users that are not in the current user following list
+
+  try {
+    const curUser = await User.findById(req.params.userId);
+    if (curUser) {
+      const users = await User.find({});
+      const friends = users.filter((user) => {
+        return !curUser.following.includes(user._id);
+      });
+      console.log("friends", friends);
+      let friendsListSummary = [];
+      friends.forEach((friend) => {
+        const { _id, username, profilePicture } = friend;
+        friendsListSummary.push({
+          _id,
+          username,
+          profilePicture,
+        });
+      });
+      return res.status(200).json(friendsListSummary);
+    } else {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    // const friends = await Promise.all(
+    //   user.following.map((friendID) => User.findById(friendID))
+    // );
+
+    // let friendsListSummary = [];
+
+    // friends.map((friend) => {
+    //   const [_id, username, profilePicture] = friend;
+    //   friendsList.push({
+    //     _id,
+    //     username,
+    //     profilePicture,
+    //   });
+    // });
+    // res.status(200).json(friendsListSummary);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};

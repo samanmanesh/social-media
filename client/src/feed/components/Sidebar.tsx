@@ -27,6 +27,7 @@ export function Sidebar({ ...props }: Props) {
         <button className="">See All</button>
       </div>
       <div className="flex flex-col space-y-4 p-3">
+        
         <FriendSuggestion />
       </div>
       <div className="text-gray-400 text-xs font-medium p-3">
