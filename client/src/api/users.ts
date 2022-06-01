@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { instance } from "./index";
 
-interface UserSuggestion {
+export interface UserSuggestion {
   _id: string;
   username: string;
   profilePicture: string;

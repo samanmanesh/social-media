@@ -1,12 +1,33 @@
 import { FriendSuggestion } from "./FriendSuggestion";
 import { useAuth } from "../../auth/utils";
+import React, { useEffect } from "react";
+import { getPeople, UserSuggestion } from "api";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ ...props }: Props) {
   const { user } = useAuth();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
-  
+  const [people, setPeople] = React.useState<UserSuggestion[]>([]);
+
+  useEffect(() => {
+    console.log("FriendSuggestion");
+    const fetchPeople = async () => {
+      try {
+        if (user) {
+          const peopleList = await getPeople(user._id);
+          const firstFive = peopleList.data.slice(0, 5);
+          // setPeople(peopleList.data);
+          setPeople(firstFive);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchPeople();
+  }, [user]);
+
+  console.log("people : ", people);
 
   return (
     <div className="h-96 sticky flex-shrink-0 top-28 p-6 hidden lg:block ml-8 w-80">
@@ -30,8 +51,9 @@ export function Sidebar({ ...props }: Props) {
         <button className="">See All</button>
       </div>
       <div className="flex flex-col space-y-4 p-3">
-
-        <FriendSuggestion />
+        {people.map((person) => (
+          <FriendSuggestion key={person._id} person={person} />
+        ))}
       </div>
       <div className="text-gray-400 text-xs font-medium p-3">
         © 2022 SAMAN MANESH
