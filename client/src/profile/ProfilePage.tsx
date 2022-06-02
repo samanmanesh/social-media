@@ -22,13 +22,11 @@ const ProfilePage = (props: Props) => {
   const [userStatus, setUserStatus] = useState({
     isCurrentUser: false,
     isFollowing: false,
-    isRandomProfile: false,
   });
 
   //user is current user
   //user is random user
   //user is user we followed
-
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -37,23 +35,20 @@ const ProfilePage = (props: Props) => {
         setUserStatus({
           isCurrentUser: true,
           isFollowing: false,
-          isRandomProfile: false,
         });
       } else {
         //user data
         const { data: userData } = await getUser({ username: params.username });
         setUserOfProfile(userData);
-        if(user?.following.includes(userData.username)) {
+        if (user?.following.includes(userData._id)) {
           setUserStatus({
             isCurrentUser: false,
             isFollowing: true,
-            isRandomProfile: false,
           });
-        }else {
+        } else {
           setUserStatus({
             isCurrentUser: false,
             isFollowing: false,
-            isRandomProfile: true,
           });
         }
       }
@@ -96,9 +91,11 @@ const ProfilePage = (props: Props) => {
       numOfPosts = userPosts ? userPosts?.length : 0;
       numOfFollowers = user ? user.followers?.length : 0;
       numOfFollowing = user ? user.following?.length : 0;
-      numOfLikes = userPosts ? userPosts.reduce((acc, curr) => {
-        return acc + curr.likes.length;
-      }, 0) : 0;
+      numOfLikes = userPosts
+        ? userPosts.reduce((acc, curr) => {
+            return acc + curr.likes.length;
+          }, 0)
+        : 0;
     };
 
     getDetails(userOfProfile);
@@ -113,10 +110,15 @@ const ProfilePage = (props: Props) => {
 
   return (
     <div className=" container flex flex-col">
-      <ProfileHeader user={userOfProfile} userDetails={userDetails} userStatus={userStatus} />
+      <ProfileHeader
+        user={userOfProfile}
+        userDetails={userDetails}
+        userStatus={userStatus}
+        setUserStatus={setUserStatus}
+      />
       <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
       <div className="p-8 flex items-center justify-center text-sm text-slate-600">
-        © 2022 Hilarion By Saman Manesh  
+        © 2022 Hilarion By Saman Manesh
       </div>
     </div>
   );

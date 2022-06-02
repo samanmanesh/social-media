@@ -1,4 +1,6 @@
 import { UserRemoveIcon } from "@heroicons/react/solid";
+import { unfollowUser, followUser } from "api";
+import { useAuth } from '../../auth/utils';
 
 interface UserDetails {
   numOfPosts: number;
@@ -10,18 +12,34 @@ interface UserDetails {
 interface UserStatus {
   isCurrentUser: boolean;
   isFollowing: boolean;
-  isRandomProfile: boolean;
 }
 
 type Props = {
   user: User;
   userDetails: UserDetails;
   userStatus: UserStatus;
+  setUserStatus: (userStatus: UserStatus) => void;
 };
 
-const ProfileHeader = ({ user, userDetails, userStatus }: Props) => {
+const ProfileHeader = ({ user, userDetails, userStatus, setUserStatus }: Props) => {
   console.log("user", user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
+  const {user:currUser} = useAuth();
+  const followHandler = async () => {
+    if (userStatus.isFollowing && currUser) {
+      await unfollowUser(user._id, currUser?._id);
+      setUserStatus({
+        isCurrentUser: false,
+        isFollowing: false,
+      });
+    } else if(currUser && !userStatus.isFollowing) {
+      await followUser(user.username);
+      setUserStatus({
+        isCurrentUser: false,
+        isFollowing: true,
+      });
+    }
+  };
 
   return (
     <div className="flex justify-center">
@@ -57,7 +75,7 @@ const ProfileHeader = ({ user, userDetails, userStatus }: Props) => {
                 <button className="w-full sm:w-max sm:mx-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded ">
                   Message
                 </button>
-                <UserRemoveIcon className="w-16 h-[1.8rem] rounded border p-0.5 cursor-pointer" />
+                <UserRemoveIcon onClick={followHandler} className="w-16 h-[1.8rem] rounded border p-0.5 cursor-pointer" />
               </div>
             ) : (
               <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2  px-2 py-1 text-white font-bold text-sm whitespace-nowrap rounded bg-blue-500">
