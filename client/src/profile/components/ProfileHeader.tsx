@@ -35,14 +35,15 @@ const ProfileHeader = ({
   const followHandler = async () => {
     console.log("following Handler");
     if (userStatus.isFollowing && currUser) {
-      console.log("unfollowing");
-      await unfollowUser(user._id, currUser?._id);
+      const result  = await unfollowUser(user._id, currUser?._id);
       setUserStatus({
         isCurrentUser: false,
         isFollowing: false,
       });
+      //todo: need to update the user in auth
+
+      console.log("following result", result);
     } else if (currUser && !userStatus.isFollowing) {
-      console.log("following user", user._id, currUser?._id);
       try {
         await followUser(user._id, currUser?._id);
         setUserStatus({

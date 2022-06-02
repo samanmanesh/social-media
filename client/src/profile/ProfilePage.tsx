@@ -29,6 +29,7 @@ const ProfilePage = (props: Props) => {
   //user is user we followed
 
   useEffect(() => {
+    console.log("hit useEffect inside profile page ");
     const fetchUserData = async () => {
       if (user && params.username === user?.username) {
         setUserOfProfile(user);
@@ -52,15 +53,10 @@ const ProfilePage = (props: Props) => {
           });
         }
       }
-      // //user posts
-      // console.log("user of profile", userOfProfile);
-      // const { data: posts } = await getUserPosts(userOfProfile.username);
-      // // setUserOfProfile(userData);
-      // setUserPosts(posts);
     };
 
     fetchUserData();
-  }, [params.username]);
+  }, [params.username, user]);
 
   useEffect(() => {
     const fetchUserPosts = async () => {
@@ -75,7 +71,7 @@ const ProfilePage = (props: Props) => {
       setUserPosts(posts);
     };
     if (userOfProfile) fetchUserPosts();
-  }, [userOfProfile]);
+  }, [userOfProfile ]);
 
   console.log("userOfProfile", userOfProfile);
   console.log("userPosts", userPosts);
