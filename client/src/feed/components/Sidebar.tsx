@@ -11,12 +11,14 @@ export function Sidebar({ ...props }: Props) {
   const [people, setPeople] = React.useState<UserSuggestion[]>([]);
 
   useEffect(() => {
-    console.log("FriendSuggestion");
     const fetchPeople = async () => {
       try {
         if (user) {
           const peopleList = await getPeople(user._id);
-          const firstFive = peopleList.data.slice(0, 5);
+          const excludeCurrentUser = peopleList.data.filter(
+            (person) => person._id !== user._id
+          );
+          const firstFive = excludeCurrentUser.slice(0, 5);
           // setPeople(peopleList.data);
           setPeople(firstFive);
         }

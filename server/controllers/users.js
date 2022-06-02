@@ -168,11 +168,13 @@ export const getFriends = async (req, res) => {
   // fetch all the users and then filter the users that are not in the current user following list
 
   try {
-    const curUser = await User.findById(req.params.userId);
-    if (curUser) {
+    const currUser = await User.findById(req.params.userId);
+    if (currUser) {
       const users = await User.find({});
+      //filter the users that are not in the current user following list and also not the current user
+
       const friends = users.filter((user) => {
-        return !curUser.following.includes(user._id);
+        return (!currUser.following.includes(user._id) && user._id !== currUser._id);
       });
       let friendsListSummary = [];
       friends.forEach((friend) => {
