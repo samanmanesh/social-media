@@ -24,10 +24,10 @@ export const getPeople = (userId : string): Promise<AxiosResponse<UserSuggestion
   return instance.get(`users/people/${userId}`);
 }
 
-export const followUser = (userId: string): Promise<AxiosResponse<User>> => {
-  return instance.post(`users/${userId}/follow`);
+export const followUser = (userId: string, currUserId :string): Promise<AxiosResponse<User>> => {
+  return instance.put(`users/${userId}/follow`, {userId: currUserId});
 }
 
-export const unfollowUser = (userId: string, curUserId :string): Promise<AxiosResponse<User>> => {
-  return instance.post(`users/${userId}/unfollow`, curUserId);
+export const unfollowUser = (userId: string, currUserId :string): Promise<AxiosResponse<User>> => {
+  return instance.put(`users/${userId}/unfollow`, {userId: currUserId});
 }

@@ -30,19 +30,28 @@ const ProfileHeader = ({
   console.log("user", user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user: currUser } = useAuth();
+
+  // use mutation to follow or unfollow user when the button is clicked and update the user with setUser in auth
   const followHandler = async () => {
+    console.log("following Handler");
     if (userStatus.isFollowing && currUser) {
+      console.log("unfollowing");
       await unfollowUser(user._id, currUser?._id);
       setUserStatus({
         isCurrentUser: false,
         isFollowing: false,
       });
     } else if (currUser && !userStatus.isFollowing) {
-      await followUser(user.username);
-      setUserStatus({
-        isCurrentUser: false,
-        isFollowing: true,
-      });
+      console.log("following user", user._id, currUser?._id);
+      try {
+        await followUser(user._id, currUser?._id);
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: true,
+        });
+      } catch (err) {
+        console.log("follow user error", err);
+      }
     }
   };
 
@@ -86,7 +95,10 @@ const ProfileHeader = ({
                 />
               </div>
             ) : (
-              <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2  px-2 py-1 text-white font-bold text-sm whitespace-nowrap rounded bg-blue-500">
+              <button
+                onClick={followHandler}
+                className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2  px-2 py-1 text-white font-bold text-sm whitespace-nowrap rounded bg-blue-500"
+              >
                 Follow
               </button>
             )}

@@ -78,7 +78,8 @@ export const getUsers = async (req, res) => {
 export const followUser = async (req, res) => {
   const { id } = req.params; // id is the user id the current user id
   const { userId } = req.body;
-
+  console.log(req.body);
+  console.log("id, userId", id, userId);
   if (userId === id) {
     return res.status(403).json({
       message: "You cannot follow yourself",
