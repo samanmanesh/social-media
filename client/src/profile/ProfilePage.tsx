@@ -102,7 +102,7 @@ const ProfilePage = (props: Props) => {
   return (
     <div className=" container flex flex-col">
       <ProfileHeader
-        user={userOfProfile}
+        userOfProfile={userOfProfile}
         userDetails={userDetails}
         userStatus={userStatus}
         setUserStatus={setUserStatus}

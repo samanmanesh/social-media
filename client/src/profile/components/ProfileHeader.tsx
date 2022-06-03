@@ -16,60 +16,65 @@ interface UserStatus {
 }
 
 type Props = {
-  user: User;
+  userOfProfile: User;
   userDetails: UserDetails;
   userStatus: UserStatus;
   setUserStatus: (userStatus: UserStatus) => void;
 };
 
 const ProfileHeader = ({
-  user,
+  userOfProfile,
   userDetails,
   userStatus,
   setUserStatus,
 }: Props) => {
-  console.log("user", user);
+  console.log("user", userOfProfile);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user: currUser, setUser } = useAuth();
 
-  const { mutate, error, isLoading } = useMutation(unfollowUser, {
-    onSuccess: (
-      onSuccess: ({ data }) => {
-        
-      },
-      onError: (err: any) => {
-        console.log("err", err);
-      },
-    ),
-  });
-  
+  // const { mutate, error, isLoading } = useMutation(unfollowUser, {
+  //   onSuccess: (data) => {
+  //     console.log("data in unfollowUser", data);
 
-  //todo: need to update the user in auth
-  const updateUserFollowing = (userId: string, action: string) => {
+  //     if (data.data) {
+  //       updateUserFollowing()
+  //       setUserStatus({
+  //         isCurrentUser: false,
+  //         isFollowing: false,
+  //       });
+  //     }
+  //   },
+  // });
+
+  //todo: need to update the user in auth ✓
+  const updateUserFollowing = (userOfProfileId: string, action: string) => {
     //Unfollow user
     if (action === "unfollow") {
-      if (currUser && userId) {
+      if (currUser && userOfProfileId) {
         setUser({
           ...currUser,
           following: currUser.following.filter(
-            (following) => following !== userId
+            (following) => following !== userOfProfileId
           ),
         });
       }
     }
 
     //follow user
-    if (action === "follow" && currUser && userId) {
-      setUser({ ...currUser, following: [...currUser.following, userId] });
+    if (action === "follow" && currUser && userOfProfileId) {
+      setUser({
+        ...currUser,
+        following: [...currUser.following, userOfProfileId],
+      });
     }
   };
 
   const followHandler = async () => {
     if (userStatus.isFollowing && currUser) {
       try {
-        const result = await unfollowUser(user._id, currUser?._id);
+        const result = await unfollowUser(userOfProfile._id, currUser?._id);
         if (result.data) {
-          updateUserFollowing(user._id, "unfollow");
+          updateUserFollowing(userOfProfile._id, "unfollow");
           setUserStatus({
             isCurrentUser: false,
             isFollowing: false,
@@ -80,9 +85,9 @@ const ProfileHeader = ({
       }
     } else if (currUser && !userStatus.isFollowing) {
       try {
-        const result = await followUser(user._id, currUser?._id);
+        const result = await followUser(userOfProfile._id, currUser?._id);
         if (result.data) {
-          updateUserFollowing(user._id, "follow");
+          updateUserFollowing(userOfProfile._id, "follow");
           setUserStatus({
             isCurrentUser: false,
             isFollowing: true,
@@ -100,8 +105,8 @@ const ProfileHeader = ({
         <div className="px-4 py-2 mr-4 md:ml-12 md:mr-16 flex-shrink-0 grid place-items-center">
           <img
             src={
-              user?.profilePicture
-                ? user.profilePicture
+              userOfProfile?.profilePicture
+                ? userOfProfile.profilePicture
                 : PF + "people/no-image-avatar2.png"
             }
             alt="profileImage"
@@ -112,10 +117,10 @@ const ProfileHeader = ({
           {/* Username Section */}
           <div className="flex flex-col sm:flex-row items-start mb-4">
             <h1
-              title={user.username}
+              title={userOfProfile.username}
               className="font-medium text-2xl overflow-hidden whitespace-nowrap text-ellipsis w-40 sm:w-52 cursor-default"
             >
-              {user.username}
+              {userOfProfile.username}
             </h1>
 
             {/* here for button we need to show it based on if its current user?, a random profile, or a profile we followed  */}
@@ -156,7 +161,7 @@ const ProfileHeader = ({
           <div className="mt-2">
             {/* <p className="font-medium">Name</p>
             <p>bio what ever they want put here</p> */}
-            {user.desc}
+            {userOfProfile.desc}
           </div>
         </div>
       </div>
