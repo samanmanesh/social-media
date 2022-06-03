@@ -44,7 +44,7 @@ const ProfileHeader = ({
     },
     onError: (err) => {
       console.log("err in unfollowUser", err);
-    },
+    }
   });
 
   const { mutate: followUserMutation } = useMutation(followUser, {
@@ -59,8 +59,10 @@ const ProfileHeader = ({
     },
     onError: (err) => {
       console.log("err in followUser", err);
-    },
+    }
   });
+
+
 
   //todo: need to update the user in auth ✓
   const updateUserFollowing = (userOfProfileId: string, action: string) => {
@@ -90,7 +92,9 @@ const ProfileHeader = ({
         userIdToUnfollow: userOfProfile._id,
         currUserId: currUser._id,
       });
+      
     } else if (currUser && !userStatus.isFollowing) {
+      
       followUserMutation({
         userIdToFollow: userOfProfile._id,
         currUserId: currUser._id,
