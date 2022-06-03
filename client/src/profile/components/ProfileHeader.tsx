@@ -29,27 +29,55 @@ const ProfileHeader = ({
 }: Props) => {
   console.log("user", user);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
-  const { user: currUser } = useAuth();
+  const { user: currUser, setUser } = useAuth();
 
   // use mutation to follow or unfollow user when the button is clicked and update the user with setUser in auth
+
+  //todo: need to update the user in auth
+  const updateUserFollowing = (userId: string, action: string) => {
+    //Unfollow user
+    if (action === "unfollow") {
+      if (currUser && userId) {
+        setUser({
+          ...currUser,
+          following: currUser.following.filter(
+            (following) => following !== userId
+          ),
+        });
+      }
+    }
+
+    //follow user
+    if (action === "follow" && currUser && userId) {
+      setUser({ ...currUser, following: [...currUser.following, userId] });
+    }
+  };
+
   const followHandler = async () => {
     console.log("following Handler");
     if (userStatus.isFollowing && currUser) {
-      const result  = await unfollowUser(user._id, currUser?._id);
-      setUserStatus({
-        isCurrentUser: false,
-        isFollowing: false,
-      });
-      //todo: need to update the user in auth
-
-      console.log("following result", result);
+      try {
+        const result = await unfollowUser(user._id, currUser?._id);
+        if (result.data) {
+          updateUserFollowing(user._id, "unfollow");
+          setUserStatus({
+            isCurrentUser: false,
+            isFollowing: false,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else if (currUser && !userStatus.isFollowing) {
       try {
-        await followUser(user._id, currUser?._id);
-        setUserStatus({
-          isCurrentUser: false,
-          isFollowing: true,
-        });
+        const result = await followUser(user._id, currUser?._id);
+        if (result.data) {
+          updateUserFollowing(user._id, "follow");
+          setUserStatus({
+            isCurrentUser: false,
+            isFollowing: true,
+          });
+        }
       } catch (err) {
         console.log("follow user error", err);
       }
