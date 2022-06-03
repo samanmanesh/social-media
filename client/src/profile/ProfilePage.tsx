@@ -18,19 +18,11 @@ const ProfilePage = (props: Props) => {
   const params = useParams();
   const [userPosts, setUserPosts] = useState([] as Post[]);
   const [userOfProfile, setUserOfProfile] = useState({} as User);
-  const { user, setUser } = useAuth();
+  const { user } = useAuth();
   const [userStatus, setUserStatus] = useState({
     isCurrentUser: false,
     isFollowing: false,
   });
-
-  //user is current user
-  //user is random user
-  //user is user we followed
-
-  
-
-
 
   useEffect(() => {
     const fetchUserData = async () => {

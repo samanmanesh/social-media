@@ -1,5 +1,6 @@
 import { UserRemoveIcon } from "@heroicons/react/solid";
 import { unfollowUser, followUser } from "api";
+import { useMutation } from "react-query";
 import { useAuth } from "../../auth/utils";
 
 interface UserDetails {
@@ -31,7 +32,17 @@ const ProfileHeader = ({
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user: currUser, setUser } = useAuth();
 
-  // use mutation to follow or unfollow user when the button is clicked and update the user with setUser in auth
+  const { mutate, error, isLoading } = useMutation(unfollowUser, {
+    onSuccess: (
+      onSuccess: ({ data }) => {
+        
+      },
+      onError: (err: any) => {
+        console.log("err", err);
+      },
+    ),
+  });
+  
 
   //todo: need to update the user in auth
   const updateUserFollowing = (userId: string, action: string) => {
@@ -54,7 +65,6 @@ const ProfileHeader = ({
   };
 
   const followHandler = async () => {
-    console.log("following Handler");
     if (userStatus.isFollowing && currUser) {
       try {
         const result = await unfollowUser(user._id, currUser?._id);
