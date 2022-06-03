@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { FeedPage } from "./feed/components";
 import { AuthProvider } from "auth";
 import { Toaster } from "react-hot-toast";
+import SettingPage from "accounts/SettingPage";
 
 function App() {
   const client = new QueryClient();
@@ -34,6 +35,14 @@ function App() {
                   element={
                     <RequireAuth>
                       <ProfilePage />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="accounts/edit"
+                  element={
+                    <RequireAuth>
+                      <SettingPage />
                     </RequireAuth>
                   }
                 />
