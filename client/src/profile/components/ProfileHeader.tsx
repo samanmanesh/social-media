@@ -32,19 +32,37 @@ const ProfileHeader = ({
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user: currUser, setUser } = useAuth();
 
-  // const { mutate, error, isLoading } = useMutation(unfollowUser, {
-  //   onSuccess: (data) => {
-  //     console.log("data in unfollowUser", data);
+  const { mutate, error, isLoading } = useMutation(unfollowUser, {
+    onSuccess: (data) => {
+      if (data.data) {
+        updateUserFollowing(userOfProfile._id, "unfollow");
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: false,
+        });
+      }
+    },
+    onError: (err) => {
+      console.log("err in unfollowUser", err);
+    }
+  });
 
-  //     if (data.data) {
-  //       updateUserFollowing()
-  //       setUserStatus({
-  //         isCurrentUser: false,
-  //         isFollowing: false,
-  //       });
-  //     }
-  //   },
-  // });
+  const { mutate: followUserMutation } = useMutation(followUser, {
+    onSuccess: (data) => {
+      if (data.data) {
+        updateUserFollowing(userOfProfile._id, "follow");
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: true,
+        });
+      }
+    },
+    onError: (err) => {
+      console.log("err in followUser", err);
+    }
+  });
+
+
 
   //todo: need to update the user in auth ✓
   const updateUserFollowing = (userOfProfileId: string, action: string) => {
@@ -59,7 +77,6 @@ const ProfileHeader = ({
         });
       }
     }
-
     //follow user
     if (action === "follow" && currUser && userOfProfileId) {
       setUser({
@@ -71,31 +88,40 @@ const ProfileHeader = ({
 
   const followHandler = async () => {
     if (userStatus.isFollowing && currUser) {
-      try {
-        const result = await unfollowUser(userOfProfile._id, currUser?._id);
-        if (result.data) {
-          updateUserFollowing(userOfProfile._id, "unfollow");
-          setUserStatus({
-            isCurrentUser: false,
-            isFollowing: false,
-          });
-        }
-      } catch (error) {
-        console.log(error);
-      }
+      mutate({
+        userIdToUnfollow: userOfProfile._id,
+        currUserId: currUser._id,
+      });
+      // try {
+      //   const result = await unfollowUser(userOfProfile._id, currUser?._id);
+      //   if (result.data) {
+      //     updateUserFollowing(userOfProfile._id, "unfollow");
+      //     setUserStatus({
+      //       isCurrentUser: false,
+      //       isFollowing: false,
+      //     });
+      //   }
+      // } catch (error) {
+      //   console.log(error);
+      // }
     } else if (currUser && !userStatus.isFollowing) {
-      try {
-        const result = await followUser(userOfProfile._id, currUser?._id);
-        if (result.data) {
-          updateUserFollowing(userOfProfile._id, "follow");
-          setUserStatus({
-            isCurrentUser: false,
-            isFollowing: true,
-          });
-        }
-      } catch (err) {
-        console.log("follow user error", err);
-      }
+      
+      followUserMutation({
+        userIdToFollow: userOfProfile._id,
+        currUserId: currUser._id,
+      });
+      // try {
+      //   const result = await followUser(userOfProfile._id, currUser?._id);
+      //   if (result.data) {
+      //     updateUserFollowing(userOfProfile._id, "follow");
+      //     setUserStatus({
+      //       isCurrentUser: false,
+      //       isFollowing: true,
+      //     });
+      //   }
+      // } catch (err) {
+      //   console.log("follow user error", err);
+      // }
     }
   };
 

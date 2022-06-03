@@ -20,14 +20,32 @@ export const getUser = (params: {
   });
 };
 
-export const getPeople = (userId : string): Promise<AxiosResponse<UserSuggestion[]>> => {
+export const getPeople = (
+  userId: string
+): Promise<AxiosResponse<UserSuggestion[]>> => {
   return instance.get(`users/people/${userId}`);
+};
+interface FollowUserParams {
+  userIdToFollow: string;
+  currUserId: string;
 }
 
-export const followUser = (userId: string, currUserId :string): Promise<AxiosResponse<User>> => {
-  return instance.put(`users/${userId}/follow`, {userId: currUserId});
-}
+export const followUser = ({
+  userIdToFollow,
+  currUserId,
+}: FollowUserParams): Promise<AxiosResponse<User>> => {
+  return instance.put(`users/${userIdToFollow}/follow`, { userId: currUserId });
+};
 
-export const unfollowUser = (userId: string, currUserId :string): Promise<AxiosResponse<User>> => {
-  return instance.put(`users/${userId}/unfollow`, {userId: currUserId});
+interface UnfolllowUserParams {
+  userIdToUnfollow: string;
+  currUserId: string;
 }
+export const unfollowUser = ({
+  userIdToUnfollow,
+  currUserId,
+}: UnfolllowUserParams): Promise<AxiosResponse<User>> => {
+  return instance.put(`users/${userIdToUnfollow}/unfollow`, {
+    userId: currUserId,
+  });
+};
