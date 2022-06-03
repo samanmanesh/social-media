@@ -2,6 +2,7 @@ import { FriendSuggestion } from "./FriendSuggestion";
 import { useAuth } from "../../auth/utils";
 import React, { useEffect } from "react";
 import { getPeople, UserSuggestion } from "api";
+import { Link } from "react-router-dom";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ ...props }: Props) {
@@ -34,17 +35,21 @@ export function Sidebar({ ...props }: Props) {
   return (
     <div className="h-96 sticky flex-shrink-0 top-28 p-6 hidden lg:block ml-8 w-80">
       <div className="flex space-x-4">
-        <img
-          src={
-            user?.profilePicture
-              ? PF + "/people/" + user.profilePicture
-              : PF + "people/no-image-avatar2.png"
-          }
-          alt="profile"
-          className="rounded-full w-14 h-14 object-cover border border-gray-400 "
-        />
+        <Link to={`/profile/${user?.username}`}>
+          <img
+            src={
+              user?.profilePicture
+                ? PF + "/people/" + user.profilePicture
+                : PF + "people/no-image-avatar2.png"
+            }
+            alt="profile"
+            className="rounded-full w-14 h-14 object-cover border border-gray-400 "
+          />
+        </Link>
         <div className="flex flex-col mt-2 text-sm">
-          <span className="font-semibold">{user?.username}</span>
+          <Link to={`/profile/${user?.username}`}>
+            <span className="font-semibold">{user?.username}</span>
+          </Link>
           <span className="text-gray-800">{user?.desc}</span>
         </div>
       </div>
