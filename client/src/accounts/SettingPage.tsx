@@ -3,13 +3,50 @@ import { useAuth } from "auth";
 
 type Props = {};
 
+// username
+// email
+// desc
+
 const SettingPage = (props: Props) => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
+
+  const onFieldChange = (field: keyof User, value: any) => {
+    if (!user) return;
+
+    // const newUser: User = {
+    //   ...user,
+    //   [field]: value,
+    // };
+
+    // setUser(newUser);
+  };
+
+  const fields: {
+    name: keyof User;
+    label: string;
+    description: string;
+    type: "text" | "textarea";
+  }[] = [
+    {
+      name: "username",
+      label: "Username",
+      description: "",
+      type: "text",
+    },
+    {
+      name: "desc",
+      label: "Description",
+      description: "Tell us a little about yourself",
+      type: "textarea",
+    },
+  ];
+
   return (
-    <div className="container">
-      <div className="flex space-x-6">
-        <div className="  ">
+    <div className="max-w-4xl mx-auto p-6 border rounded-md mt-8">
+      <div className="flex space-x-6 max-w-lg py-4 md:px-28">
+        <div className="">
           <img
             src={
               user?.profilePicture
@@ -23,46 +60,39 @@ const SettingPage = (props: Props) => {
         <div className=" space-x-4">
           <h1
             title={user?.username}
-            className="font-semibold text-xl text-gray-800 px-4 py-"
+            className="font-bold text-xl text-gray-800 px-4"
           >
             {user?.username}
           </h1>
-          <button className="text-blue-500 text-sm font-bold">
+          <button className="text-blue-500 text-sm font-bold ">
             Change Profile Photo
           </button>
         </div>
       </div>
 
-      <form action="">
-        <label htmlFor="" className="font-semibold">
-          {" "}
-          Name{" "}
-        </label>
-        <input type="text" className="border" />
-        <div className="text-sm text-gray-600">
-          Help people discover your account by using the name you're known by:
-          either your full name, nickname, or business name.
-        </div>
-        <label htmlFor="" className="font-semibold">
-          {" "}
-          Username{" "}
-        </label>
-        <input type="text" className="border" />
-        <label htmlFor="" className="font-semibold">
-          {" "}
-          Bio{" "}
-        </label>
-        <textarea
-          placeholder="Write a caption..."
-          className=" w-full outline-none border rounded my-4 min-h-[15ch] p-1 "
-        />
-        <label htmlFor="" className="font-semibold">
-          {" "}
-          Email{" "}
-        </label>
-        <input type="text" className="border" />
-      </form>
-      <button className=" bg-blue-500 text-white rounded p-1">Submit</button>
+      <div className="max-w-lg space-y-4">
+        {fields.map((field, index) => (
+          <div key={index} className="grid md:grid-cols-5 gap-x-8 gap-y-2">
+            <div className="md:col-span-2 md:text-right">
+              <label htmlFor={field.name} className="font-semibold capitalize">
+                {field.label}
+              </label>
+            </div>
+            <div className="md:col-span-3">
+              {field.type === "text" ? (
+                <input
+                  type="text"
+                  id={field.name}
+                  className="w-full border rounded"
+                />
+              ) : (
+                <textarea id={field.name} className="w-full border rounded" />
+              )}
+              <p className="text-sm text-gray-600 my-2"> {field.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
