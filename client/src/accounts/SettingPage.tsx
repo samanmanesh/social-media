@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "auth";
+import ProfilePhotoUploaderModal from './components/ProfilePhotoUploaderModal';
 
 type Props = {};
 
@@ -10,11 +11,16 @@ type Props = {};
 //todo: let user change any options of the fileds bellow incoluding the profile picture and when press submit a propmpt will appear to confirm that the user is sure that he want to change the options then the user will be updated
 const SettingPage = (props: Props) => {
   const { user, setUser } = useAuth();
-  const [updateUser, setUpdateUser] = useState();
+  // const [updateUser, setUpdateUser] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
-
   const [currUserData , setCurrUserData] = useState(user);
+  const [isOpen, setIsOpen] = useState(false);
+  const [file, setFile] = useState(null as File | null);
+  const [image, setImage] = useState(null as any);
 
+  useEffect(() => {
+    if (file) setImage(URL.createObjectURL(file));
+  }, [file]);
 
   const onFieldChange = (field: keyof User, value: any) => {
     if (!user || ! currUserData) return;
@@ -36,6 +42,9 @@ const SettingPage = (props: Props) => {
     console.log("onSubmit clicked", user);
     //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
     //then update the user
+  };
+  const openModal = () => {
+    setIsOpen(true);
   };
 
   const fields: {
@@ -96,11 +105,12 @@ const SettingPage = (props: Props) => {
           >
             {currUserData?.username}
           </h1>
-          <button className="text-blue-500 text-sm font-bold ">
+          <button className="text-blue-500 text-sm font-bold " onClick={openModal}>
             {currUserData?.profilePicture
               ? "Change Profile Photo"
               : "Add Profile Photo"}
           </button>
+          <ProfilePhotoUploaderModal isOpen={isOpen} setIsOpen={setIsOpen} user={currUserData}  file ={file} setFile={setFile} image={image} setImage={setImage} />
         </div>
       </div>
 
