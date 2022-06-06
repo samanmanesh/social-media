@@ -55,7 +55,7 @@ const SettingPage = (props: Props) => {
     onSuccess: (data) => {
       console.log("data in updateUserData success", data);
       // setIsOpen(false);
-      
+
       // setUser(data.data);
     },
   });
@@ -78,7 +78,7 @@ const SettingPage = (props: Props) => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!file) return;
+
     // setCurrUserData(updateUser);
     console.log("onSubmit clicked", user);
     console.log("file", file);
@@ -87,12 +87,21 @@ const SettingPage = (props: Props) => {
 
     //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
     //then update the user
-    const formData = new FormData();
+    if (file) {
+      const formData = new FormData();
 
-    formData.append("file", file);
-    console.log("formData", formData.getAll("file"));
-    uploadPhoto(formData);
+      formData.append("file", file);
+      console.log("formData", formData.getAll("file"));
+      uploadPhoto(formData);
+    } else {
+      updatedUser &&
+        updateUser({
+          userId: updatedUser._id,
+          userDataToUpdated: updatedUser,
+        });
+    }
   };
+
   const openModal = () => {
     setIsOpen(true);
   };
