@@ -2,6 +2,7 @@ import { UserRemoveIcon } from "@heroicons/react/solid";
 import { unfollowUser, followUser } from "api";
 import { useMutation } from "react-query";
 import { useAuth } from "../../auth/utils";
+import { Link } from 'react-router-dom';
 
 interface UserDetails {
   numOfPosts: number;
@@ -128,9 +129,9 @@ const ProfileHeader = ({
 
             {/* here for button we need to show it based on if its current user?, a random profile, or a profile we followed  */}
             {userStatus.isCurrentUser ? (
-              <button className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded">
+              <Link to="/accounts/edit" className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded">
                 Edit Profile
-              </button>
+              </Link>
             ) : userStatus.isFollowing ? (
               <div className="flex space-x-2 my-4 sm:my-0 ">
                 <button className="w-full sm:w-max sm:mx-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded ">

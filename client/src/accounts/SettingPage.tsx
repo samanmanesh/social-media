@@ -77,7 +77,9 @@ const SettingPage = (props: Props) => {
             {user?.username}
           </h1>
           <button className="text-blue-500 text-sm font-bold ">
-            Change Profile Photo
+            {user?.profilePicture
+              ? "Change Profile Photo"
+              : "Add Profile Photo"}
           </button>
         </div>
       </div>
@@ -108,7 +110,9 @@ const SettingPage = (props: Props) => {
             </div>
           </form>
         ))}
-        <button className="text-white bg-blue-500 text-sm font-bold border px-2 py-1 rounded md:mx-52">Submit</button>
+        <button className="text-white bg-blue-500 text-sm font-bold border px-2 py-1 rounded md:mx-52">
+          Submit
+        </button>
       </div>
     </div>
   );
