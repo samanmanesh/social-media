@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "auth";
 
 type Props = {};
@@ -7,20 +7,35 @@ type Props = {};
 // email
 // desc
 
+//todo: let user change any options of the fileds bellow incoluding the profile picture and when press submit a propmpt will appear to confirm that the user is sure that he want to change the options then the user will be updated
 const SettingPage = (props: Props) => {
   const { user, setUser } = useAuth();
-
+  const [updateUser, setUpdateUser] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
-  const onFieldChange = (field: keyof User, value: any) => {
-    if (!user) return;
+  const [currUserData , setCurrUserData] = useState(user);
 
-    // const newUser: User = {
-    //   ...user,
-    //   [field]: value,
-    // };
+
+  const onFieldChange = (field: keyof User, value: any) => {
+    if (!user || ! currUserData) return;
+    //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
+    //then update the user
+    console.log("field", field);
+    console.log("value", value);
+    
+    const newUser: User = {
+      ...currUserData,
+      [field]: value,
+    };
 
     // setUser(newUser);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("onSubmit clicked", user);
+    //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
+    //then update the user
   };
 
   const fields: {
@@ -28,6 +43,7 @@ const SettingPage = (props: Props) => {
     label: string;
     description: string;
     type: "text" | "textarea";
+    value: any;
   }[] = [
     {
       name: "name",
@@ -35,24 +51,28 @@ const SettingPage = (props: Props) => {
       description:
         "Help people discover your account by using the name you're known by: either your full name, nickname, or business name",
       type: "text",
+      value: currUserData?.name,
     },
     {
       name: "username",
       label: "Username",
       description: "",
       type: "text",
+      value: currUserData?.username,
     },
     {
       name: "desc",
       label: "Bio",
       description: "Tell us a little about yourself",
       type: "textarea",
+      value: currUserData?.desc,
     },
     {
       name: "email",
       label: "Email",
       description: "",
       type: "text",
+      value: currUserData?.email,
     },
   ];
 
@@ -61,8 +81,8 @@ const SettingPage = (props: Props) => {
       <div className="flex space-x-6 max-w-lg py-4 md:px-32">
         <img
           src={
-            user?.profilePicture
-              ? user.profilePicture
+            currUserData?.profilePicture
+              ? currUserData.profilePicture
               : PF + "people/no-image-avatar2.png"
           }
           alt="profileImage"
@@ -71,13 +91,13 @@ const SettingPage = (props: Props) => {
 
         <div className="space-x-4">
           <h1
-            title={user?.username}
+            title={currUserData?.username}
             className="font-bold text-xl text-gray-800 px-4"
           >
-            {user?.username}
+            {currUserData?.username}
           </h1>
           <button className="text-blue-500 text-sm font-bold ">
-            {user?.profilePicture
+            {currUserData?.profilePicture
               ? "Change Profile Photo"
               : "Add Profile Photo"}
           </button>
@@ -89,7 +109,8 @@ const SettingPage = (props: Props) => {
           <form
             key={index}
             className="grid md:grid-cols-5 gap-x-8 gap-y-2"
-            action="submit"
+            action=""
+            onSubmit={onSubmit}
           >
             <div className="md:col-span-2 md:text-right">
               <label htmlFor={field.name} className="font-semibold capitalize">
@@ -97,15 +118,25 @@ const SettingPage = (props: Props) => {
               </label>
             </div>
             <div className="md:col-span-3">
-              {field.type === "text" ? (
+              {user && field.type === "text" ? (
                 <input
                   type="text"
                   id={field.name}
-                  className="w-full border rounded p-1"
+                  className="w-full border rounded p-1 placeholder:text-black"
+                  onChange={(e) => onFieldChange(field.name, e.target.value)}
+                  placeholder={field.value}
                 />
               ) : (
-                <textarea id={field.name} className="w-full border rounded" />
+                
+                  <textarea
+                    id={field.name}
+                    className="w-full border rounded"
+                    onChange={(e) => onFieldChange(field.name, e.target.value)}
+                    value={user?.desc}
+                  />
+                
               )}
+
               <p className="text-xs text-gray-600 my-2"> {field.description}</p>
             </div>
           </form>
