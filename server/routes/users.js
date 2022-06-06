@@ -6,6 +6,7 @@ import {
   followUser,
   unfollowUser,
   getFriends,
+  up
 } from "../controllers/users.js";
 const router = express.Router();
 
@@ -17,6 +18,9 @@ router.get("/", getUsers);
 
 //update user by id
 router.put("/:id", updateUser);
+
+//upload a user image into cloudinary
+router.post("/upload", upload.single("file"), uploadUserProfileImage);
 
 //delete a user by id
 router.delete("/:id", deleteUser);

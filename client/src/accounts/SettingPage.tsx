@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "auth";
 import ProfilePhotoUploaderModal from './components/ProfilePhotoUploaderModal';
+import { useMutation } from 'react-query';
 
 type Props = {};
 
@@ -10,41 +11,45 @@ type Props = {};
 
 //todo: let user change any options of the fileds bellow incoluding the profile picture and when press submit a propmpt will appear to confirm that the user is sure that he want to change the options then the user will be updated
 const SettingPage = (props: Props) => {
-  const { user, setUser } = useAuth();
-  // const [updateUser, setUpdateUser] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
-  const [currUserData , setCurrUserData] = useState(user);
+  const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
+  const [currUserData , setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
+  const [updateUser, setUpdateUser] = useState(null as User | null); // the user data that will be updated after the user press submit
   const [isOpen, setIsOpen] = useState(false);
-  const [file, setFile] = useState(null as File | null);
-  const [image, setImage] = useState(null as any);
+  const [file, setFile] = useState(null as File | null); // the file that the user will upload
+  const [image, setImage] = useState(null as any); // the image that the user will upload
+
+  {mutate} =useMutation(updateUser )
 
   useEffect(() => {
     if (file) setImage(URL.createObjectURL(file));
-    console.log("image", image);
   }, [file]);
 
-  console.log("image1", image);
   
   const onFieldChange = (field: keyof User, value: any) => {
     if (!user || ! currUserData) return;
-    //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
-    //then update the user
-    console.log("field", field);
-    console.log("value", value);
-    
+   
+    //todo first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
+    //todo then update the user
     const newUser: User = {
       ...currUserData,
       [field]: value,
     };
-
-    // setUser(newUser);
+    setUpdateUser(newUser);
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // setCurrUserData(updateUser);
     console.log("onSubmit clicked", user);
+    console.log("file", file);
+    console.log("image", image);
+    console.log("currUserData", currUserData);
+
     //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
     //then update the user
+
   };
   const openModal = () => {
     setIsOpen(true);
@@ -124,6 +129,7 @@ const SettingPage = (props: Props) => {
             className="grid md:grid-cols-5 gap-x-8 gap-y-2"
             action=""
             onSubmit={onSubmit}
+            id="submitForm"
           >
             <div className="md:col-span-2 md:text-right">
               <label htmlFor={field.name} className="font-semibold capitalize">
@@ -154,7 +160,7 @@ const SettingPage = (props: Props) => {
             </div>
           </form>
         ))}
-        <button className="text-white bg-blue-500 text-sm font-bold border px-2 py-1 rounded md:mx-52">
+        <button form="submitForm" type="submit" className="text-white bg-blue-500 text-sm font-bold border px-2 py-1 rounded md:mx-52" >
           Submit
         </button>
       </div>

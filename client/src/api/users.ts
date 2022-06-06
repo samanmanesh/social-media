@@ -49,3 +49,7 @@ export const unfollowUser = ({
     userId: currUserId,
   });
 };
+
+export const updateUser =({}):Promise<AxiosResponse<User>>  => {
+  return instance.put(`users`);
+}

@@ -1,6 +1,57 @@
 import User from "../models/user.js";
 import { makeHashedPass, compareHashedPass } from "../helpers/bcryptHandler.js";
 
+
+
+
+export const uploadUserProfileImage = async (req, res) => {
+  console.log("createPost", req.file);
+
+  if (req.file) {
+    //version promise
+    const streamUpload = (req) => {
+      return new Promise((resolve, reject) => {
+        let stream = cloudinary.v2.uploader.upload_stream((error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
+          }
+        });
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+    };
+
+    async function upload(req) {
+      try {
+        let result = await streamUpload(req);
+        return result;
+      } catch (error) {
+        return error;
+      }
+    }
+
+    // if size of file is greater than 10mb then reject
+    if (req.file.size > MAX_FILE_SIZE) {
+      return res.status(400).send({
+        message: "File size is too large",
+      });
+    }
+
+    await upload(req)
+      .then((uploaded) => {
+        return res.status(200).send(uploaded.url);
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(500).send(error);
+      });
+  } else {
+    return res.status(400).send("No file uploaded");
+  }
+};
+
+
 export const updateUser = async (req, res) => {
   const { id } = req.params; // id is the user id that we want to update the user
 
@@ -20,6 +71,8 @@ export const updateUser = async (req, res) => {
         return res.status(500).json({ message: err.message });
       }
     }
+
+    //upload the user image into cloudinary
 
     try {
       const user = await User.findByIdAndUpdate(id, { $set: req.body });
