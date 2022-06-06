@@ -20,8 +20,11 @@ const SettingPage = (props: Props) => {
 
   useEffect(() => {
     if (file) setImage(URL.createObjectURL(file));
+    console.log("image", image);
   }, [file]);
 
+  console.log("image1", image);
+  
   const onFieldChange = (field: keyof User, value: any) => {
     if (!user || ! currUserData) return;
     //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated

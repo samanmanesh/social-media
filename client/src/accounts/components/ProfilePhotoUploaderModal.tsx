@@ -57,9 +57,12 @@ function ProfilePhotoUploaderModal({
     if (e.target.files[0].size > MAX_FILE_SIZE) {
       toast.error("File size should be less than 10MB");
       setFile(null);
+      
       return;
     } else if (e.target.files[0]) {
       setFile(e.target.files[0]);
+      console.log("file", e.target.files[0]);
+      setIsOpen(false);
     }
   };
 
