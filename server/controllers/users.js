@@ -2,8 +2,7 @@ import User from "../models/user.js";
 import { makeHashedPass, compareHashedPass } from "../helpers/bcryptHandler.js";
 
 
-
-
+//upload the user image into cloudinary
 export const uploadUserProfileImage = async (req, res) => {
   console.log("createPost", req.file);
 
@@ -71,8 +70,6 @@ export const updateUser = async (req, res) => {
         return res.status(500).json({ message: err.message });
       }
     }
-
-    //upload the user image into cloudinary
 
     try {
       const user = await User.findByIdAndUpdate(id, { $set: req.body });

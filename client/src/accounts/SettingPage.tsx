@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "auth";
-import ProfilePhotoUploaderModal from './components/ProfilePhotoUploaderModal';
-import { useMutation } from 'react-query';
+import ProfilePhotoUploaderModal from "./components/ProfilePhotoUploaderModal";
+import { useMutation } from "react-query";
+import { uploadUserProfileImage } from "api";
+import { toast } from "react-hot-toast/dist/core/toast";
+import { updateUserData } from "../api/users";
 
 type Props = {};
 
@@ -13,34 +16,69 @@ type Props = {};
 const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
-  const [currUserData , setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
-  const [updateUser, setUpdateUser] = useState(null as User | null); // the user data that will be updated after the user press submit
+  const [currUserData, setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
+  const [updatedUser, setUpdatedUser] = useState(null as User | null); // the user data that will be updated after the user press submit
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState(null as File | null); // the file that the user will upload
   const [image, setImage] = useState(null as any); // the image that the user will upload
 
-  {mutate} =useMutation(updateUser )
+  // {mutate} =useMutation(updateUser )
+  const {
+    mutate: uploadPhoto,
+    isLoading,
+    error,
+    data,
+  } = useMutation(uploadUserProfileImage, {
+    onSuccess: (data) => {
+      console.log("data in uploadUserProifleImage on success", data);
+
+      if (updatedUser && data.data) {
+        const newUserData = {
+          ...updatedUser,
+          profilePicture: data.data,
+        };
+
+        updateUser({
+          userId: updatedUser._id,
+          userDataToUpdated: newUserData,
+        });
+      } else {
+        toast.error("Error in uploading post");
+      }
+    },
+    onError: (err: any) => {
+      toast.error(err.message);
+    },
+  });
+
+  const { mutate: updateUser } = useMutation(updateUserData, {
+    onSuccess: (data) => {
+      console.log("data in updateUserData success", data);
+      // setIsOpen(false);
+      
+      // setUser(data.data);
+    },
+  });
 
   useEffect(() => {
     if (file) setImage(URL.createObjectURL(file));
   }, [file]);
 
-  
   const onFieldChange = (field: keyof User, value: any) => {
-    if (!user || ! currUserData) return;
-   
+    if (!user || !currUserData) return;
+
     //todo first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
     //todo then update the user
     const newUser: User = {
       ...currUserData,
       [field]: value,
     };
-    setUpdateUser(newUser);
+    setUpdatedUser(newUser);
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    if (!file) return;
     // setCurrUserData(updateUser);
     console.log("onSubmit clicked", user);
     console.log("file", file);
@@ -49,7 +87,11 @@ const SettingPage = (props: Props) => {
 
     //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
     //then update the user
+    const formData = new FormData();
 
+    formData.append("file", file);
+    console.log("formData", formData.getAll("file"));
+    uploadPhoto(formData);
   };
   const openModal = () => {
     setIsOpen(true);
@@ -113,12 +155,23 @@ const SettingPage = (props: Props) => {
           >
             {currUserData?.username}
           </h1>
-          <button className="text-blue-500 text-sm font-bold " onClick={openModal}>
+          <button
+            className="text-blue-500 text-sm font-bold "
+            onClick={openModal}
+          >
             {currUserData?.profilePicture
               ? "Change Profile Photo"
               : "Add Profile Photo"}
           </button>
-          <ProfilePhotoUploaderModal isOpen={isOpen} setIsOpen={setIsOpen} user={currUserData}  file ={file} setFile={setFile} image={image} setImage={setImage} />
+          <ProfilePhotoUploaderModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            user={currUserData}
+            file={file}
+            setFile={setFile}
+            image={image}
+            setImage={setImage}
+          />
         </div>
       </div>
 
@@ -146,21 +199,23 @@ const SettingPage = (props: Props) => {
                   placeholder={field.value}
                 />
               ) : (
-                
-                  <textarea
-                    id={field.name}
-                    className="w-full border rounded"
-                    onChange={(e) => onFieldChange(field.name, e.target.value)}
-                    value={user?.desc}
-                  />
-                
+                <textarea
+                  id={field.name}
+                  className="w-full border rounded"
+                  onChange={(e) => onFieldChange(field.name, e.target.value)}
+                  value={user?.desc}
+                />
               )}
 
               <p className="text-xs text-gray-600 my-2"> {field.description}</p>
             </div>
           </form>
         ))}
-        <button form="submitForm" type="submit" className="text-white bg-blue-500 text-sm font-bold border px-2 py-1 rounded md:mx-52" >
+        <button
+          form="submitForm"
+          type="submit"
+          className="text-white bg-blue-500 text-sm font-bold border px-2 py-1 rounded md:mx-52"
+        >
           Submit
         </button>
       </div>

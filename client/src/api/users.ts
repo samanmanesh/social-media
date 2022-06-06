@@ -7,6 +7,19 @@ export interface UserSuggestion {
   profilePicture: string;
 }
 
+interface FollowUserParams {
+  userIdToFollow: string;
+  currUserId: string;
+}
+interface UnfolllowUserParams {
+  userIdToUnfollow: string;
+  currUserId: string;
+}
+
+interface UpdateUserParams {
+  userId: string;
+  userDataToUpdated: User;
+}
 export const getUser = (params: {
   userId?: string;
   username?: string;
@@ -25,10 +38,6 @@ export const getPeople = (
 ): Promise<AxiosResponse<UserSuggestion[]>> => {
   return instance.get(`users/people/${userId}`);
 };
-interface FollowUserParams {
-  userIdToFollow: string;
-  currUserId: string;
-}
 
 export const followUser = ({
   userIdToFollow,
@@ -37,10 +46,6 @@ export const followUser = ({
   return instance.put(`users/${userIdToFollow}/follow`, { userId: currUserId });
 };
 
-interface UnfolllowUserParams {
-  userIdToUnfollow: string;
-  currUserId: string;
-}
 export const unfollowUser = ({
   userIdToUnfollow,
   currUserId,
@@ -50,6 +55,12 @@ export const unfollowUser = ({
   });
 };
 
-export const updateUser =({}):Promise<AxiosResponse<User>>  => {
-  return instance.put(`users`);
-}
+export const uploadUserProfileImage = (file: any): Promise<AxiosResponse> => {
+  return instance.post("/users/upload", file);
+};
+
+export const updateUserData = (
+  data: UpdateUserParams
+): Promise<AxiosResponse<User>> => {
+  return instance.post(`users/${data.userId}`, data.userDataToUpdated);
+};
