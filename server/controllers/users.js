@@ -1,10 +1,11 @@
 import User from "../models/user.js";
 import { makeHashedPass, compareHashedPass } from "../helpers/bcryptHandler.js";
 
+const MAX_FILE_SIZE = 10485760;
 
 //upload the user image into cloudinary
 export const uploadUserProfileImage = async (req, res) => {
-  console.log("createPost", req.file);
+  console.log("uploadUserProfileImage", req.file);
 
   if (req.file) {
     //version promise

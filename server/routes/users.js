@@ -6,10 +6,14 @@ import {
   followUser,
   unfollowUser,
   getFriends,
-  up
+  uploadUserProfileImage
 } from "../controllers/users.js";
-const router = express.Router();
+import multer from "multer";
+import streamifier from "streamifier";
+import cloudinary from "cloudinary";
 
+const router = express.Router();
+const upload = multer();
 //get a users by id
 // router.get("/:id", getUsers);
 

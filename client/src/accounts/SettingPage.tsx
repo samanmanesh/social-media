@@ -3,8 +3,9 @@ import { useAuth } from "auth";
 import ProfilePhotoUploaderModal from "./components/ProfilePhotoUploaderModal";
 import { useMutation } from "react-query";
 import { uploadUserProfileImage } from "api";
-import { toast } from "react-hot-toast/dist/core/toast";
+
 import { updateUserData } from "../api/users";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -42,6 +43,7 @@ const SettingPage = (props: Props) => {
           userId: updatedUser._id,
           userDataToUpdated: newUserData,
         });
+
       } else {
         toast.error("Error in uploading post");
       }
@@ -64,15 +66,21 @@ const SettingPage = (props: Props) => {
     if (file) setImage(URL.createObjectURL(file));
   }, [file]);
 
+  useEffect(() => {
+    console.log("image", image);
+    // onFieldChange("profilePicture", image);
+    if (!user || !currUserData) return;
+    setCurrUserData({ ...currUserData, profilePicture: image });
+    setUpdatedUser( { ...currUserData });
+  }, [image]);
+
   const onFieldChange = (field: keyof User, value: any) => {
     if (!user || !currUserData) return;
-
-    //todo first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
-    //todo then update the user
     const newUser: User = {
       ...currUserData,
       [field]: value,
     };
+    // setCurrUserData(newUser);
     setUpdatedUser(newUser);
   };
 
@@ -84,12 +92,9 @@ const SettingPage = (props: Props) => {
     console.log("file", file);
     console.log("image", image);
     console.log("currUserData", currUserData);
-
-    //first show the prompts to confirm that the user is sure that he want to change the options then the user will be updated
-    //then update the user
+    // if there is a file or image then upload it to the server otherwise update the user
     if (file) {
       const formData = new FormData();
-
       formData.append("file", file);
       console.log("formData", formData.getAll("file"));
       uploadPhoto(formData);

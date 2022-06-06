@@ -62,5 +62,5 @@ export const uploadUserProfileImage = (file: any): Promise<AxiosResponse> => {
 export const updateUserData = (
   data: UpdateUserParams
 ): Promise<AxiosResponse<User>> => {
-  return instance.post(`users/${data.userId}`, data.userDataToUpdated);
+  return instance.put(`users/${data.userId}`, data.userDataToUpdated);
 };
