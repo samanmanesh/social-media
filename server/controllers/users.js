@@ -1,11 +1,12 @@
 import User from "../models/user.js";
 import { makeHashedPass, compareHashedPass } from "../helpers/bcryptHandler.js";
-
+import streamifier from "streamifier";
+import cloudinary from "cloudinary";
 const MAX_FILE_SIZE = 10485760;
 
 //upload the user image into cloudinary
 export const uploadUserProfileImage = async (req, res) => {
-  console.log("uploadUserProfileImage", req.file);
+  // console.log("uploadUserProfileImage", req.file);
 
   if (req.file) {
     //version promise
@@ -54,12 +55,13 @@ export const uploadUserProfileImage = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params; // id is the user id that we want to update the user
-
-  if (req.body.userId !== id) {
+  console.log("updateUser body", req.body);
+  console.log("params", req.params);
+  if (req.body._id !== id) {
     return res.status(403).json({
       message: "You are not authorized to update this user",
     });
-  } else if (req.body.userId === id || req.body.isAdmin) {
+  } else if (req.body._id === id || req.body.isAdmin) {
     // if password is provided to be updated
     if (req.body.password) {
       try {

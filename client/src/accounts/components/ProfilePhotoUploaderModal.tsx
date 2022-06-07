@@ -26,17 +26,6 @@ function ProfilePhotoUploaderModal({
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef<HTMLTextAreaElement>(null);
 
-  // const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   console.log("onSubmit clicked", file);
-  //   if (user && file) {
-  //     const formData = new FormData();
-  //     formData.append("file", file);
-  //     console.log("formData", formData.getAll("file"));
-  //     // mutate(formData);
-  //   }
-  // };
   const closeModal = () => {
     setIsOpen(false);
     setFile(null);

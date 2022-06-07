@@ -42,6 +42,7 @@ export const uploadPost = async (req, res) => {
 
     await upload(req)
       .then((uploaded) => {
+        
         return res.status(200).send(uploaded.url);
       })
       .catch((error) => {

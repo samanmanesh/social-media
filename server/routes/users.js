@@ -9,8 +9,7 @@ import {
   uploadUserProfileImage
 } from "../controllers/users.js";
 import multer from "multer";
-import streamifier from "streamifier";
-import cloudinary from "cloudinary";
+
 
 const router = express.Router();
 const upload = multer();

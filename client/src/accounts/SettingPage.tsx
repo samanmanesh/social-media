@@ -19,6 +19,7 @@ const SettingPage = (props: Props) => {
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
   const [currUserData, setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
   const [updatedUser, setUpdatedUser] = useState(null as User | null); // the user data that will be updated after the user press submit
+  
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState(null as File | null); // the file that the user will upload
   const [image, setImage] = useState(null as any); // the image that the user will upload
