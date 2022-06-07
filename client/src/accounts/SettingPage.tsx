@@ -14,17 +14,19 @@ type Props = {};
 // desc
 
 //todo: let user change any options of the fileds bellow incoluding the profile picture and when press submit a propmpt will appear to confirm that the user is sure that he want to change the options then the user will be updated
+//todo : check if user change something then send request to the server to update the user data
 const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
   const [currUserData, setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
   const [updatedUser, setUpdatedUser] = useState(null as User | null); // the user data that will be updated after the user press submit
-  
+
   const [isOpen, setIsOpen] = useState(false);
+
   const [file, setFile] = useState(null as File | null); // the file that the user will upload
   const [image, setImage] = useState(null as any); // the image that the user will upload
 
-  // {mutate} =useMutation(updateUser )
+  console.log("currUserData", currUserData);
   const {
     mutate: uploadPhoto,
     isLoading,
@@ -39,12 +41,12 @@ const SettingPage = (props: Props) => {
           ...updatedUser,
           profilePicture: data.data,
         };
+        const { password, ...newUserDataWithoutPassword } = newUserData; // remove the password from the user data to not change it
 
         updateUser({
           userId: updatedUser._id,
-          userDataToUpdated: newUserData,
+          userDataToUpdated: newUserDataWithoutPassword,
         });
-
       } else {
         toast.error("Error in uploading post");
       }
@@ -58,23 +60,27 @@ const SettingPage = (props: Props) => {
     onSuccess: (data) => {
       console.log("data in updateUserData success", data);
       // setIsOpen(false);
-
-      // setUser(data.data);
+      setUser(data.data);
+      toast.success("User data updated successfully");
+    },
+    onError: (err: any) => {
+      toast.error(err.message);
     },
   });
 
   useEffect(() => {
     if (file) setImage(URL.createObjectURL(file));
+    else setImage(user?.profilePicture || null);
   }, [file]);
 
   useEffect(() => {
     console.log("image", image);
-    // onFieldChange("profilePicture", image);
     if (!user || !currUserData) return;
     setCurrUserData({ ...currUserData, profilePicture: image });
-    setUpdatedUser( { ...currUserData });
+    // setUpdatedUser({ ...currUserData });
   }, [image]);
 
+  // this is for when the user change the value of the inputs in the form
   const onFieldChange = (field: keyof User, value: any) => {
     if (!user || !currUserData) return;
     const newUser: User = {
@@ -85,14 +91,17 @@ const SettingPage = (props: Props) => {
     setUpdatedUser(newUser);
   };
 
+  // this is for when the user press submit
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // setCurrUserData(updateUser);
-    console.log("onSubmit clicked", user);
-    console.log("file", file);
-    console.log("image", image);
+    if (JSON.stringify(currUserData) === JSON.stringify(updatedUser) || !file) {
+      toast.error("No changes made");
+      return;
+    }
+    
     console.log("currUserData", currUserData);
+
     // if there is a file or image then upload it to the server otherwise update the user
     if (file) {
       const formData = new FormData();
@@ -100,11 +109,13 @@ const SettingPage = (props: Props) => {
       console.log("formData", formData.getAll("file"));
       uploadPhoto(formData);
     } else {
-      updatedUser &&
+      if (updatedUser) {
+        const { password, ...newUserDataWithoutPassword } = updatedUser; // remove the password from the user data to not change it
         updateUser({
           userId: updatedUser._id,
-          userDataToUpdated: updatedUser,
+          userDataToUpdated: newUserDataWithoutPassword,
         });
+      }
     }
   };
 
@@ -156,11 +167,11 @@ const SettingPage = (props: Props) => {
         <img
           src={
             currUserData?.profilePicture
-              ? currUserData.profilePicture
+              ? currUserData.profilePicture ?? image ?? image
               : PF + "people/no-image-avatar2.png"
           }
-          alt="profileImage"
-          className="rounded-full w-10 h-10 md:w-14 md:h-14 border border-gray-500 object-cover"
+          alt={user?.username + "'s profile picture"}
+          className="rounded-full w-10 h-10 md:w-14 md:h-14 border border-gray-500 object-cover alt-image:font-semibold text-center text-xs text-gray-500"
         />
 
         <div className="space-x-4">
@@ -216,9 +227,9 @@ const SettingPage = (props: Props) => {
               ) : (
                 <textarea
                   id={field.name}
-                  className="w-full border rounded"
+                  className="w-full border rounded placeholder:text-black"
                   onChange={(e) => onFieldChange(field.name, e.target.value)}
-                  value={user?.desc}
+                  placeholder={user?.desc}
                 />
               )}
 

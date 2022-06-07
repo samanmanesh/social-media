@@ -52,7 +52,6 @@ export const uploadUserProfileImage = async (req, res) => {
   }
 };
 
-
 export const updateUser = async (req, res) => {
   const { id } = req.params; // id is the user id that we want to update the user
   console.log("updateUser body", req.body);
@@ -76,10 +75,7 @@ export const updateUser = async (req, res) => {
 
     try {
       const user = await User.findByIdAndUpdate(id, { $set: req.body });
-      return res.status(200).json({
-        message: "User updated successfully",
-        user,
-      });
+      return res.status(200).json(user);
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -228,7 +224,9 @@ export const getFriends = async (req, res) => {
       //filter the users that are not in the current user following list and also not the current user
 
       const friends = users.filter((user) => {
-        return (!currUser.following.includes(user._id) && user._id !== currUser._id);
+        return (
+          !currUser.following.includes(user._id) && user._id !== currUser._id
+        );
       });
       let friendsListSummary = [];
       friends.forEach((friend) => {

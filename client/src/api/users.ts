@@ -18,7 +18,7 @@ interface UnfolllowUserParams {
 
 interface UpdateUserParams {
   userId: string;
-  userDataToUpdated: User;
+  userDataToUpdated: User | Partial<User>;
 }
 export const getUser = (params: {
   userId?: string;
