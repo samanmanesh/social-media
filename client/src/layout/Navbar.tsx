@@ -25,7 +25,7 @@ export default function Navbar() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
 
   //todo change the icon solid and outline based on the current page user is on
-
+  console.log("user2", user?.profilePicture);
   return (
     <div className="flex items-center space-x-5 mx-2">
       <Link to="/">
@@ -59,11 +59,11 @@ export default function Navbar() {
           <img
             src={
               user?.profilePicture
-                ? PF + "/people/" + user.profilePicture
+                ?  user.profilePicture
                 : PF + "people/no-image-avatar2.png"
             }
-            alt="profile"
-            className=" w-7 h-7 rounded-full object-cover border border-gray-400"
+            alt={user?.username}
+            className=" w-7 h-7 rounded-full object-cover border border-gray-400 alt-image:font-semibold text-center text-xs text-gray-500"
           />
         </Menu.Button>
 

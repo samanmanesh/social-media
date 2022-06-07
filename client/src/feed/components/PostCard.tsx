@@ -72,11 +72,11 @@ export function PostCard({ post, ...props }: Props) {
             <img
               src={
                 user.profilePicture
-                  ? PF + "/people/" + user.profilePicture
+                  ?  user.profilePicture
                   : PF + "people/no-image-avatar2.png"
               }
-              alt="profile"
-              className=" w-9 h-9 rounded-full object-cover border border-gray-400"
+              alt={user.username}
+              className=" w-9 h-9 rounded-full object-cover border border-gray-400 alt-image:font-semibold text-center text-xs text-gray-500"
             />
           </Link>
           <Link to={`/profile/${user.username}`}>

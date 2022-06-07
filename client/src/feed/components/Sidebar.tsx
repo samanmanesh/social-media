@@ -39,11 +39,11 @@ export function Sidebar({ ...props }: Props) {
           <img
             src={
               user?.profilePicture
-                ? PF + "/people/" + user.profilePicture
+                ?   user.profilePicture
                 : PF + "people/no-image-avatar2.png"
             }
-            alt="profile"
-            className="rounded-full w-14 h-14 object-cover border border-gray-400 "
+            alt={user?.username}
+            className="rounded-full w-14 h-14 object-cover border border-gray-400 alt-image:font-semibold text-center text-xs text-gray-500 "
           />
         </Link>
         <div className="flex flex-col mt-2 text-sm">

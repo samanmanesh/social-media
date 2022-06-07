@@ -15,11 +15,14 @@ type Props = {};
 
 //todo: let user change any options of the fileds bellow incoluding the profile picture and when press submit a propmpt will appear to confirm that the user is sure that he want to change the options then the user will be updated
 //todo : check if user change something then send request to the server to update the user data
+
+//?? problem with the updating the page when use setUser is updated the page will not update
+//?? remember when uploading a new profile remove the previous profile photo from the cloudinary
 const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
   const [currUserData, setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
-  const [updatedUser, setUpdatedUser] = useState(null as User | null); // the user data that will be updated after the user press submit
+  const [finalUpdatedUser, setFinalUpdatedUser] = useState(null as User | null); // the user data that will be updated after the user press submit
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,15 +39,15 @@ const SettingPage = (props: Props) => {
     onSuccess: (data) => {
       console.log("data in uploadUserProifleImage on success", data);
 
-      if (updatedUser && data.data) {
+      if (finalUpdatedUser && data.data) {
         const newUserData = {
-          ...updatedUser,
+          ...finalUpdatedUser,
           profilePicture: data.data,
         };
         const { password, ...newUserDataWithoutPassword } = newUserData; // remove the password from the user data to not change it
 
         updateUser({
-          userId: updatedUser._id,
+          userId: finalUpdatedUser._id,
           userDataToUpdated: newUserDataWithoutPassword,
         });
       } else {
@@ -61,6 +64,7 @@ const SettingPage = (props: Props) => {
       console.log("data in updateUserData success", data);
       // setIsOpen(false);
       setUser(data.data);
+      window.location.reload();
       toast.success("User data updated successfully");
     },
     onError: (err: any) => {
@@ -68,17 +72,22 @@ const SettingPage = (props: Props) => {
     },
   });
 
+  // this is for image upload if the user upload a new image show the new image in the modal rather than the old image
   useEffect(() => {
     if (file) setImage(URL.createObjectURL(file));
     else setImage(user?.profilePicture || null);
   }, [file]);
 
   useEffect(() => {
-    console.log("image", image);
-    if (!user || !currUserData) return;
-    setCurrUserData({ ...currUserData, profilePicture: image });
+    if (!currUserData) return;
+    // if (image) setCurrUserData({ ...currUserData, profilePicture: image });
     // setUpdatedUser({ ...currUserData });
   }, [image]);
+
+  useEffect(() => {
+    if (!currUserData) return;
+    setFinalUpdatedUser({ ...currUserData });
+  }, [currUserData]);
 
   // this is for when the user change the value of the inputs in the form
   const onFieldChange = (field: keyof User, value: any) => {
@@ -88,31 +97,39 @@ const SettingPage = (props: Props) => {
       [field]: value,
     };
     // setCurrUserData(newUser);
-    setUpdatedUser(newUser);
+    setFinalUpdatedUser(newUser);
   };
 
   // this is for when the user press submit
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (JSON.stringify(currUserData) === JSON.stringify(updatedUser) || !file) {
+    console.log(
+      JSON.stringify(currUserData) === JSON.stringify(finalUpdatedUser)
+    );
+    console.log(!file);
+    if (
+      JSON.stringify(currUserData) === JSON.stringify(finalUpdatedUser) &&
+      !file
+    ) {
       toast.error("No changes made");
       return;
     }
-    
+
     console.log("currUserData", currUserData);
 
     // if there is a file or image then upload it to the server otherwise update the user
     if (file) {
+      console.log("hit the file");
       const formData = new FormData();
       formData.append("file", file);
       console.log("formData", formData.getAll("file"));
       uploadPhoto(formData);
     } else {
-      if (updatedUser) {
-        const { password, ...newUserDataWithoutPassword } = updatedUser; // remove the password from the user data to not change it
+      if (finalUpdatedUser) {
+        const { password, ...newUserDataWithoutPassword } = finalUpdatedUser; // remove the password from the user data to not change it
         updateUser({
-          userId: updatedUser._id,
+          userId: finalUpdatedUser._id,
           userDataToUpdated: newUserDataWithoutPassword,
         });
       }
@@ -166,9 +183,9 @@ const SettingPage = (props: Props) => {
       <div className="flex space-x-6 max-w-lg py-4 md:px-32">
         <img
           src={
-            currUserData?.profilePicture
-              ? currUserData.profilePicture ?? image ?? image
-              : PF + "people/no-image-avatar2.png"
+            image
+              ? image
+              : user?.profilePicture ?? PF + "people/no-image-avatar2.png"
           }
           alt={user?.username + "'s profile picture"}
           className="rounded-full w-10 h-10 md:w-14 md:h-14 border border-gray-500 object-cover alt-image:font-semibold text-center text-xs text-gray-500"
