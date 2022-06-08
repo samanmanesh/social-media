@@ -1,7 +1,8 @@
 import { PlusIcon } from "@heroicons/react/solid";
 import PostShareModal from "layout/PostShareModal";
+import { PostCard } from "post/PostCard";
 import { useState } from "react";
-import { PostCard } from "./PostCard";
+// import { PostCard } from "../../post/PostCard/PostCard";
 interface Props {
   posts: Post[];
 } // extends React.HTMLAttributes<HTMLDivElement> {}

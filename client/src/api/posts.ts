@@ -41,3 +41,10 @@ export const uploadPost = (post: any): Promise<AxiosResponse> => {
 }
 
 //todo : remove a post from the server and the client
+export const deletePost = (postId: string , userId: string): Promise<AxiosResponse> => {
+  return instance.delete(`/posts/${postId}`, {
+    data: {
+      userId
+    }
+  });
+}

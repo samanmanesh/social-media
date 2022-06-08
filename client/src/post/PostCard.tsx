@@ -4,10 +4,11 @@ import { useMemo, useState } from "react";
 import { useEffect } from "react";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import { getUser } from "api";
-import { useAuth } from "../../auth/utils";
+import { getUser, likePost } from "api";
+// import { useAuth } from "../auth/utils
 import { useMutation } from "react-query";
-import { likePost } from "../../api/posts";
+import { useAuth } from "auth";
+// import { likePost } from "../api/posts
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
@@ -85,6 +86,7 @@ export function PostCard({ post, ...props }: Props) {
         </div>
         <button>
           <DotsHorizontalIcon className="w-4 h-4" />
+          {/* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */}
         </button>
       </div>
       <div className="aspect-square w-full">

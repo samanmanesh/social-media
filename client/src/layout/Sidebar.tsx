@@ -1,8 +1,10 @@
-import { FriendSuggestion } from "./FriendSuggestion";
-import { useAuth } from "../../auth/utils";
+// import { FriendSuggestion } from "../feed/components/FriendSuggestion/FriendSuggestion";
+// import { useAuth } from "../auth/utils
 import React, { useEffect } from "react";
 import { getPeople, UserSuggestion } from "api";
 import { Link } from "react-router-dom";
+import { useAuth } from "auth";
+import { FriendSuggestion } from "feed/components/FriendSuggestion";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ ...props }: Props) {

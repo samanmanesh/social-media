@@ -1,8 +1,9 @@
 import { useFeed } from "feed/hooks";
 import { useEffect, useState } from "react";
 import { Feed } from "./Feed";
-import { Sidebar } from "./Sidebar";
+// import { Sidebar } from "../../layout/Sidebarout/Sidebar";
 import { useAuth } from '../../auth/utils';
+import { Sidebar } from "layout/Sidebar";
 
 export function FeedPage() {
   const [posts, setPosts] = useState<Post[]>([]);
