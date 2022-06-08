@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 
 type Props = {};
 
-
 //todo:  remember when uploading a new profile remove the previous profile photo from the cloudinary
 const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
@@ -19,12 +18,7 @@ const SettingPage = (props: Props) => {
   const [file, setFile] = useState(null as File | null); // the file that the user will upload
   const [image, setImage] = useState(null as any); // the image that the user will upload
 
-  const {
-    mutate: uploadPhoto,
-    isLoading,
-    error,
-    data,
-  } = useMutation(uploadUserProfileImage, {
+  const { mutate: uploadPhoto } = useMutation(uploadUserProfileImage, {
     onSuccess: (data) => {
       if (currUserData && data.data) {
         const newUserData = {
@@ -61,7 +55,7 @@ const SettingPage = (props: Props) => {
   useEffect(() => {
     if (file) setImage(URL.createObjectURL(file));
     else setImage(user?.profilePicture || null);
-  }, [file]);
+  }, [file, user?.profilePicture]);
 
   // this is for when the user change the value of the inputs in the form
   const onFieldChange = (field: keyof User, value: any) => {

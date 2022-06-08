@@ -59,7 +59,7 @@ export default function Navbar() {
           <img
             src={
               user?.profilePicture
-                ?  user.profilePicture
+                ? user.profilePicture
                 : PF + "people/no-image-avatar2.png"
             }
             alt={user?.username}
@@ -94,14 +94,15 @@ export default function Navbar() {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
-                  <button
+                  <Link
+                    to="/accounts/edit"
                     className={`${
                       active ? "bg-slate-100" : "text-gray-900"
                     } group flex w-full items-center px-3 py-2 text-sm space-x-4 `}
                   >
                     <CogIcon className="w-5 h-5 " />
                     <span>Settings</span>
-                  </button>
+                  </Link>
                 )}
               </Menu.Item>
             </div>
