@@ -16,12 +16,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   console.log("user in auth context", user);
   
   React.useEffect(() => {
+    console.log("useEffect1", user);
+    // console.log("user in auth context changed", user);
     if (user) {
+      localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
     }
   }, [user]);
 
   React.useEffect(() => {
+    console.log("useEffect2", user);
     const userStr = localStorage.getItem("user");
     if (userStr) {
       setUser(JSON.parse(userStr));

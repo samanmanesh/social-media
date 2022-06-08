@@ -22,7 +22,7 @@ const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
   const [currUserData, setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
-  const [finalUpdatedUser, setFinalUpdatedUser] = useState(null as User | null); // the user data that will be updated after the user press submit
+  // const [currUserData, setFinalUpdatedUser] = useState(null as User | null); // the user data that will be updated after the user press submit
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,15 +39,15 @@ const SettingPage = (props: Props) => {
     onSuccess: (data) => {
       console.log("data in uploadUserProifleImage on success", data);
 
-      if (finalUpdatedUser && data.data) {
+      if (currUserData && data.data) {
         const newUserData = {
-          ...finalUpdatedUser,
+          ...currUserData,
           profilePicture: data.data,
         };
         const { password, ...newUserDataWithoutPassword } = newUserData; // remove the password from the user data to not change it
-
+        console.log("newUserDataWithoutPassword", newUserDataWithoutPassword);
         updateUser({
-          userId: finalUpdatedUser._id,
+          userId: currUserData._id,
           userDataToUpdated: newUserDataWithoutPassword,
         });
       } else {
@@ -63,8 +63,10 @@ const SettingPage = (props: Props) => {
     onSuccess: (data) => {
       console.log("data in updateUserData success", data);
       // setIsOpen(false);
-      setUser(data.data);
-      window.location.reload();
+      // setUser(finalUpdatedUser);
+      // setFinalUpdatedUser(finalUpdatedUser);
+      setCurrUserData(data.data);
+      // window.location.reload();
       toast.success("User data updated successfully");
     },
     onError: (err: any) => {
@@ -86,7 +88,6 @@ const SettingPage = (props: Props) => {
 
   useEffect(() => {
     if (!currUserData) return;
-    setFinalUpdatedUser({ ...currUserData });
   }, [currUserData]);
 
   // this is for when the user change the value of the inputs in the form
@@ -96,22 +97,18 @@ const SettingPage = (props: Props) => {
       ...currUserData,
       [field]: value,
     };
-    // setCurrUserData(newUser);
-    setFinalUpdatedUser(newUser);
+    setCurrUserData(newUser);
   };
 
   // this is for when the user press submit
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // // @ts-ignore
+    // console.debug(e.target.elements);
 
-    console.log(
-      JSON.stringify(currUserData) === JSON.stringify(finalUpdatedUser)
-    );
+    console.log(JSON.stringify(currUserData) === JSON.stringify(user));
     console.log(!file);
-    if (
-      JSON.stringify(currUserData) === JSON.stringify(finalUpdatedUser) &&
-      !file
-    ) {
+    if (JSON.stringify(currUserData) === JSON.stringify(user) && !file) {
       toast.error("No changes made");
       return;
     }
@@ -120,16 +117,16 @@ const SettingPage = (props: Props) => {
 
     // if there is a file or image then upload it to the server otherwise update the user
     if (file) {
-      console.log("hit the file");
       const formData = new FormData();
       formData.append("file", file);
       console.log("formData", formData.getAll("file"));
       uploadPhoto(formData);
     } else {
-      if (finalUpdatedUser) {
-        const { password, ...newUserDataWithoutPassword } = finalUpdatedUser; // remove the password from the user data to not change it
+      if (currUserData) {
+        const { password, ...newUserDataWithoutPassword } = currUserData; // remove the password from the user data to not change it
+
         updateUser({
-          userId: finalUpdatedUser._id,
+          userId: currUserData._id,
           userDataToUpdated: newUserDataWithoutPassword,
         });
       }
@@ -193,10 +190,10 @@ const SettingPage = (props: Props) => {
 
         <div className="space-x-4">
           <h1
-            title={currUserData?.username}
+            title={user?.username}
             className="font-bold text-xl text-gray-800 px-4"
           >
-            {currUserData?.username}
+            {user?.username}
           </h1>
           <button
             className="text-blue-500 text-sm font-bold "
@@ -236,17 +233,16 @@ const SettingPage = (props: Props) => {
               {user && field.type === "text" ? (
                 <input
                   type="text"
-                  id={field.name}
                   className="w-full border rounded p-1 placeholder:text-black"
                   onChange={(e) => onFieldChange(field.name, e.target.value)}
-                  placeholder={field.value}
+                  defaultValue={field.value}
                 />
               ) : (
                 <textarea
-                  id={field.name}
                   className="w-full border rounded placeholder:text-black"
                   onChange={(e) => onFieldChange(field.name, e.target.value)}
-                  placeholder={user?.desc}
+                  defaultValue={field.value}
+                  maxLength={field.name === "desc" ? 150 : undefined}
                 />
               )}
 

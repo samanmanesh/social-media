@@ -72,9 +72,16 @@ export const updateUser = async (req, res) => {
         return res.status(500).json({ message: err.message });
       }
     }
-
+    
     try {
-      const user = await User.findByIdAndUpdate(id, { $set: req.body });
+      console.log("updateUser***", req.body);
+      // const user = await User.findByIdAndUpdate(id, { $set: req.body });
+      const user = await User.findOneAndUpdate(
+        { _id: id },
+        { $set: req.body },
+        { new: true }
+      );
+      console.log("user***", user);
       return res.status(200).json(user);
     } catch (err) {
       return res.status(500).json({ message: err.message });
