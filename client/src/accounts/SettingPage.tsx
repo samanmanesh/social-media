@@ -22,7 +22,6 @@ const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
   const [currUserData, setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
-  // const [currUserData, setFinalUpdatedUser] = useState(null as User | null); // the user data that will be updated after the user press submit
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -62,9 +61,8 @@ const SettingPage = (props: Props) => {
   const { mutate: updateUser } = useMutation(updateUserData, {
     onSuccess: (data) => {
       console.log("data in updateUserData success", data);
-      // setIsOpen(false);
-      // setUser(finalUpdatedUser);
-      // setFinalUpdatedUser(finalUpdatedUser);
+      
+      setUser(data.data);
       setCurrUserData(data.data);
       // window.location.reload();
       toast.success("User data updated successfully");
