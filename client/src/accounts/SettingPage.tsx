@@ -9,26 +9,16 @@ import toast from "react-hot-toast";
 
 type Props = {};
 
-// username
-// email
-// desc
 
-//todo: let user change any options of the fileds bellow incoluding the profile picture and when press submit a propmpt will appear to confirm that the user is sure that he want to change the options then the user will be updated
-//todo : check if user change something then send request to the server to update the user data
-
-//?? problem with the updating the page when use setUser is updated the page will not update
 //?? remember when uploading a new profile remove the previous profile photo from the cloudinary
 const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
   const [currUserData, setCurrUserData] = useState(user); // a copy of the user data to be used to update the user data
-
   const [isOpen, setIsOpen] = useState(false);
-
   const [file, setFile] = useState(null as File | null); // the file that the user will upload
   const [image, setImage] = useState(null as any); // the image that the user will upload
 
-  console.log("currUserData", currUserData);
   const {
     mutate: uploadPhoto,
     isLoading,
@@ -36,15 +26,12 @@ const SettingPage = (props: Props) => {
     data,
   } = useMutation(uploadUserProfileImage, {
     onSuccess: (data) => {
-      console.log("data in uploadUserProifleImage on success", data);
-
       if (currUserData && data.data) {
         const newUserData = {
           ...currUserData,
           profilePicture: data.data,
         };
         const { password, ...newUserDataWithoutPassword } = newUserData; // remove the password from the user data to not change it
-        console.log("newUserDataWithoutPassword", newUserDataWithoutPassword);
         updateUser({
           userId: currUserData._id,
           userDataToUpdated: newUserDataWithoutPassword,
@@ -61,10 +48,8 @@ const SettingPage = (props: Props) => {
   const { mutate: updateUser } = useMutation(updateUserData, {
     onSuccess: (data) => {
       console.log("data in updateUserData success", data);
-      
       setUser(data.data);
       setCurrUserData(data.data);
-      // window.location.reload();
       toast.success("User data updated successfully");
     },
     onError: (err: any) => {
@@ -77,16 +62,6 @@ const SettingPage = (props: Props) => {
     if (file) setImage(URL.createObjectURL(file));
     else setImage(user?.profilePicture || null);
   }, [file]);
-
-  useEffect(() => {
-    if (!currUserData) return;
-    // if (image) setCurrUserData({ ...currUserData, profilePicture: image });
-    // setUpdatedUser({ ...currUserData });
-  }, [image]);
-
-  useEffect(() => {
-    if (!currUserData) return;
-  }, [currUserData]);
 
   // this is for when the user change the value of the inputs in the form
   const onFieldChange = (field: keyof User, value: any) => {
@@ -101,23 +76,15 @@ const SettingPage = (props: Props) => {
   // this is for when the user press submit
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // // @ts-ignore
-    // console.debug(e.target.elements);
-
-    console.log(JSON.stringify(currUserData) === JSON.stringify(user));
-    console.log(!file);
     if (JSON.stringify(currUserData) === JSON.stringify(user) && !file) {
       toast.error("No changes made");
       return;
     }
-
-    console.log("currUserData", currUserData);
-
     // if there is a file or image then upload it to the server otherwise update the user
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      console.log("formData", formData.getAll("file"));
+      // console.log("formData", formData.getAll("file"));
       uploadPhoto(formData);
     } else {
       if (currUserData) {
