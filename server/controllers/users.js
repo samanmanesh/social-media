@@ -54,8 +54,7 @@ export const uploadUserProfileImage = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params; // id is the user id that we want to update the user
-  console.log("updateUser body", req.body);
-  console.log("params", req.params);
+
   if (req.body._id !== id) {
     return res.status(403).json({
       message: "You are not authorized to update this user",
@@ -72,16 +71,15 @@ export const updateUser = async (req, res) => {
         return res.status(500).json({ message: err.message });
       }
     }
-    
+
     try {
-      console.log("updateUser***", req.body);
       // const user = await User.findByIdAndUpdate(id, { $set: req.body });
       const user = await User.findOneAndUpdate(
         { _id: id },
         { $set: req.body },
         { new: true }
       );
-      console.log("user***", user);
+
       return res.status(200).json(user);
     } catch (err) {
       return res.status(500).json({ message: err.message });
