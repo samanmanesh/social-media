@@ -54,55 +54,72 @@ export const uploadUserProfileImage = async (req, res) => {
   }
 };
 
-export const removeUserProfileImage = async (req, res) => {
-  // console.log("uploadUserProfileImage", req.file);
+//?? for now we are not deleting the image from cloudinary
+// export const removeUserProfileImage = async (req, res) => {
+//   // console.log("uploadUserProfileImage", req.file);
+//   console.log("removeUserProfileImage", req.params.id);
+//   const profileUrl = req.body.profileUrl;
+//   if (req.body.profileUrl) {
+//     //version promise
+//     const streamRemove = (req) => {
+//       return new Promise((resolve, reject) => {
+//         let stream = cloudinary.v2.uploader.destroy(req.params.id, (error, result) => {
+//           if (result) {
+//             resolve(result);
+//           } else {
+//             reject(error);
+//           }
+//         });
 
-  if (req.params.id) {
-    //version promise
-    const streamRemove = (req) => {
-      return new Promise((resolve, reject) => {
-        let stream = cloudinary.v2.uploader.destroy(req.params.id, (error, result) => {
-          if (result) {
-            resolve(result);
-          } else {
-            reject(error);
-          }
-        });
+//         streamifier.createReadStream(req.params.buffer).pipe(stream);
+//       });
+//     };
+//     const removeFromCloudinary = async (req) => {
+//       return new Promise((resolve, reject) => {
+//         let result = cloudinary.v2.uploader.destroy(req.params.id, (error, result) => {
+//           console.log("removeFromCloudinary result", result);
+//           console.log("removeFromCloudinary error", error);
+//           if (result) {
+//             resolve(result);
+//           } else {
+//             reject(error);
+//           }
+//         });
+//       });
+//     };
 
-        streamifier.createReadStream(req.file.buffer).pipe(stream);
-      });
-    };
 
-    async function remove(req) {
-      try {
-        let result = await streamRemove(req);
-        console.log("result", result);
-        return result;
-      } catch (error) {
-        return error;
-      }
-    }
+//     async function remove(req) {
+//       try {
+//         // let result = await streamRemove(req);
+//         const result = await removeFromCloudinary(req);
+//         console.log("result", result);
+//         return result;
+//       } catch (error) {
+//         return error;
+//       }
+//     }
 
-    // if size of file is greater than 10mb then reject
-    // if (req.file.size > MAX_FILE_SIZE) {
-    //   return res.status(400).send({
-    //     message: "File size is too large",
-    //   });
-    // }
+//     // if size of file is greater than 10mb then reject
+//     // if (req.file.size > MAX_FILE_SIZE) {
+//     //   return res.status(400).send({
+//     //     message: "File size is too large",
+//     //   });
+//     // }
 
-    await remove(req)
-      .then((removed) => {
-        console.log("removed", removed);
-        return res.status(200).send(removed.url);
-      })
-      .catch((error) => {
-        console.log(error);
-        return res.status(500).send(error);
-      });
-  } else {
-    return res.status(400).send("No image removed");
-  }
-};
+//     await remove(req)
+//       .then((removed) => {
+//         console.log("removed", removed);
+//         return res.status(200).send(removed.url);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//         return res.status(500).send(error);
+//       });
+//   } else {
+//     return res.status(400).send("No image removed");
+//   }
+// };
 
 
 export const updateUser = async (req, res) => {

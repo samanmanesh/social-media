@@ -7,7 +7,7 @@ import {
   unfollowUser,
   getFriends,
   uploadUserProfileImage,
-  removeUserProfileImage,
+  // removeUserProfileImage,
 } from "../controllers/users.js";
 import multer from "multer";
 
@@ -25,8 +25,9 @@ router.put("/:id", updateUser);
 //upload a user image into cloudinary
 router.post("/upload", upload.single("file"), uploadUserProfileImage);
 
+//?? for now we are not deleting the image from cloudinary
 // remove a user image from cloudinary
-router.delete("/remove", upload.single("file"), removeUserProfileImage);
+// router.delete("/profile/remove", upload.single("file"), removeUserProfileImage);
 
 //delete a user by id
 router.delete("/:id", deleteUser);
