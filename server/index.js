@@ -26,15 +26,12 @@ mongoose
     console.log(err);
   });
 
-  
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-    secure: true,
-  });
-
-  
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 //Middlewares
 
@@ -47,7 +44,7 @@ app.use(cors());
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoute);
-app.use('/api/posts', postRoutes);
+app.use("/api/posts", postRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello Social Media");
@@ -56,5 +53,3 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log("Backend server is running on port 8800");
 });
-
-

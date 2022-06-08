@@ -6,10 +6,10 @@ import {
   followUser,
   unfollowUser,
   getFriends,
-  uploadUserProfileImage
+  uploadUserProfileImage,
+  removeUserProfileImage,
 } from "../controllers/users.js";
 import multer from "multer";
-
 
 const router = express.Router();
 const upload = multer();
@@ -25,6 +25,9 @@ router.put("/:id", updateUser);
 //upload a user image into cloudinary
 router.post("/upload", upload.single("file"), uploadUserProfileImage);
 
+// remove a user image from cloudinary
+router.delete("/remove", upload.single("file"), removeUserProfileImage);
+
 //delete a user by id
 router.delete("/:id", deleteUser);
 
@@ -35,6 +38,6 @@ router.put("/:id/follow", followUser);
 router.put("/:id/unfollow", unfollowUser);
 
 //get friends friends
-router.get("/people/:userId", getFriends)
+router.get("/people/:userId", getFriends);
 
 export default router;

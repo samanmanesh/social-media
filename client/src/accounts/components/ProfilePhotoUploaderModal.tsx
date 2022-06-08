@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { Fragment, useRef } from "react";
+import React, { Fragment } from "react";
 import toast from "react-hot-toast";
 
 type Image = File | null;
@@ -23,9 +23,6 @@ function ProfilePhotoUploaderModal({
   isOpen,
   setIsOpen,
 }: Props) {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const desc = useRef<HTMLTextAreaElement>(null);
-
   const closeModal = () => {
     setIsOpen(false);
     setFile(null);
@@ -34,11 +31,11 @@ function ProfilePhotoUploaderModal({
   const removeProfilePhoto = () => {
     if (user) {
       //remove from server and update user
-      //remove from state 
+      //remove from state
       setImage(null);
       setFile(null);
     }
-  }
+  };
 
   const MAX_FILE_SIZE = 10485760;
   const handleChange = (e: any) => {
@@ -47,7 +44,7 @@ function ProfilePhotoUploaderModal({
       toast.error("File size should be less than 10MB");
       // setFile(null);
       setFile(null);
-      
+
       return;
     } else if (e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -98,17 +95,19 @@ function ProfilePhotoUploaderModal({
             <hr className=" text-lg text-black" />
 
             <label
-            htmlFor="file"
-             className=" text-blue-500 font-semibold p-3 text-center cursor-pointer ">
+              htmlFor="file"
+              className=" text-blue-500 font-semibold p-3 text-center cursor-pointer "
+            >
               {" "}
               Upload Photo
             </label>
             <hr className=" text-lg text-black" />
 
             {user?.profilePicture && (
-              <button 
-              onClick={removeProfilePhoto}
-              className="text-red-500 font-semibold p-3">
+              <button
+                onClick={removeProfilePhoto}
+                className="text-red-500 font-semibold p-3"
+              >
                 {" "}
                 Remove Current Photo
               </button>

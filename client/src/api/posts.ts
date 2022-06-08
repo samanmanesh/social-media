@@ -39,3 +39,5 @@ export const createPost = (post: any): Promise<AxiosResponse> => {
 export const uploadPost = (post: any): Promise<AxiosResponse> => {
   return instance.post("/posts/upload", post);
 }
+
+//todo : remove a post from the server and the client

@@ -4,6 +4,8 @@ import streamifier from "streamifier";
 import cloudinary from "cloudinary";
 const MAX_FILE_SIZE = 10485760;
 
+//todo:  remember when uploading a new profile remove the previous profile photo from the cloudinary
+
 //upload the user image into cloudinary
 export const uploadUserProfileImage = async (req, res) => {
   // console.log("uploadUserProfileImage", req.file);
@@ -51,6 +53,57 @@ export const uploadUserProfileImage = async (req, res) => {
     return res.status(400).send("No file uploaded");
   }
 };
+
+export const removeUserProfileImage = async (req, res) => {
+  // console.log("uploadUserProfileImage", req.file);
+
+  if (req.params.id) {
+    //version promise
+    const streamRemove = (req) => {
+      return new Promise((resolve, reject) => {
+        let stream = cloudinary.v2.uploader.destroy(req.params.id, (error, result) => {
+          if (result) {
+            resolve(result);
+          } else {
+            reject(error);
+          }
+        });
+
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+    };
+
+    async function remove(req) {
+      try {
+        let result = await streamRemove(req);
+        console.log("result", result);
+        return result;
+      } catch (error) {
+        return error;
+      }
+    }
+
+    // if size of file is greater than 10mb then reject
+    // if (req.file.size > MAX_FILE_SIZE) {
+    //   return res.status(400).send({
+    //     message: "File size is too large",
+    //   });
+    // }
+
+    await remove(req)
+      .then((removed) => {
+        console.log("removed", removed);
+        return res.status(200).send(removed.url);
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(500).send(error);
+      });
+  } else {
+    return res.status(400).send("No image removed");
+  }
+};
+
 
 export const updateUser = async (req, res) => {
   const { id } = req.params; // id is the user id that we want to update the user

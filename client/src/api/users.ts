@@ -64,3 +64,10 @@ export const updateUserData = (
 ): Promise<AxiosResponse<User>> => {
   return instance.put(`users/${data.userId}`, data.userDataToUpdated);
 };
+
+
+//todo: remove a user profile from the server and cloudinary and the client
+//todo: remove a user from the server and the client
+
+
+

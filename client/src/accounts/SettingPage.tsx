@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 type Props = {};
 
 
-//?? remember when uploading a new profile remove the previous profile photo from the cloudinary
+//todo:  remember when uploading a new profile remove the previous profile photo from the cloudinary
 const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
