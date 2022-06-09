@@ -5,11 +5,9 @@ import { useEffect } from "react";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { getUser, likePost } from "api";
-// import { useAuth } from "../auth/utils
 import { useMutation } from "react-query";
 import { useAuth } from "auth";
-// import { likePost } from "../api/posts
-import PostCardEditModal from './PostCardEditModal';
+import PostCardEditModal from "./PostCardEditModal";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
@@ -22,6 +20,7 @@ export function PostCard({ post, ...props }: Props) {
   const [isLiked, setIsLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+
   //todo make a list of likes by users
   //todo if user click on others it must get an array of users name who liked it
 
@@ -65,7 +64,7 @@ export function PostCard({ post, ...props }: Props) {
 
   const openModal = () => {
     setIsOpen(true);
-  }
+  };
   return (
     <div
       {...props}
@@ -77,7 +76,7 @@ export function PostCard({ post, ...props }: Props) {
             <img
               src={
                 userOfPost.profilePicture
-                  ?  userOfPost.profilePicture
+                  ? userOfPost.profilePicture
                   : PF + "people/no-image-avatar2.png"
               }
               alt={userOfPost.username}
@@ -90,11 +89,15 @@ export function PostCard({ post, ...props }: Props) {
         </div>
         <button>
           <DotsHorizontalIcon className="w-4 h-4" onClick={openModal} />
-          
 
           {/* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */}
         </button>
-        <PostCardEditModal isOpen={isOpen} setIsOpen={setIsOpen} userOfPost={userOfPost} post={post} />
+        <PostCardEditModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          userOfPost={userOfPost}
+          post={post}
+        />
       </div>
       <div className="aspect-square w-full">
         <img
@@ -129,7 +132,9 @@ export function PostCard({ post, ...props }: Props) {
 
         {/* needs for "more" if it's more than a numbers of words then expand more button appears */}
         <div className="space-x-2">
-          <span className="font-medium cursor-pointer hover:underline underline-offset-4 ">{userOfPost?.username}</span>
+          <span className="font-medium cursor-pointer hover:underline underline-offset-4 ">
+            {userOfPost?.username}
+          </span>
           <span>
             {post?.desc?.length > 100 ? (
               <button className="text-s text-gray-600"> more</button>

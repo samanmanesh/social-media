@@ -4,7 +4,7 @@ import { deletePost } from "api";
 import { useAuth } from "auth";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMutation } from "react-query";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -106,7 +106,7 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost, post }: Props) => {
   const deletePostHandler = async () => {
     if (user && userOfPost) {
       deletePostMutate({ postId: post._id, userId: user._id });
-      console.log("data", post._id , user._id);
+      console.log("data", post._id, user._id);
     }
     closeModal();
   };

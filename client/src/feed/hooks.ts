@@ -1,8 +1,6 @@
 import { useAuth } from "auth";
 import { useQuery } from "react-query";
 import { getTimelinePosts } from "../api/posts";
-import { useMutation } from "react-query";
-import { followUser, unfollowUser, UserSuggestion } from "api";
 
 export const useFeed = () => {
   const { user } = useAuth();
