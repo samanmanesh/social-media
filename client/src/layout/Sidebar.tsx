@@ -1,5 +1,4 @@
-// import { FriendSuggestion } from "../feed/components/FriendSuggestion/FriendSuggestion";
-// import { useAuth } from "../auth/utils
+
 import React, { useEffect } from "react";
 import { getPeople, UserSuggestion } from "api";
 import { Link } from "react-router-dom";
@@ -65,7 +64,7 @@ export function Sidebar({ ...props }: Props) {
         ))}
       </div>
       <div className="text-gray-400 text-xs font-medium p-3">
-        © 2022 SAMAN MANESH
+      © 2022 Hilarion By Saman Manesh
       </div>
     </div>
   );
