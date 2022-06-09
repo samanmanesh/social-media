@@ -3,6 +3,7 @@ import { unfollowUser, followUser } from "api";
 import { useMutation } from "react-query";
 import { useAuth } from "../../auth/utils";
 import { Link } from "react-router-dom";
+import { useFollow } from "feed";
 
 interface UserDetails {
   numOfPosts: number;
@@ -32,62 +33,69 @@ const ProfileHeader = ({
   console.log("user", userOfProfile);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user: currUser, setUser } = useAuth();
-
   const {
-    mutate: unfollowUserMutation,
-    error,
-    isLoading,
-  } = useMutation(unfollowUser, {
-    onSuccess: (data) => {
-      if (data.data) {
-        updateUserFollowing(userOfProfile._id, "unfollow");
-        setUserStatus({
-          isCurrentUser: false,
-          isFollowing: false,
-        });
-      }
-    },
-    onError: (err) => {
-      console.log("err in unfollowUser", err);
-    },
-  });
+    followUserMutation,
+    unfollowUserMutation,
+    followedSuccessfully,
+    unfollowedSuccessfully,
+  } = useFollow(userOfProfile);
+  
+  // const {
+  //   mutate: unfollowUserMutation,
+  //   error,
+  //   isLoading,
+  // } = useMutation(unfollowUser, {
+  //   onSuccess: (data) => {
+  //     if (data.data) {
+  //       updateUserFollowing(userOfProfile._id, "unfollow");
+  //       //need to stay here
+  //       setUserStatus({
+  //         isCurrentUser: false,
+  //         isFollowing: false,
+  //       });
+  //     }
+  //   },
+  //   onError: (err) => {
+  //     console.log("err in unfollowUser", err);
+  //   },
+  // });
 
-  const { mutate: followUserMutation } = useMutation(followUser, {
-    onSuccess: (data) => {
-      if (data.data) {
-        updateUserFollowing(userOfProfile._id, "follow");
-        setUserStatus({
-          isCurrentUser: false,
-          isFollowing: true,
-        });
-      }
-    },
-    onError: (err) => {
-      console.log("err in followUser", err);
-    },
-  });
+  // const { mutate: followUserMutation } = useMutation(followUser, {
+  //   onSuccess: (data) => {
+  //     if (data.data) {
+  //       updateUserFollowing(userOfProfile._id, "follow");
+  //       setUserStatus({
+  //         isCurrentUser: false,
+  //         isFollowing: true,
+  //       });
+  //     }
+  //   },
+  //   onError: (err) => {
+  //     console.log("err in followUser", err);
+  //   },
+  // });
 
   //todo: need to update the user in auth ✓
-  const updateUserFollowing = (userOfProfileId: string, action: string) => {
-    //Unfollow user
-    if (action === "unfollow") {
-      if (currUser && userOfProfileId) {
-        setUser({
-          ...currUser,
-          following: currUser.following.filter(
-            (following) => following !== userOfProfileId
-          ),
-        });
-      }
-    }
-    //follow user
-    if (action === "follow" && currUser && userOfProfileId) {
-      setUser({
-        ...currUser,
-        following: [...currUser.following, userOfProfileId],
-      });
-    }
-  };
+  // const updateUserFollowing = (userOfProfileId: string, action: string) => {
+  //   //Unfollow user
+  //   if (action === "unfollow") {
+  //     if (currUser && userOfProfileId) {
+  //       setUser({
+  //         ...currUser,
+  //         following: currUser.following.filter(
+  //           (following) => following !== userOfProfileId
+  //         ),
+  //       });
+  //     }
+  //   }
+  //   //follow user
+  //   if (action === "follow" && currUser && userOfProfileId) {
+  //     setUser({
+  //       ...currUser,
+  //       following: [...currUser.following, userOfProfileId],
+  //     });
+  //   }
+  // };
 
   const followHandler = async () => {
     if (userStatus.isFollowing && currUser) {
@@ -95,11 +103,22 @@ const ProfileHeader = ({
         userIdToUnfollow: userOfProfile._id,
         currUserId: currUser._id,
       });
+      unfollowedSuccessfully &&
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: false,
+        });
     } else if (currUser && !userStatus.isFollowing) {
       followUserMutation({
         userIdToFollow: userOfProfile._id,
         currUserId: currUser._id,
       });
+      followedSuccessfully &&
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: true,
+        });
+        
     }
   };
 
