@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { useFollow } from "accounts/hooks";
 import { useAuth } from "auth";
-import { useFollow } from "feed/hooks";
 import React, { Fragment, useEffect, useState } from "react";
 
 type Props = {

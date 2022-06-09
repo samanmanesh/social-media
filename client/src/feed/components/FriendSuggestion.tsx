@@ -1,6 +1,7 @@
+import { useFollow } from "accounts/hooks";
 import { UserSuggestion } from "api";
 import { useAuth } from "auth";
-import { useFollow } from "feed/hooks";
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

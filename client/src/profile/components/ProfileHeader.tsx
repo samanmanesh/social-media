@@ -1,7 +1,9 @@
 import { UserRemoveIcon } from "@heroicons/react/solid";
 import { useAuth } from "../../auth/utils";
 import { Link } from "react-router-dom";
-import { useFollow } from "feed";
+import { useFollow } from "accounts/hooks";
+// import { useFollow } from "feed";
+
 
 interface UserDetails {
   numOfPosts: number;
