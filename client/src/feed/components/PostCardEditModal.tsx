@@ -17,6 +17,12 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
     isCurrentUser: false,
     isFollowing: false,
   });
+  const {
+    followUserMutation,
+    unfollowUserMutation,
+    followedSuccessfully,
+    unfollowedSuccessfully,
+  } = useFollow(userOfPost);
 
   useEffect(() => {
     if (user && userOfPost && user._id === userOfPost._id) {
@@ -39,12 +45,8 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
       }
     }
   }, [userOfPost, user]);
-  const {
-    followUserMutation,
-    unfollowUserMutation,
-    followedSuccessfully,
-    unfollowedSuccessfully,
-  } = useFollow(userOfPost);
+  
+  
 
   const closeModal = () => {
     setIsOpen(false);

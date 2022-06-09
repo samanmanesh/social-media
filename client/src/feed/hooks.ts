@@ -2,7 +2,7 @@ import { useAuth } from "auth";
 import { useQuery } from "react-query";
 import { getTimelinePosts } from "../api/posts";
 import { useMutation } from "react-query";
-import { followUser, unfollowUser } from "api";
+import { followUser, unfollowUser, UserSuggestion } from "api";
 export const useFeed = () => {
   const { user } = useAuth();
 
@@ -24,7 +24,7 @@ export const useFeed = () => {
   return { data, status };
 };
 
-export const useFollow = (userOfProfile: User) => {
+export const useFollow = (userOfProfile: User | UserSuggestion) => {
   const { user: currUser, setUser } = useAuth();
   const {
     mutate: unfollowUserMutation,
