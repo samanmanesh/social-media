@@ -188,21 +188,17 @@ const SettingPage = (props: Props) => {
             </div>
             <div className="md:col-span-3">
               {user && field.type === "text" ? (
-                <>
-                {field.value}
-                <button type="button" onClick={() => onFieldChange(field.name, "")}> clear</button>
                 <input
                   type="text"
                   className="w-full border rounded p-1 placeholder:text-black"
                   onChange={(e) => onFieldChange(field.name, e.target.value)}
                   value={field.value}
                 />
-                </>
               ) : (
                 <textarea
                   className="w-full border rounded placeholder:text-black"
                   onChange={(e) => onFieldChange(field.name, e.target.value)}
-                  defaultValue={field.value}
+                  value={field.value}
                   maxLength={field.name === "desc" ? 150 : undefined}
                 />
               )}

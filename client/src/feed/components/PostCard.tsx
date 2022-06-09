@@ -9,6 +9,7 @@ import { getUser, likePost } from "api";
 import { useMutation } from "react-query";
 import { useAuth } from "auth";
 // import { likePost } from "../api/posts
+import PostCardEditModal from './PostCardEditModal';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   post: Post;
@@ -20,7 +21,7 @@ export function PostCard({ post, ...props }: Props) {
   const { user: currentUser } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
-
+  const [isOpen, setIsOpen] = useState(false);
   //todo make a list of likes by users
   //todo if user click on others it must get an array of users name who liked it
 
@@ -62,6 +63,9 @@ export function PostCard({ post, ...props }: Props) {
     }
   };
 
+  const openModal = () => {
+    setIsOpen(true);
+  }
   return (
     <div
       {...props}
@@ -85,9 +89,12 @@ export function PostCard({ post, ...props }: Props) {
           </Link>
         </div>
         <button>
-          <DotsHorizontalIcon className="w-4 h-4" />
+          <DotsHorizontalIcon className="w-4 h-4" onClick={openModal} />
+          
+
           {/* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */}
         </button>
+        <PostCardEditModal isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
       <div className="aspect-square w-full">
         <img

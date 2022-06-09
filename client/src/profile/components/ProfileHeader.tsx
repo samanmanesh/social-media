@@ -2,7 +2,7 @@ import { UserRemoveIcon } from "@heroicons/react/solid";
 import { unfollowUser, followUser } from "api";
 import { useMutation } from "react-query";
 import { useAuth } from "../../auth/utils";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 interface UserDetails {
   numOfPosts: number;
@@ -33,7 +33,11 @@ const ProfileHeader = ({
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user: currUser, setUser } = useAuth();
 
-  const { mutate, error, isLoading } = useMutation(unfollowUser, {
+  const {
+    mutate: unfollowUserMutation,
+    error,
+    isLoading,
+  } = useMutation(unfollowUser, {
     onSuccess: (data) => {
       if (data.data) {
         updateUserFollowing(userOfProfile._id, "unfollow");
@@ -45,7 +49,7 @@ const ProfileHeader = ({
     },
     onError: (err) => {
       console.log("err in unfollowUser", err);
-    }
+    },
   });
 
   const { mutate: followUserMutation } = useMutation(followUser, {
@@ -60,10 +64,8 @@ const ProfileHeader = ({
     },
     onError: (err) => {
       console.log("err in followUser", err);
-    }
+    },
   });
-
-
 
   //todo: need to update the user in auth ✓
   const updateUserFollowing = (userOfProfileId: string, action: string) => {
@@ -89,13 +91,11 @@ const ProfileHeader = ({
 
   const followHandler = async () => {
     if (userStatus.isFollowing && currUser) {
-      mutate({
+      unfollowUserMutation({
         userIdToUnfollow: userOfProfile._id,
         currUserId: currUser._id,
       });
-      
     } else if (currUser && !userStatus.isFollowing) {
-      
       followUserMutation({
         userIdToFollow: userOfProfile._id,
         currUserId: currUser._id,
@@ -129,7 +129,10 @@ const ProfileHeader = ({
 
             {/* here for button we need to show it based on if its current user?, a random profile, or a profile we followed  */}
             {userStatus.isCurrentUser ? (
-              <Link to="/accounts/edit" className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded">
+              <Link
+                to="/accounts/edit"
+                className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded"
+              >
                 Edit Profile
               </Link>
             ) : userStatus.isFollowing ? (
