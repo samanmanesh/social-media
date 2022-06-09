@@ -48,27 +48,47 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
     setIsOpen(false);
   };
 
+useEffect(() => {
+  if (followedSuccessfully) {
+    setUserStatus({
+      isCurrentUser: false,
+      isFollowing: true,
+    });
+  }
+  if (unfollowedSuccessfully) {
+    setUserStatus({
+      isCurrentUser: false,
+      isFollowing: false,
+    });
+  }
+}, [followedSuccessfully, unfollowedSuccessfully]);
+
   const followHandler = async () => {
     if (userStatus.isFollowing && user) {
+      console.log("unfollowing");
       unfollowUserMutation({
         userIdToUnfollow: userOfPost._id,
         currUserId: user._id,
       });
-      unfollowedSuccessfully &&
-        setUserStatus({
-          isCurrentUser: false,
-          isFollowing: false,
-        });
+      console.log("unfollowedSuccessfully", unfollowedSuccessfully);
+      // if (unfollowedSuccessfully) {
+      //   console.log("unfollowedSuccessfully if");
+      //   setUserStatus({
+      //     isCurrentUser: false,
+      //     isFollowing: false,
+      //   });
+      //   closeModal();
+      // }
     } else if (user && !userStatus.isFollowing) {
       followUserMutation({
         userIdToFollow: userOfPost._id,
         currUserId: user._id,
       });
-      followedSuccessfully &&
-        setUserStatus({
-          isCurrentUser: false,
-          isFollowing: true,
-        });
+      // followedSuccessfully &&
+      //   setUserStatus({
+      //     isCurrentUser: false,
+      //     isFollowing: true,
+      //   });
     }
   };
 
