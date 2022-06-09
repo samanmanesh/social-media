@@ -1,6 +1,4 @@
 import { UserRemoveIcon } from "@heroicons/react/solid";
-import { unfollowUser, followUser } from "api";
-import { useMutation } from "react-query";
 import { useAuth } from "../../auth/utils";
 import { Link } from "react-router-dom";
 import { useFollow } from "feed";
@@ -39,63 +37,6 @@ const ProfileHeader = ({
     followedSuccessfully,
     unfollowedSuccessfully,
   } = useFollow(userOfProfile);
-  
-  // const {
-  //   mutate: unfollowUserMutation,
-  //   error,
-  //   isLoading,
-  // } = useMutation(unfollowUser, {
-  //   onSuccess: (data) => {
-  //     if (data.data) {
-  //       updateUserFollowing(userOfProfile._id, "unfollow");
-  //       //need to stay here
-  //       setUserStatus({
-  //         isCurrentUser: false,
-  //         isFollowing: false,
-  //       });
-  //     }
-  //   },
-  //   onError: (err) => {
-  //     console.log("err in unfollowUser", err);
-  //   },
-  // });
-
-  // const { mutate: followUserMutation } = useMutation(followUser, {
-  //   onSuccess: (data) => {
-  //     if (data.data) {
-  //       updateUserFollowing(userOfProfile._id, "follow");
-  //       setUserStatus({
-  //         isCurrentUser: false,
-  //         isFollowing: true,
-  //       });
-  //     }
-  //   },
-  //   onError: (err) => {
-  //     console.log("err in followUser", err);
-  //   },
-  // });
-
-  //todo: need to update the user in auth ✓
-  // const updateUserFollowing = (userOfProfileId: string, action: string) => {
-  //   //Unfollow user
-  //   if (action === "unfollow") {
-  //     if (currUser && userOfProfileId) {
-  //       setUser({
-  //         ...currUser,
-  //         following: currUser.following.filter(
-  //           (following) => following !== userOfProfileId
-  //         ),
-  //       });
-  //     }
-  //   }
-  //   //follow user
-  //   if (action === "follow" && currUser && userOfProfileId) {
-  //     setUser({
-  //       ...currUser,
-  //       following: [...currUser.following, userOfProfileId],
-  //     });
-  //   }
-  // };
 
   const followHandler = async () => {
     if (userStatus.isFollowing && currUser) {
@@ -118,7 +59,6 @@ const ProfileHeader = ({
           isCurrentUser: false,
           isFollowing: true,
         });
-        
     }
   };
 

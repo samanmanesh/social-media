@@ -35,10 +35,6 @@ export const useFollow = (userOfProfile: User) => {
     onSuccess: (data) => {
       if (data.data) {
         updateUserFollowing(userOfProfile._id, "unfollow");
-        // setUserStatus({
-        //   isCurrentUser: false,
-        //   isFollowing: false,
-        // });
       }
     },
     onError: (err) => {
@@ -51,10 +47,6 @@ export const useFollow = (userOfProfile: User) => {
       onSuccess: (data) => {
         if (data.data) {
           updateUserFollowing(userOfProfile._id, "follow");
-          // setUserStatus({
-          //   isCurrentUser: false,
-          //   isFollowing: true,
-          // });
         }
       },
       onError: (err) => {
