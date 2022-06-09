@@ -113,8 +113,8 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
             {/* if the post is realated to the account user then don't show unfollow features shows edit instead  */}
 
             {userOfPost._id === user?._id ? (
-              <button onClick={followHandler} className="font-semibold py-4">
-                Edit
+              <button onClick={followHandler} className="text-red-500 font-semibold py-4">
+                Delete
               </button>
             ) : (
               <button
