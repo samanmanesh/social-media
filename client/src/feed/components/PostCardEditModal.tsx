@@ -48,47 +48,35 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
     setIsOpen(false);
   };
 
-useEffect(() => {
-  if (followedSuccessfully) {
-    setUserStatus({
-      isCurrentUser: false,
-      isFollowing: true,
-    });
-  }
-  if (unfollowedSuccessfully) {
-    setUserStatus({
-      isCurrentUser: false,
-      isFollowing: false,
-    });
-  }
-}, [followedSuccessfully, unfollowedSuccessfully]);
+  useEffect(() => {
+    if (followedSuccessfully) {
+      setUserStatus({
+        isCurrentUser: false,
+        isFollowing: true,
+      });
+    }
+    if (unfollowedSuccessfully) {
+      setUserStatus({
+        isCurrentUser: false,
+        isFollowing: false,
+      });
+    }
+  }, [followedSuccessfully, unfollowedSuccessfully]);
 
+  //here we only need unfollow feature compared to ProfileHeader
   const followHandler = async () => {
     if (userStatus.isFollowing && user) {
-      console.log("unfollowing");
       unfollowUserMutation({
         userIdToUnfollow: userOfPost._id,
         currUserId: user._id,
       });
       console.log("unfollowedSuccessfully", unfollowedSuccessfully);
-      // if (unfollowedSuccessfully) {
-      //   console.log("unfollowedSuccessfully if");
-      //   setUserStatus({
-      //     isCurrentUser: false,
-      //     isFollowing: false,
-      //   });
-      //   closeModal();
-      // }
+      closeModal();
     } else if (user && !userStatus.isFollowing) {
       followUserMutation({
         userIdToFollow: userOfPost._id,
         currUserId: user._id,
       });
-      // followedSuccessfully &&
-      //   setUserStatus({
-      //     isCurrentUser: false,
-      //     isFollowing: true,
-      //   });
     }
   };
 
