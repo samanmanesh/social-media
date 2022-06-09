@@ -106,12 +106,9 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost, post }: Props) => {
   const deletePostHandler = async () => {
     if (user && userOfPost) {
       deletePostMutate({ postId: post._id, userId: user._id });
-      console.log("data", post._id, user._id);
     }
     closeModal();
   };
-
-  /* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
