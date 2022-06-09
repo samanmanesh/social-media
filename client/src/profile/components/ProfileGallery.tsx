@@ -1,4 +1,6 @@
 import { HeartIcon } from "@heroicons/react/solid";
+import { useState } from "react";
+import PostModal from "./PostModal";
 
 // import { Posts } from "../../DummyData";
 interface UserDetails {
@@ -15,6 +17,11 @@ type Props = {
 };
 
 const ProfileGallery = ({ userPosts, userDetails }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  const [post, setPost] = useState<Post | undefined>(undefined);
   return (
     <div className="flex justify-center">
       <div className="grid md:grid-cols-3 gap-6 max-w-4xl flex-1 mt-6">
@@ -22,6 +29,10 @@ const ProfileGallery = ({ userPosts, userDetails }: Props) => {
           <div
             key={index}
             className={`aspect-square cursor-pointer relative flex items-center justify-center group`}
+            onClick={() => {
+              setPost(p);
+              openModal();
+            }}
           >
             <img
               src={p.img}
@@ -34,6 +45,7 @@ const ProfileGallery = ({ userPosts, userDetails }: Props) => {
             </div>
           </div>
         ))}
+        <PostModal isOpen={isOpen} setIsOpen={setIsOpen} post={post} />
       </div>
     </div>
   );
