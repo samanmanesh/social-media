@@ -1,13 +1,16 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { useAuth } from "auth";
 import { useFollow } from "feed/hooks";
 import React, { Fragment } from "react";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  userOfPost: User;
 };
 
-const PostCardEditModal = ({ isOpen, setIsOpen }: Props) => {
+const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
+  const { user } = useAuth();
   // const {
   //   followUserMutation,
   //   unfollowUserMutation,
@@ -73,13 +76,21 @@ const PostCardEditModal = ({ isOpen, setIsOpen }: Props) => {
           leaveTo="opacity-0"
         >
           <Dialog.Panel className="bg-white rounded-xl relative flex flex-col md:w-72">
-            <button
-              onClick={followHandler}
-              className="text-red-500 font-semibold py-4"
-            >
-              {" "}
-              Unfollow
-            </button>
+            {/* if the post is realated to the account user then don't show unfollow features shows edit instead  */}
+
+            {userOfPost._id === user?._id ? (
+              <button onClick={followHandler} className="font-semibold py-4">
+                Edit
+              </button>
+            ) : (
+              <button
+                onClick={followHandler}
+                className="text-red-500 font-semibold py-4"
+              >
+                {" "}
+                Unfollow
+              </button>
+            )}
             <hr className=" text-lg text-black" />
 
             <button className=" font-semibold py-4"> Go to post</button>

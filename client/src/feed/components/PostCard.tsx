@@ -17,7 +17,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 
 export function PostCard({ post, ...props }: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
-  const [user, setUser] = useState({} as User);
+  const [userOfPost, setUserOfPost] = useState({} as User);
   const { user: currentUser } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
@@ -36,10 +36,10 @@ export function PostCard({ post, ...props }: Props) {
     // if post is for current user then dont fetch user otherwise fetch user
     const fetchUser = async () => {
       if (currentUser && post.userId === currentUser?._id) {
-        setUser(currentUser);
+        setUserOfPost(currentUser);
       } else {
         const res = await getUser({ userId: post.userId });
-        setUser(res.data);
+        setUserOfPost(res.data);
       }
     };
     fetchUser();
@@ -73,19 +73,19 @@ export function PostCard({ post, ...props }: Props) {
     >
       <div className="p-2 border-b border-black flex items-center justify-between">
         <div className="flex items-center space-x-1">
-          <Link to={`/profile/${user.username}`}>
+          <Link to={`/profile/${userOfPost.username}`}>
             <img
               src={
-                user.profilePicture
-                  ?  user.profilePicture
+                userOfPost.profilePicture
+                  ?  userOfPost.profilePicture
                   : PF + "people/no-image-avatar2.png"
               }
-              alt={user.username}
+              alt={userOfPost.username}
               className=" w-9 h-9 rounded-full object-cover border border-gray-400 alt-image:font-semibold text-center text-xs text-gray-500"
             />
           </Link>
-          <Link to={`/profile/${user.username}`}>
-            <span className="pl-2 font-semibold ">{user?.username}</span>
+          <Link to={`/profile/${userOfPost.username}`}>
+            <span className="pl-2 font-semibold ">{userOfPost?.username}</span>
           </Link>
         </div>
         <button>
@@ -94,7 +94,7 @@ export function PostCard({ post, ...props }: Props) {
 
           {/* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */}
         </button>
-        <PostCardEditModal isOpen={isOpen} setIsOpen={setIsOpen} />
+        <PostCardEditModal isOpen={isOpen} setIsOpen={setIsOpen} userOfPost={userOfPost} />
       </div>
       <div className="aspect-square w-full">
         <img
@@ -129,7 +129,7 @@ export function PostCard({ post, ...props }: Props) {
 
         {/* needs for "more" if it's more than a numbers of words then expand more button appears */}
         <div className="space-x-2">
-          <span className="font-medium cursor-pointer hover:underline underline-offset-4 ">{user?.username}</span>
+          <span className="font-medium cursor-pointer hover:underline underline-offset-4 ">{userOfPost?.username}</span>
           <span>
             {post?.desc?.length > 100 ? (
               <button className="text-s text-gray-600"> more</button>
