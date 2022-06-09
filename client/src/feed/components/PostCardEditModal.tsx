@@ -1,17 +1,49 @@
-import { Dialog, Transition } from '@headlessui/react'
-import React, { Fragment } from 'react'
+import { Dialog, Transition } from "@headlessui/react";
+import { useFollow } from "feed/hooks";
+import React, { Fragment } from "react";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-}
+};
 
-const PostCardEditModal = ({isOpen,
-  setIsOpen}: Props) => {
+const PostCardEditModal = ({ isOpen, setIsOpen }: Props) => {
+  // const {
+  //   followUserMutation,
+  //   unfollowUserMutation,
+  //   followedSuccessfully,
+  //   unfollowedSuccessfully,
+  // } = useFollow(userOfProfile);
 
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const followHandler = async () => {
+    // if (userStatus.isFollowing && currUser) {
+    //   unfollowUserMutation({
+    //     userIdToUnfollow: userOfProfile._id,
+    //     currUserId: currUser._id,
+    //   });
+    //   unfollowedSuccessfully &&
+    //     setUserStatus({
+    //       isCurrentUser: false,
+    //       isFollowing: false,
+    //     });
+    // } else if (currUser && !userStatus.isFollowing) {
+    //   followUserMutation({
+    //     userIdToFollow: userOfProfile._id,
+    //     currUserId: currUser._id,
+    //   });
+    //   followedSuccessfully &&
+    //     setUserStatus({
+    //       isCurrentUser: false,
+    //       isFollowing: true,
+    //     });
+    // }
+  };
+
+  /* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -40,44 +72,29 @@ const PostCardEditModal = ({isOpen,
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="bg-white rounded-xl relative flex flex-col">
-            <Dialog.Title
-              className={`font-bold py-6 px-12 border-b w-full text-center   `}
-            >
-              
-            </Dialog.Title>
-            <hr className=" text-lg text-black" />
-
-            <label
-              htmlFor="file"
-              className=" text-blue-500 font-semibold p-3 text-center cursor-pointer "
+          <Dialog.Panel className="bg-white rounded-xl relative flex flex-col md:w-72">
+            <button
+              onClick={followHandler}
+              className="text-red-500 font-semibold py-4"
             >
               {" "}
-            </label>
+              Unfollow
+            </button>
             <hr className=" text-lg text-black" />
 
-            {/* {user?.profilePicture && (
-              <button
-                onClick={removeProfilePhoto}
-                className="text-red-500 font-semibold p-3"
-              >
-                {" "}
-                Remove Current Photo
-              </button>
-            )} */}
+            <button className=" font-semibold py-4"> Go to post</button>
 
             <hr className=" text-lg text-black" />
 
-            <button onClick={closeModal} className=" font-semibold py-3">
+            <button onClick={closeModal} className=" font-semibold py-4">
               {" "}
               Cancel
             </button>
-            
           </Dialog.Panel>
         </Transition.Child>
       </Dialog>
     </Transition>
-  )
-}
+  );
+};
 
-export default PostCardEditModal
+export default PostCardEditModal;
