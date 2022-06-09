@@ -10,7 +10,9 @@ type Props = {
 };
 
 const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
+  const [openPromptModal, setOpenPromptModal] = useState(false);
   const [userStatus, setUserStatus] = useState({
     isCurrentUser: false,
     isFollowing: false,
@@ -46,6 +48,13 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
 
   const closeModal = () => {
     setIsOpen(false);
+    setOpenPromptModal(false);
+  };
+  const showPromptModal = () => {
+    setOpenPromptModal(true);
+  };
+  const hidePromptModal = () => {
+    setOpenPromptModal(false);
   };
 
   useEffect(() => {
@@ -109,33 +118,69 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="bg-white rounded-xl relative flex flex-col md:w-72">
-            {/* if the post is realated to the account user then don't show unfollow features shows edit instead  */}
+          {!openPromptModal && (
+            <Dialog.Panel className="bg-white rounded-xl relative flex flex-col md:w-72">
+              {/* if the post is realated to the account user then don't show unfollow features shows edit instead  */}
 
-            {userOfPost._id === user?._id ? (
-              <button onClick={followHandler} className="text-red-500 font-semibold py-4">
-                Delete
+              {userOfPost._id === user?._id ? (
+                <button
+                  onClick={followHandler}
+                  className="text-red-500 font-semibold py-4"
+                >
+                  Delete
+                </button>
+              ) : (
+                <button
+                  onClick={showPromptModal}
+                  className="text-red-500 font-semibold py-4"
+                >
+                  {" "}
+                  Unfollow
+                </button>
+              )}
+              <hr className=" text-lg text-black" />
+
+              <button className=" font-semibold py-4"> Go to post</button>
+
+              <hr className=" text-lg text-black" />
+
+              <button onClick={closeModal} className=" font-semibold py-4">
+                {" "}
+                Cancel
               </button>
-            ) : (
+            </Dialog.Panel>
+          )}
+
+          {openPromptModal && (
+            <Dialog.Panel className="bg-white rounded-xl relative flex flex-col items-center md:w-72 py-4">
+              <img
+                src={
+                  userOfPost.profilePicture
+                    ? userOfPost.profilePicture
+                    : PF + "people/no-image-avatar2.png"
+                }
+                alt={userOfPost.username}
+                className=" w-10 h-10 rounded-full object-cover border border-gray-400 alt-image:font-semibold text-center text-xs text-gray-500"
+              />
+
+              <span className="text-center font-semibold py-4 border-b w-full border-gray-300">
+                Unfollow {userOfPost.username} ?{" "}
+              </span>
+
               <button
                 onClick={followHandler}
-                className="text-red-500 font-semibold py-4"
+                className="py-3 w-full rounded border-b border-gray-300 text-red-500 font-semibold"
               >
-                {" "}
                 Unfollow
               </button>
-            )}
-            <hr className=" text-lg text-black" />
-
-            <button className=" font-semibold py-4"> Go to post</button>
-
-            <hr className=" text-lg text-black" />
-
-            <button onClick={closeModal} className=" font-semibold py-4">
-              {" "}
-              Cancel
-            </button>
-          </Dialog.Panel>
+              <button
+                onClick={hidePromptModal}
+                className="py-3 w-full font-semibold"
+              >
+                Cancel
+              </button>
+            </Dialog.Panel>
+          )}
         </Transition.Child>
       </Dialog>
     </Transition>
