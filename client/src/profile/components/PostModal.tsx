@@ -1,11 +1,13 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import React, { Fragment } from "react";
 import { useAuth } from "../../auth/utils";
+import { format } from "timeago.js";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  post : Post | undefined;
+  post: Post | undefined;
 };
 
 const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
@@ -42,7 +44,7 @@ const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
           leaveTo="opacity-0"
         >
           <Dialog.Panel className="bg-white rounded-lg relative">
-            <div className="grid grid-cols-3 gap-4 lg:max-w-6xl h-screen max-h-[45rem]">
+            <div className="grid grid-cols-3 lg:max-w-6xl h-screen max-h-[50rem]">
               {post && (
                 <img
                   src={post.img}
@@ -50,8 +52,26 @@ const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
                   className=" object-cover col-span-2 h-full w-full"
                 />
               )}
-              <div className="px-2 py-4   ">
-                <div className="flex space-x-4">
+              <div className="py-2">
+                <div className="flex items-center justify-between ml-4">
+                  <div className="flex items-center space-x-4 py-4">
+                    <img
+                      src={
+                        user?.profilePicture
+                          ? user.profilePicture
+                          : PF + "people/no-image-avatar2.png"
+                      }
+                      alt="profile"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <span className="text-lg font-semibold">
+                      {user?.username}
+                    </span>
+                  </div>
+                  <DotsHorizontalIcon className="w-4 h-4 mr-4" />
+                </div>
+                <hr />
+                <div className="flex text-lg font-semibold items-center space-x-3 p-4 ">
                   <img
                     src={
                       user?.profilePicture
@@ -59,12 +79,15 @@ const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
                         : PF + "people/no-image-avatar2.png"
                     }
                     alt="profile"
-                    className="w-8 h-8 rounded-full object-cover"
+                    className="w-8 h-8 rounded-full object-cover mr-1"
                   />
-                  <span className="text-lg font-semibold">
-                    {user?.username}
-                  </span>
+
+                  <span className="text-sm font-bold">{user?.username}</span>
+                  <p className="text-sm font-normal">{post?.desc}</p>
                 </div>
+                <span className="text-gray-800 text-xs font-light ">
+                  {post && format(post.createdAt)}
+                </span>
               </div>
             </div>
           </Dialog.Panel>
