@@ -51,7 +51,6 @@ export const FriendSuggestion = ({ person, ...props }: Props) => {
         userIdToUnfollow: person._id,
         currUserId: user._id,
       });
-      
     } else if (user && !userStatus.isFollowing) {
       followUserMutation({
         userIdToFollow: person._id,
@@ -80,7 +79,12 @@ export const FriendSuggestion = ({ person, ...props }: Props) => {
           <span className="text-gray-500">Suggested for you</span>
         </div>
       </div>
-      <button className="text-blue-500 text-xs font-semibold" onClick={followHandler}>Follow</button>
+      <button
+        className="text-blue-500 text-xs font-semibold"
+        onClick={followHandler}
+      >
+        Follow
+      </button>
     </div>
   );
 };
