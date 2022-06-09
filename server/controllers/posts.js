@@ -7,8 +7,6 @@ import cloudinary from "cloudinary";
 const MAX_FILE_SIZE = 10485760;
 
 export const uploadPost = async (req, res) => {
-  console.log("createPost", req.file);
-
   if (req.file) {
     //version promise
     const streamUpload = (req) => {
