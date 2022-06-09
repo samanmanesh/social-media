@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useAuth } from "auth";
 import { useFollow } from "feed/hooks";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 type Props = {
   isOpen: boolean;
@@ -11,39 +11,65 @@ type Props = {
 
 const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
   const { user } = useAuth();
-  // const {
-  //   followUserMutation,
-  //   unfollowUserMutation,
-  //   followedSuccessfully,
-  //   unfollowedSuccessfully,
-  // } = useFollow(userOfProfile);
+  const [userStatus, setUserStatus] = useState({
+    isCurrentUser: false,
+    isFollowing: false,
+  });
+
+  useEffect(() => {
+    if (user && userOfPost && user._id === userOfPost._id) {
+      setUserStatus({
+        isCurrentUser: true,
+        isFollowing: false,
+      });
+    } else {
+      //user data
+      if (user?.following.includes(userOfPost._id)) {
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: true,
+        });
+      } else {
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: false,
+        });
+      }
+    }
+  }, [userOfPost, user]);
+  const {
+    followUserMutation,
+    unfollowUserMutation,
+    followedSuccessfully,
+    unfollowedSuccessfully,
+  } = useFollow(userOfPost);
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
   const followHandler = async () => {
-    // if (userStatus.isFollowing && currUser) {
-    //   unfollowUserMutation({
-    //     userIdToUnfollow: userOfProfile._id,
-    //     currUserId: currUser._id,
-    //   });
-    //   unfollowedSuccessfully &&
-    //     setUserStatus({
-    //       isCurrentUser: false,
-    //       isFollowing: false,
-    //     });
-    // } else if (currUser && !userStatus.isFollowing) {
-    //   followUserMutation({
-    //     userIdToFollow: userOfProfile._id,
-    //     currUserId: currUser._id,
-    //   });
-    //   followedSuccessfully &&
-    //     setUserStatus({
-    //       isCurrentUser: false,
-    //       isFollowing: true,
-    //     });
-    // }
+    if (userStatus.isFollowing && user) {
+      unfollowUserMutation({
+        userIdToUnfollow: userOfPost._id,
+        currUserId: user._id,
+      });
+      unfollowedSuccessfully &&
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: false,
+        });
+    } else if (user && !userStatus.isFollowing) {
+      followUserMutation({
+        userIdToFollow: userOfPost._id,
+        currUserId: user._id,
+      });
+      followedSuccessfully &&
+        setUserStatus({
+          isCurrentUser: false,
+          isFollowing: true,
+        });
+    }
   };
 
   /* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */
