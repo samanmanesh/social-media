@@ -49,9 +49,6 @@ export function PostCard({ post, ...props }: Props) {
     setNumLikes(post.likes.length);
   }, [post.userId, currentUser, post.likes]);
 
-  // console.log("numLikes", numLikes);
-  // console.log("isLiked", isLiked);
-
   const onClickLike = () => {
     if (currentUser) {
       const req = {
@@ -118,8 +115,6 @@ export function PostCard({ post, ...props }: Props) {
         <AnnotationIcon className="w-7 h-7" />
       </button>
       <div className="flex flex-col space-y-1 p-2">
-        {/* here needs for "the like by" to have a list of followers that likes each post */}
-
         {numLikes === 1 ? (
           <span className="">Liked by a person </span>
         ) : numLikes > 1 ? (
@@ -129,8 +124,6 @@ export function PostCard({ post, ...props }: Props) {
         ) : (
           <span className="">Liked by {numLikes} people</span>
         )}
-
-        {/* needs for "more" if it's more than a numbers of words then expand more button appears */}
         <div className="space-x-2">
           <span className="font-medium cursor-pointer hover:underline underline-offset-4 ">
             {userOfPost?.username}
