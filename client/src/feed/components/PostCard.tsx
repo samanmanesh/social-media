@@ -94,7 +94,7 @@ export function PostCard({ post, ...props }: Props) {
 
           {/* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */}
         </button>
-        <PostCardEditModal isOpen={isOpen} setIsOpen={setIsOpen} userOfPost={userOfPost} />
+        <PostCardEditModal isOpen={isOpen} setIsOpen={setIsOpen} userOfPost={userOfPost} post={post} />
       </div>
       <div className="aspect-square w-full">
         <img

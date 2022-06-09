@@ -1,15 +1,19 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useFollow } from "accounts/hooks";
+import { deletePost } from "api";
 import { useAuth } from "auth";
 import React, { Fragment, useEffect, useState } from "react";
+import { useMutation } from "react-query";
+import { toast } from 'react-hot-toast';
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   userOfPost: User;
+  post: Post;
 };
 
-const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
+const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost, post }: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
   const [openPromptModal, setOpenPromptModal] = useState(false);
@@ -23,6 +27,16 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
     followedSuccessfully,
     unfollowedSuccessfully,
   } = useFollow(userOfPost);
+
+  const { mutate: deletePostMutate } = useMutation(deletePost, {
+    onSuccess: (data) => {
+      console.log("data", data);
+      toast.success("Post deleted successfully");
+    },
+    onError: (error) => {
+      toast.error("Error deleting post");
+    },
+  });
 
   useEffect(() => {
     if (user && userOfPost && user._id === userOfPost._id) {
@@ -45,8 +59,6 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
       }
     }
   }, [userOfPost, user]);
-  
-  
 
   const closeModal = () => {
     setIsOpen(false);
@@ -91,6 +103,14 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
     }
   };
 
+  const deletePostHandler = async () => {
+    if (user && userOfPost) {
+      deletePostMutate({ postId: post._id, userId: user._id });
+      console.log("data", post._id , user._id);
+    }
+    closeModal();
+  };
+
   /* here for menu for delete post if you are the user , with Unfollow user, go to post , cancel */
 
   return (
@@ -126,7 +146,7 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost }: Props) => {
 
               {userOfPost._id === user?._id ? (
                 <button
-                  onClick={followHandler}
+                  onClick={deletePostHandler}
                   className="text-red-500 font-semibold py-4"
                 >
                   Delete

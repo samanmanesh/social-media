@@ -6,6 +6,10 @@ interface likeRequest {
   userId: string;
 }
 
+interface DeletePost{
+  postId: string;
+  userId: string;
+}
 // interface postRequest {
 //   userId : string;
 //   desc: string | undefined;
@@ -41,7 +45,7 @@ export const uploadPost = (post: any): Promise<AxiosResponse> => {
 }
 
 //todo : remove a post from the server and the client
-export const deletePost = (postId: string , userId: string): Promise<AxiosResponse> => {
+export const deletePost = ({postId, userId }: DeletePost): Promise<AxiosResponse> => {
   return instance.delete(`/posts/${postId}`, {
     data: {
       userId
