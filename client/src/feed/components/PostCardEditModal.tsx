@@ -30,7 +30,6 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost, post }: Props) => {
 
   const { mutate: deletePostMutate } = useMutation(deletePost, {
     onSuccess: (data) => {
-      console.log("data", data);
       toast.success("Post deleted successfully");
     },
     onError: (error) => {
@@ -93,7 +92,6 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost, post }: Props) => {
         userIdToUnfollow: userOfPost._id,
         currUserId: user._id,
       });
-      console.log("unfollowedSuccessfully", unfollowedSuccessfully);
       closeModal();
     } else if (user && !userStatus.isFollowing) {
       followUserMutation({
