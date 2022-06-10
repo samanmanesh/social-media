@@ -40,12 +40,12 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
   useEffect(() => {
     const fetchFollowing = async () => {
       if (user) {
-        const following = getFollowingMutate(user._id);
+         getFollowingMutate(user._id);
       }
     };
     const fetchFollowers = async () => {
       if (user) {
-        const followers = getFollowersMutate(user._id);
+         getFollowersMutate(user._id);
       }
     };
 
