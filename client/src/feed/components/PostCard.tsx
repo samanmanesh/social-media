@@ -94,6 +94,7 @@ export function PostCard({ post, ...props }: Props) {
           setIsOpen={setIsOpen}
           userOfPost={userOfPost}
           post={post}
+          firstModal={true}
         />
       </div>
       <div className="aspect-square w-full">

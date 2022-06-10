@@ -107,7 +107,7 @@ const ProfilePage = (props: Props) => {
         userStatus={userStatus}
         setUserStatus={setUserStatus}
       />
-      <ProfileGallery userPosts={userPosts} userDetails={userDetails} />
+      <ProfileGallery userPosts={userPosts} userDetails={userDetails} userStatus={userStatus} />
       <div className="p-8 flex items-center justify-center text-sm text-slate-600">
         © 2022 Hilarion By Saman Manesh
       </div>

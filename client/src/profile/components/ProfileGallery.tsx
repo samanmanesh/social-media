@@ -1,6 +1,7 @@
 import { HeartIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 import PostModal from "./PostModal";
+import { UserStatus } from "./ProfileHeader";
 
 // import { Posts } from "../../DummyData";
 interface UserDetails {
@@ -14,9 +15,10 @@ interface UserDetails {
 type Props = {
   userPosts: Post[];
   userDetails: UserDetails;
+  userStatus: UserStatus;
 };
 
-const ProfileGallery = ({ userPosts, userDetails }: Props) => {
+const ProfileGallery = ({ userPosts, userDetails, userStatus }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
@@ -45,7 +47,7 @@ const ProfileGallery = ({ userPosts, userDetails }: Props) => {
             </div>
           </div>
         ))}
-        <PostModal isOpen={isOpen} setIsOpen={setIsOpen} post={post} />
+        <PostModal isOpen={isOpen} setIsOpen={setIsOpen} post={post} userStatus={userStatus}/>
       </div>
     </div>
   );

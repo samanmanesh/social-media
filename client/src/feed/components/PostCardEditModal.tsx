@@ -11,9 +11,16 @@ type Props = {
   setIsOpen: (isOpen: boolean) => void;
   userOfPost: User;
   post: Post;
+  firstModal: boolean;
 };
 
-const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost, post }: Props) => {
+const PostCardEditModal = ({
+  isOpen,
+  setIsOpen,
+  userOfPost,
+  post,
+  firstModal,
+}: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
   const [openPromptModal, setOpenPromptModal] = useState(false);
@@ -124,7 +131,11 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost, post }: Props) => {
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="absolute inset-0 bg-black bg-opacity-80" />
+          <Dialog.Overlay
+            className={`absolute inset-0 ${
+              firstModal && "bg-black bg-opacity-80"
+            } `}
+          />
         </Transition.Child>
         <Transition.Child
           as="div"
@@ -136,9 +147,7 @@ const PostCardEditModal = ({ isOpen, setIsOpen, userOfPost, post }: Props) => {
           leaveTo="opacity-0"
         >
           {!openPromptModal && (
-            <Dialog.Panel className="bg-white rounded-xl relative flex flex-col md:w-72">
-              {/* if the post is realated to the account user then don't show unfollow features shows edit instead  */}
-
+            <Dialog.Panel className="bg-white rounded-xl relative flex flex-col md:w-72 min-w-[10rem]">
               {userOfPost._id === user?._id ? (
                 <button
                   onClick={deletePostHandler}

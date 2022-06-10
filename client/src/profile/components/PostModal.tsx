@@ -4,25 +4,71 @@ import {
   DotsHorizontalIcon,
   HeartIcon,
 } from "@heroicons/react/solid";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useAuth } from "../../auth/utils";
 import { format } from "timeago.js";
 import PostCardEditModal from "feed/components/PostCardEditModal";
+import { useMutation } from "react-query";
+import { likePost } from "api";
+import { UserStatus } from "./ProfileHeader";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   post: Post | undefined;
+  userStatus: UserStatus;
 };
 
-const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
+const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
-  const [md, setMd] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  //todo if another user visit the profile can like a post and it will be added to the list of likes otherwise it will be the owner of page
+  const { mutate, isLoading, error } = useMutation(likePost, {
+    onSuccess: (data) => {
+      setIsLiked(!isLiked);
+      setNumLikes(isLiked ? numLikes - 1 : numLikes + 1);
+    },
+  });
+
+  useEffect(() => {
+    // if post is for current user then don't fetch user otherwise fetch user
+    // const fetchUser = async () => {
+    //   if (user && post.userId === user?._id) {
+    //     setUserOfPost(user);
+    //   } else {
+    //     const res = await getUser({ userId: post.userId });
+    //     setUserOfPost(res.data);
+    //   }
+    // };
+    // fetchUser();
+    // userStatus.isuser
+
+    //check if user liked the post
+    if (post && user) {
+      setIsLiked(post.likes.includes(user._id));
+      //setting num of likes
+      setNumLikes(post.likes.length);
+    }
+  }, [post?.userId, user, post?.likes]);
+
+  const onClickLike = () => {
+    if (user && post) {
+      const req = {
+        postId: post._id,
+        userId: user._id,
+      };
+      mutate(req);
+    }
+  };
+  const openModal = () => {
+    setModalIsOpen(true);
   };
 
   return (
@@ -80,7 +126,19 @@ const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
                       {user?.username}
                     </span>
                   </div>
-                  <DotsHorizontalIcon className="w-4 h-4 mr-4 cursor-pointer " />
+                  <DotsHorizontalIcon
+                    className="w-4 h-4 mr-4 cursor-pointer "
+                    onClick={openModal}
+                  />
+                  {post && user && (
+                    <PostCardEditModal
+                      isOpen={modalIsOpen}
+                      setIsOpen={setModalIsOpen}
+                      userOfPost={user}
+                      post={post}
+                      firstModal={false}
+                    />
+                  )}
                 </div>
                 <hr />
                 <div className=" text-lg font-semibold p-4 ">
@@ -120,17 +178,17 @@ const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
                   <span className="pl-2 font-semibold ">{user?.username}</span>
                 </div>
                 <button>
-                  {/* <DotsHorizontalIcon className="w-4 h-4" onClick={openModal} /> */}
-                  <DotsHorizontalIcon className="w-4 h-4" />
+                  <DotsHorizontalIcon className="w-4 h-4" onClick={openModal} />
                 </button>
-                {/* {post && (
-        <PostCardEditModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          user?={user?}
-          post={post}
-        />
-        )} */}
+                {post && user && (
+                  <PostCardEditModal
+                    isOpen={modalIsOpen}
+                    setIsOpen={setModalIsOpen}
+                    userOfPost={user}
+                    post={post}
+                    firstModal={false}
+                  />
+                )}
               </div>
               <div className="aspect-square w-full">
                 <img
@@ -140,7 +198,7 @@ const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
                 />
               </div>
               <button
-                // onClick={onClickLike}
+                onClick={onClickLike}
                 className="p-2 border-y border-black w-full flex space-x-3"
               >
                 {isLiked ? (
@@ -172,9 +230,6 @@ const PostModal = ({ isOpen, setIsOpen, post }: Props) => {
                     )}
                   </span>
                 </div>
-                <span className="text-s text-gray-600">
-                  View all 1,932 comments
-                </span>
                 <span className="text-gray-800 text-sm">
                   {post && format(post.createdAt)}
                 </span>

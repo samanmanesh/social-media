@@ -12,7 +12,7 @@ interface UserDetails {
   numOfFollowers: number;
   numOfFollowing: number;
 }
-interface UserStatus {
+export interface UserStatus {
   isCurrentUser: boolean;
   isFollowing: boolean;
 }
