@@ -7,6 +7,7 @@ import {
   unfollowUser,
   getFriends,
   uploadUserProfileImage,
+  getFollowers,
   // removeUserProfileImage,
 } from "../controllers/users.js";
 import multer from "multer";
@@ -40,5 +41,11 @@ router.put("/:id/unfollow", unfollowUser);
 
 //get friends friends
 router.get("/people/:userId", getFriends);
+
+//get a list of following user summary data for a user with id
+router.get("/:id/following", getFollowing);
+
+//get a list of followers user summary data for a user with id
+router.get("/:id/followers", getFollowers);
 
 export default router;

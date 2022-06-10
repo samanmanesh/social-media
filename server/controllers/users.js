@@ -88,7 +88,6 @@ export const uploadUserProfileImage = async (req, res) => {
 //       });
 //     };
 
-
 //     async function remove(req) {
 //       try {
 //         // let result = await streamRemove(req);
@@ -120,7 +119,6 @@ export const uploadUserProfileImage = async (req, res) => {
 //     return res.status(400).send("No image removed");
 //   }
 // };
-
 
 export const updateUser = async (req, res) => {
   const { id } = req.params; // id is the user id that we want to update the user
@@ -313,6 +311,69 @@ export const getFriends = async (req, res) => {
         });
       });
       return res.status(200).json(friendsListSummary);
+    } else {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
+export const getFollowing = async (req, res) => {
+  try {
+    const currUser = await User.findById(req.params.userId);
+    if (currUser) {
+      const users = await User.find({});
+      //filter the users that are in the current user following list
+
+      const following = users.filter((user) => {
+        return currUser.following.includes(user._id);
+      });
+      let followingListSummary = [];
+      following.forEach((following) => {
+        const { _id, username, profilePicture } = following;
+        followingListSummary.push({
+          _id,
+          username,
+          profilePicture,
+        });
+      });
+      return res.status(200).json(followingListSummary);
+    } else {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(error);
+  }
+};
+
+export const getFollowers = async (req, res) => {
+  try {
+    const currUser = await User.findById(req.params.userId);
+    if (currUser) {
+      const users = await User.find({});
+      //filter the users that are in the current user followers list
+
+      const followers = users.filter((user) => {
+        return user.followers.includes(currUser._id);
+      });
+      let followersListSummary = [];
+      followers.forEach((follower) => {
+        const { _id, username, profilePicture } = follower;
+        followersListSummary.push({
+          _id,
+          username,
+          profilePicture,
+        });
+      });
+
+      return res.status(200).json(followersListSummary);
     } else {
       return res.status(404).json({
         message: "User not found",

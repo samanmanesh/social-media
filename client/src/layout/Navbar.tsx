@@ -40,10 +40,10 @@ export default function Navbar() {
       </button>
       <PostShareModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      <button className="relative">
+      {/* <button className="relative">
         <UserGroupIcon className="w-7 h-7" />
         <span className="absolute top-4 left-6"> +1 </span>
-      </button>
+      </button> */}
       <button className="">
         <HeartIcon className="w-7 h-7" />
       </button>
