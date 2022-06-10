@@ -66,11 +66,11 @@ export const FriendSuggestion = ({ person, ...props }: Props) => {
           <img
             src={
               person.profilePicture
-                ? PF + "/people/" + person.profilePicture
+                ? person.profilePicture
                 : PF + "people/no-image-avatar2.png"
             }
-            alt="profile"
-            className="w-9 h-9 rounded-full object-cover border border-gray-400"
+            alt={person.username}
+            className="w-9 h-9 rounded-full object-cover border border-gray-400 text-xs text-gray-400 text-center"
           />
         </Link>
         <div className="flex flex-col ml-3 text-xs ">

@@ -74,8 +74,8 @@ const ProfileHeader = ({
                 ? userOfProfile.profilePicture
                 : PF + "people/no-image-avatar2.png"
             }
-            alt="profileImage"
-            className="rounded-full w-20 h-20 md:w-36 md:h-36 border border-gray-500 object-cover "
+            alt={userOfProfile?.username}
+            className="rounded-full w-20 h-20 md:w-36 md:h-36 border border-gray-500 object-cover text-xs text-center text-gray-400 "
           />
         </div>
         <div className="flex-1">
