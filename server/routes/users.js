@@ -8,6 +8,7 @@ import {
   getFriends,
   uploadUserProfileImage,
   getFollowers,
+  getFollowing,
   // removeUserProfileImage,
 } from "../controllers/users.js";
 import multer from "multer";
