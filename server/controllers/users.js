@@ -357,7 +357,7 @@ export const getFollowing = async (req, res) => {
 
 export const getFollowers = async (req, res) => {
   try {
-    const currUser = await User.findById(req.params.userId);
+    const currUser = await User.findById(req.params.id);
     if (currUser) {
       const users = await User.find({});
       //filter the users that are in the current user followers list
