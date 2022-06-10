@@ -360,11 +360,12 @@ export const getFollowers = async (req, res) => {
     const currUser = await User.findById(req.params.id);
     if (currUser) {
       const users = await User.find({});
-      //filter the users that are in the current user followers list
 
+      //we want the users Data from current user followers list
       const followers = users.filter((user) => {
-        return user.followers.includes(currUser._id);
+        return currUser.followers.includes(user._id);
       });
+
       let followersListSummary = [];
       followers.forEach((follower) => {
         const { _id, username, profilePicture } = follower;

@@ -5,6 +5,7 @@ import { useFollow } from "accounts/hooks";
 // import { useFollow } from "feed";
 import { useState } from "react";
 import FollowingModal from "./FollowingModal";
+import FollowersModal from "./FollowersModal";
 
 interface UserDetails {
   numOfPosts: number;
@@ -68,9 +69,14 @@ const ProfileHeader = ({
     }
   };
 
-  const followModalHandler = () => {
-    setOpenFollowingModal((prev) => !prev);
-    setOpenFollowersModal((prev) => !prev);
+  const followModalHandler = (action: string) => {
+    if (action === "following") {
+      setOpenFollowingModal(true);
+      setOpenFollowersModal(false);
+    } else if (action === "followers") {
+      setOpenFollowersModal(true);
+      setOpenFollowingModal(false);
+    }
   };
 
   return (
@@ -128,10 +134,10 @@ const ProfileHeader = ({
             <span>
               <strong>{userDetails.numOfPosts}</strong> posts
             </span>
-            <span>
+            <span onClick={()=>followModalHandler("followers")} className="cursor-pointer">
               <strong>{userDetails.numOfFollowers}</strong> followers
             </span>
-            <span onClick={followModalHandler}>
+            <span onClick={()=>followModalHandler("following")} className="cursor-pointer">
               <strong>{userDetails.numOfFollowing}</strong> following
             </span>
           </div>
@@ -145,6 +151,10 @@ const ProfileHeader = ({
       <FollowingModal
         isOpen={openFollowingModal}
         setIsOpen={setOpenFollowingModal}
+      />
+      <FollowersModal
+        isOpen={openFollowersModal}
+        setIsOpen={setOpenFollowersModal}
       />
     </div>
   );

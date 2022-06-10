@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { getFollowers, getFollowing } from "api";
+import { getFollowers } from "api";
 import { useAuth } from "auth";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMutation } from "react-query";
@@ -10,50 +10,36 @@ type Props = {
   setIsOpen: (isOpen: boolean) => void;
 };
 
-const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
+const FollowersModal = ({ isOpen, setIsOpen }: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
-  const [following, setFollowing] = useState([] as UserSuggestion[]);
+  const [followers, setFollowers] = useState([] as UserSuggestion[]);
   // const [followers, setFollowers] = useState([] as UserSuggestion[] | any);
   const closeModal = () => {
     setIsOpen(false);
   };
-  const { mutate: getFollowingMutate } = useMutation(getFollowing, {
+
+  const { mutate: getFollowersMutate } = useMutation(getFollowers, {
     onSuccess: (data) => {
-      setFollowing(data.data);
-      // console.log("data on Get Following success", data);
+      setFollowers(data.data);
+      console.log("data on Get Followers success", data);
     },
     onError: (error) => {
       console.log(error);
     },
   });
-  // const { mutate: getFollowersMutate } = useMutation(getFollowers, {
-  //   onSuccess: (data) => {
-  //     setFollowers(data);
-  //     console.log("data on Get Followers success", data);
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  // });
 
   useEffect(() => {
-    const fetchFollowing = async () => {
+    const fetchFollowers = async () => {
       if (user) {
-        getFollowingMutate(user._id);
+        getFollowersMutate(user._id);
       }
     };
-    // const fetchFollowers = async () => {
-    //   if (user) {
-    //      getFollowersMutate(user._id);
-    //   }
-    // };
 
-    fetchFollowing();
-    // fetchFollowers();
+    fetchFollowers();
   }, [user]);
 
-  console.log("following", following);
+  console.log("followers", followers);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -84,28 +70,29 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
         >
           <Dialog.Panel className="bg-white rounded-lg relative m-4 max-h-96">
             <Dialog.Title className="text-xl font-bold text-center border-b px-4 py-2 md:w-96 ">
-              Following
+              Followers
             </Dialog.Title>
             <div className=" items-center ">
-              {following &&
-                following.map((following) => (
+              {followers &&
+                followers.map((followers) => (
                   <div className="flex justify-between ">
                     <div className="flex space-x-3 m-2 ">
                       <img
                         className="rounded-full w-8 h-8 object-cover "
                         src={
-                          following.profilePicture
-                            ? following.profilePicture
+                          followers.profilePicture
+                            ? followers.profilePicture
                             : PF + "people/no-image-avatar2.png"
                         }
-                        alt={following.username}
+                        alt={followers.username}
                       />
                       <div className="text-xs  font-semibold self-center">
-                        {following.username}
+                        {followers.username}
                       </div>
                     </div>
                     <button className="border rounded mx-4 my-2 p-1">
-                      Following
+                      {/* follow unfollow  */}
+                      Follow
                     </button>
                   </div>
                 ))}
@@ -117,4 +104,4 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
   );
 };
 
-export default FollowingModal;
+export default FollowersModal;
