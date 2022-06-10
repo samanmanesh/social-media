@@ -101,7 +101,7 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
           <Dialog.Panel className="bg-white rounded-lg relative m-4">
             {/* For md size upper screen */}
             <div
-              className={` md:grid  md:grid-cols-3 lg:max-w-6xl md:h-screen md:max-h-[50rem] hidden md:visible`}
+              className={`md:grid md:grid-cols-3 lg:max-w-6xl md:h-screen md:max-h-[50rem] hidden md:visible`}
             >
               {post && (
                 <img
@@ -141,24 +141,56 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                   )}
                 </div>
                 <hr />
-                <div className=" text-lg font-semibold p-4 ">
-                  <div className="flex space-x-3 items-center ">
-                    <img
-                      src={
-                        user?.profilePicture
-                          ? user.profilePicture
-                          : PF + "people/no-image-avatar2.png"
-                      }
-                      alt="profile"
-                      className="w-8 h-8 rounded-full object-cover mr-1"
-                    />
+                <div className="flex flex-col justify-between  h-full">
+                  <div className="text-lg font-semibold p-4">
+                    <div className="flex space-x-3 items-center ">
+                      <img
+                        src={
+                          user?.profilePicture
+                            ? user.profilePicture
+                            : PF + "people/no-image-avatar2.png"
+                        }
+                        alt="profile"
+                        className="w-8 h-8 rounded-full object-cover mr-1"
+                      />
 
-                    <span className="text-sm font-bold">{user?.username}</span>
-                    <p className="text-sm font-normal w-full">{post?.desc}</p>
+                      <span className="text-sm font-bold">
+                        {user?.username}
+                      </span>
+                      <p className="text-sm font-normal w-full">{post?.desc}</p>
+                    </div>
+                    <span className="text-gray-800 text-xs font-extralight md:ml-12">
+                      {post && format(post.createdAt)}
+                    </span>
                   </div>
-                  <span className="text-gray-800 text-xs font-extralight md:ml-12">
-                    {post && format(post.createdAt)}
-                  </span>
+                  <div className=" mb-20">
+                    <button
+                      onClick={onClickLike}
+                      className="p-2 border-t  w-full flex space-x-3"
+                    >
+                      {isLiked ? (
+                        <HeartIcon className="w-7 h-7 fill-red-500 text-red-600" />
+                      ) : (
+                        <HeartIcon className="w-7 h-7" />
+                      )}
+                      <AnnotationIcon className="w-7 h-7" />
+                    </button>
+                    <div className="flex flex-col space-y-1 p-2">
+                      {numLikes === 1 ? (
+                        <span className="">Liked by a person </span>
+                      ) : numLikes > 1 ? (
+                        <span className="">
+                          Liked by mohammadgh4907 and {numLikes} others{" "}
+                        </span>
+                      ) : (
+                        <span className="">Liked by {numLikes} people</span>
+                      )}
+
+                      <span className="text-gray-800 text-sm">
+                        {post && format(post.createdAt)}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
