@@ -24,7 +24,7 @@ const ProfileGallery = ({ userPosts, userDetails }: Props) => {
   const [post, setPost] = useState<Post | undefined>(undefined);
   return (
     <div className="flex justify-center">
-      <div className="grid md:grid-cols-3 gap-6 max-w-4xl flex-1 mt-6">
+      <div className="grid grid-cols-3 gap-6 max-w-4xl flex-1 mt-6">
         {userPosts.map((p, index) => (
           <div
             key={index}

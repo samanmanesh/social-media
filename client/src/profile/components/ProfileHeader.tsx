@@ -92,7 +92,7 @@ const ProfileHeader = ({
             {userStatus.isCurrentUser ? (
               <Link
                 to="/accounts/edit"
-                className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-700 font-bold text-sm whitespace-nowrap rounded"
+                className="w-full sm:w-max mt-2 sm:mt-0 sm:ml-2 border px-2 py-1 text-neutral-800 font-bold text-sm whitespace-nowrap rounded text-center"
               >
                 Edit Profile
               </Link>
