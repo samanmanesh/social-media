@@ -14,7 +14,6 @@ const FollowersModal = ({ isOpen, setIsOpen }: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
   const [followers, setFollowers] = useState([] as UserSuggestion[]);
-  // const [followers, setFollowers] = useState([] as UserSuggestion[] | any);
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -22,7 +21,6 @@ const FollowersModal = ({ isOpen, setIsOpen }: Props) => {
   const { mutate: getFollowersMutate } = useMutation(getFollowers, {
     onSuccess: (data) => {
       setFollowers(data.data);
-      console.log("data on Get Followers success", data);
     },
     onError: (error) => {
       console.log(error);
