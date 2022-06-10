@@ -3,7 +3,8 @@ import { useAuth } from "../../auth/utils";
 import { Link } from "react-router-dom";
 import { useFollow } from "accounts/hooks";
 // import { useFollow } from "feed";
-
+import { useState } from "react";
+import FollowingModal from "./FollowingModal";
 
 interface UserDetails {
   numOfPosts: number;
@@ -40,6 +41,9 @@ const ProfileHeader = ({
     unfollowedSuccessfully,
   } = useFollow(userOfProfile);
 
+  const [openFollowingModal, setOpenFollowingModal] = useState(false);
+  const [openFollowersModal, setOpenFollowersModal] = useState(false);
+
   const followHandler = async () => {
     if (userStatus.isFollowing && currUser) {
       unfollowUserMutation({
@@ -62,6 +66,11 @@ const ProfileHeader = ({
           isFollowing: true,
         });
     }
+  };
+
+  const followModalHandler = () => {
+    setOpenFollowingModal((prev) => !prev);
+    setOpenFollowersModal((prev) => !prev);
   };
 
   return (
@@ -122,7 +131,7 @@ const ProfileHeader = ({
             <span>
               <strong>{userDetails.numOfFollowers}</strong> followers
             </span>
-            <span>
+            <span onClick={followModalHandler}>
               <strong>{userDetails.numOfFollowing}</strong> following
             </span>
           </div>
@@ -133,6 +142,10 @@ const ProfileHeader = ({
           </div>
         </div>
       </div>
+      <FollowingModal
+        isOpen={openFollowingModal}
+        setIsOpen={setOpenFollowingModal}
+      />
     </div>
   );
 };

@@ -324,7 +324,8 @@ export const getFriends = async (req, res) => {
 
 export const getFollowing = async (req, res) => {
   try {
-    const currUser = await User.findById(req.params.userId);
+    console.log("getFollowing ", req.params.id);
+    const currUser = await User.findById(req.params.id);
     if (currUser) {
       const users = await User.find({});
       //filter the users that are in the current user following list
@@ -341,6 +342,7 @@ export const getFollowing = async (req, res) => {
           profilePicture,
         });
       });
+      console.log("followingListSummary", followingListSummary);
       return res.status(200).json(followingListSummary);
     } else {
       return res.status(404).json({

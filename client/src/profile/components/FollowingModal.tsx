@@ -1,6 +1,9 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { getFollowers, getFollowing } from "api";
 import { useAuth } from "auth";
 import React, { Fragment, useEffect, useState } from "react";
+import { useMutation } from "react-query";
+import { UserSuggestion } from "api";
 
 type Props = {
   isOpen: boolean;
@@ -10,17 +13,45 @@ type Props = {
 const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
-  const [following, setFollowing] = useState([] as string[]);
+  const [following, setFollowing] = useState([] as UserSuggestion[] | any);
+  const [followers, setFollowers] = useState([] as UserSuggestion[] | any);
   const closeModal = () => {
     setIsOpen(false);
   };
-  
+  const { mutate: getFollowingMutate } = useMutation(getFollowing, {
+    onSuccess: (data) => {
+      setFollowing(data);
+      // console.log("data on Get Following success", data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  const { mutate: getFollowersMutate } = useMutation(getFollowers, {
+    onSuccess: (data) => {
+      setFollowers(data);
+      console.log("data on Get Followers success", data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   useEffect(() => {
-    if (user) {
-      setFollowing(user.following);
-    }
-  }
-  , [user]);
+    const fetchFollowing = async () => {
+      if (user) {
+        const following = getFollowingMutate(user._id);
+      }
+    };
+    const fetchFollowers = async () => {
+      if (user) {
+        const followers = getFollowersMutate(user._id);
+      }
+    };
+
+    fetchFollowing();
+    fetchFollowers();
+  }, [user]);
 
   console.log("following", following);
 
