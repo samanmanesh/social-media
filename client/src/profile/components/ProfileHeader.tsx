@@ -141,8 +141,6 @@ const ProfileHeader = ({
             </span>
           </div>
           <div className="mt-2">
-            {/* <p className="font-medium">Name</p>
-            <p>bio what ever they want put here</p> */}
             {userOfProfile.desc}
           </div>
         </div>

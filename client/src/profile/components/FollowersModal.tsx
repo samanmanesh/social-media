@@ -4,7 +4,6 @@ import { useAuth } from "auth";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { UserSuggestion } from "api";
-import { Link } from "react-router-dom";
 import People from "./People";
 
 type Props = {
