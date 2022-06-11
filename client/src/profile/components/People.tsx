@@ -13,12 +13,7 @@ const People = ({ closeModal, user: person }: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
 
-  const {
-    followUserMutation,
-    unfollowUserMutation,
-    followedSuccessfully,
-    unfollowedSuccessfully,
-  } = useFollow(person);
+  const { followUserMutation, unfollowUserMutation } = useFollow(person);
 
   const [userStatus, setUserStatus] = useState({
     isCurrentUser: false,
@@ -81,7 +76,12 @@ const People = ({ closeModal, user: person }: Props) => {
           {person.username}
         </div>
       </Link>
-      <button className={`border border-gray-500 rounded mx-4 my-2 px-2 py-1 ${!userStatus.isFollowing && "bg-blue-500 text-white border" } `} onClick={followHandler}>
+      <button
+        className={`border border-gray-500 rounded mx-4 my-2 px-2 py-1 ${
+          !userStatus.isFollowing && "bg-blue-500 text-white border"
+        } `}
+        onClick={followHandler}
+      >
         {userStatus.isFollowing ? "Following" : "Follow"}
       </button>
     </div>

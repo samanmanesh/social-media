@@ -12,12 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 export const FriendSuggestion = ({ person, ...props }: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
-  const {
-    followUserMutation,
-    unfollowUserMutation,
-    followedSuccessfully,
-    unfollowedSuccessfully,
-  } = useFollow(person);
+  const { followUserMutation, unfollowUserMutation } = useFollow(person);
 
   const [userStatus, setUserStatus] = useState({
     isCurrentUser: false,

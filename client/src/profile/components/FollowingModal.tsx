@@ -1,11 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { getFollowers, getFollowing } from "api";
+import { getFollowing } from "api";
 import { useAuth } from "auth";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { UserSuggestion } from "api";
-import { Link } from "react-router-dom";
-import People from './People';
+import People from "./People";
 
 type Props = {
   isOpen: boolean;
@@ -23,7 +22,7 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
       console.log(error);
     },
   });
-  
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -71,7 +70,11 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
             <div className=" items-center ">
               {following &&
                 following.map((following) => (
-                  <People key={following._id} user={following}  closeModal={closeModal}/>
+                  <People
+                    key={following._id}
+                    user={following}
+                    closeModal={closeModal}
+                  />
                 ))}
             </div>
           </Dialog.Panel>
