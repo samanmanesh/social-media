@@ -13,7 +13,6 @@ type Props = {
 };
 
 const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user } = useAuth();
   const [following, setFollowing] = useState([] as UserSuggestion[]);
   const { mutate: getFollowingMutate } = useMutation(getFollowing, {
