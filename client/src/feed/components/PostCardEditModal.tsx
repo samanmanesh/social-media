@@ -147,7 +147,7 @@ const PostCardEditModal = ({
           leaveTo="opacity-0"
         >
           {!openPromptModal && (
-            <Dialog.Panel className="bg-white rounded-xl relative flex flex-col md:w-72 min-w-[10rem]">s
+            <Dialog.Panel className="bg-white rounded-xl relative flex flex-col md:w-72 min-w-[10rem]">
               {userOfPost._id === user?._id ? (
                 <button
                   onClick={deletePostHandler}
