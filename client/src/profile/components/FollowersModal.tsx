@@ -5,6 +5,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { UserSuggestion } from "api";
 import { Link } from "react-router-dom";
+import People from "./People";
 
 type Props = {
   isOpen: boolean;
@@ -74,30 +75,31 @@ const FollowersModal = ({ isOpen, setIsOpen }: Props) => {
             <div className=" items-center ">
               {followers &&
                 followers.map((followers) => (
-                  <div className="flex justify-between ">
-                    <Link
-                      to={`/profile/${followers.username}`}
-                      className="flex space-x-3 m-2 "
-                      onClick={closeModal}
-                    >
-                      <img
-                        className="rounded-full w-8 h-8 object-cover "
-                        src={
-                          followers.profilePicture
-                            ? followers.profilePicture
-                            : PF + "people/no-image-avatar2.png"
-                        }
-                        alt={followers.username}
-                      />
-                      <div className="text-xs  font-semibold self-center">
-                        {followers.username}
-                      </div>
-                    </Link>
-                    <button className="border rounded mx-4 my-2 p-1">
-                      {/* follow unfollow  */}
-                      Follow
-                    </button>
-                  </div>
+                  <People key={followers._id} user={followers}  closeModal={closeModal}/>
+                  // <div className="flex justify-between ">
+                  //   <Link
+                  //     to={`/profile/${followers.username}`}
+                  //     className="flex space-x-3 m-2 "
+                  //     onClick={closeModal}
+                  //   >
+                  //     <img
+                  //       className="rounded-full w-8 h-8 object-cover "
+                  //       src={
+                  //         followers.profilePicture
+                  //           ? followers.profilePicture
+                  //           : PF + "people/no-image-avatar2.png"
+                  //       }
+                  //       alt={followers.username}
+                  //     />
+                  //     <div className="text-xs  font-semibold self-center">
+                  //       {followers.username}
+                  //     </div>
+                  //   </Link>
+                  //   <button className="border rounded mx-4 my-2 p-1">
+                  //     {/* follow unfollow  */}
+                  //     Follow
+                  //   </button>
+                  // </div>
                 ))}
             </div>
           </Dialog.Panel>
