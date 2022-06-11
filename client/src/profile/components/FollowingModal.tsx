@@ -4,6 +4,7 @@ import { useAuth } from "auth";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { UserSuggestion } from "api";
+import { Link } from "react-router-dom";
 
 type Props = {
   isOpen: boolean;
@@ -21,21 +22,11 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
   const { mutate: getFollowingMutate } = useMutation(getFollowing, {
     onSuccess: (data) => {
       setFollowing(data.data);
-      // console.log("data on Get Following success", data);
     },
     onError: (error) => {
       console.log(error);
     },
   });
-  // const { mutate: getFollowersMutate } = useMutation(getFollowers, {
-  //   onSuccess: (data) => {
-  //     setFollowers(data);
-  //     console.log("data on Get Followers success", data);
-  //   },
-  //   onError: (error) => {
-  //     console.log(error);
-  //   },
-  // });
 
   useEffect(() => {
     const fetchFollowing = async () => {
@@ -43,14 +34,7 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
         getFollowingMutate(user._id);
       }
     };
-    // const fetchFollowers = async () => {
-    //   if (user) {
-    //      getFollowersMutate(user._id);
-    //   }
-    // };
-
     fetchFollowing();
-    // fetchFollowers();
   }, [user]);
 
   console.log("following", following);
@@ -90,7 +74,11 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
               {following &&
                 following.map((following) => (
                   <div className="flex justify-between ">
-                    <div className="flex space-x-3 m-2 ">
+                    <Link
+                      to={`/profile/${following.username}`}
+                      className="flex space-x-3 m-2 "
+                      onClick={closeModal}
+                    >
                       <img
                         className="rounded-full w-8 h-8 object-cover "
                         src={
@@ -103,7 +91,7 @@ const FollowingModal = ({ isOpen, setIsOpen }: Props) => {
                       <div className="text-xs  font-semibold self-center">
                         {following.username}
                       </div>
-                    </div>
+                    </Link>
                     <button className="border rounded mx-4 my-2 p-1">
                       Following
                     </button>

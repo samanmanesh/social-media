@@ -4,6 +4,7 @@ import { useAuth } from "auth";
 import React, { Fragment, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { UserSuggestion } from "api";
+import { Link } from "react-router-dom";
 
 type Props = {
   isOpen: boolean;
@@ -74,7 +75,11 @@ const FollowersModal = ({ isOpen, setIsOpen }: Props) => {
               {followers &&
                 followers.map((followers) => (
                   <div className="flex justify-between ">
-                    <div className="flex space-x-3 m-2 ">
+                    <Link
+                      to={`/profile/${followers.username}`}
+                      className="flex space-x-3 m-2 "
+                      onClick={closeModal}
+                    >
                       <img
                         className="rounded-full w-8 h-8 object-cover "
                         src={
@@ -87,7 +92,7 @@ const FollowersModal = ({ isOpen, setIsOpen }: Props) => {
                       <div className="text-xs  font-semibold self-center">
                         {followers.username}
                       </div>
-                    </div>
+                    </Link>
                     <button className="border rounded mx-4 my-2 p-1">
                       {/* follow unfollow  */}
                       Follow
