@@ -73,6 +73,7 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
+      
       <Dialog
         as="div"
         className="fixed inset-0 grid place-items-center"

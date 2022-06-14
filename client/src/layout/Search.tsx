@@ -1,4 +1,4 @@
-import { Listbox, Transition } from "@headlessui/react";
+import { Dialog, Listbox, Transition } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/outline";
 import { getAllUsers } from "api";
 
@@ -10,7 +10,7 @@ type Props = {};
 export default function Search({}: Props) {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
-  const [seachModaIsOpen, setSearchModaIsOpen] = useState(false);
+  const [searchModalIsOpen, setSearchModaIsOpen] = useState(false);
 
   const {
     isLoading,
@@ -40,6 +40,10 @@ export default function Search({}: Props) {
     console.log("open search modal");
     setSearchModaIsOpen(true);
   };
+  const closeSearchModal = () => {
+    console.log("close search modal");
+    setSearchModaIsOpen(false);
+  };
   return (
     <div className="relative hidden items-center  sm:flex">
       <SearchIcon className="w-4 h-4 absolute left-2 text-gray-500" />
@@ -52,9 +56,10 @@ export default function Search({}: Props) {
         onChange={(e) => setQuery(e.target.value)}
         onClick={openSearchModal}
       />
-      {seachModaIsOpen && (
+      {searchModalIsOpen && (
         <Transition
-          show={seachModaIsOpen}
+          as="div"
+          show={searchModalIsOpen}
           enter="transition ease-out duration-100"
           enterFrom="opacity-0"
           enterTo="opacity-100"
@@ -62,30 +67,37 @@ export default function Search({}: Props) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="absolute top-0 left-0 w-full h-full bg-gray-100 z-10">
-            {results &&
-              results.map((user) => {
-                return (
-                  <div className="flex items-center justify-between p-2">
-                    <div className="flex items-center">
-                      <img
-                        className="w-8 h-8 rounded-full text-center text-gray-500 text-xs"
-                        src={
-                          user.profilePicture
-                            ? user.profilePicture
-                            : "https://via.placeholder.com/150"
-                        }
-                        alt={user.username}
-                      />
-                      <span className="ml-2">{user.username}</span>
-                    </div>
-                    <button className="bg-blue-500 text-white font-bold py-1 px-2 rounded">
-                      Follow
-                    </button>
-                  </div>
-                );
-              })}
-          </div>
+          <Dialog
+            as="div"
+            className="fixed top-12 right-0 md:right-32 left-0 grid place-items-center"
+            onClose={closeSearchModal}
+          >
+            <Dialog.Panel className="relative m-4 min-w-[22rem]">
+              <div className="absolute top-0 left-0 w-full border rounded-lg bg-white max-h-96 overflow-scroll">
+                {results &&
+                  results.map((user) => {
+                    return (
+                      <div className="flex items-center p-3 space-x-6">
+                        <img
+                          className="w-10 h-10 rounded-full text-center text-gray-500 text-xs object-cover border"
+                          src={
+                            user.profilePicture
+                              ? user.profilePicture
+                              : "https://via.placeholder.com/150"
+                          }
+                          alt={user.username}
+                        />
+                        <div className="flex flex-col">
+                        <span className="font-semibold font-medium">{user.username}</span>
+                        {/* check if following type isFollowing */}
+                        <span className="text-xs text-gray-400">Following</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </Dialog.Panel>
+          </Dialog>
         </Transition>
       )}
 
