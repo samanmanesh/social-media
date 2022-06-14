@@ -88,9 +88,11 @@ export default function Search({}: Props) {
                           alt={user.username}
                         />
                         <div className="flex flex-col">
-                        <span className="font-semibold font-medium">{user.username}</span>
-                        {/* check if following type isFollowing */}
-                        <span className="text-xs text-gray-400">Following</span>
+                          <span className=" font-medium">{user.username}</span>
+                          {/* check if following type isFollowing */}
+                          <span className="text-xs text-gray-400">
+                            Following
+                          </span>
                         </div>
                       </div>
                     );
