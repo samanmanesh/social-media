@@ -65,15 +65,22 @@ export const updateUserData = (
   return instance.put(`users/${data.userId}`, data.userDataToUpdated);
 };
 
-
 //todo: remove a user profile from the server and cloudinary and the client
 //todo: remove a user from the server and the client
 //getting followers and following of a user data from the server
-export const getFollowers = (userId: string): Promise<AxiosResponse<User[]>> => {
+export const getFollowers = (
+  userId: string
+): Promise<AxiosResponse<User[]>> => {
   return instance.get(`users/${userId}/followers`);
-}
+};
 
-export const getFollowing = (userId: string): Promise<AxiosResponse<User[]>> => {
+export const getFollowing = (
+  userId: string
+): Promise<AxiosResponse<User[]>> => {
   return instance.get(`users/${userId}/following`);
-}
+};
 
+//getting all users from the server
+export const getAllUsers = (): Promise<AxiosResponse<User[]>> => {
+  return instance.get(`users/all`);
+};

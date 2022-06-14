@@ -9,6 +9,7 @@ import {
   uploadUserProfileImage,
   getFollowers,
   getFollowing,
+  getAllUsers,
   // removeUserProfileImage,
 } from "../controllers/users.js";
 import multer from "multer";
@@ -20,6 +21,9 @@ const upload = multer();
 
 //get a user by query (id or username)
 router.get("/", getUsers);
+
+//gets all the users existing in the database for search purposes
+router.get("/all", getAllUsers);
 
 //update user by id
 router.put("/:id", updateUser);
