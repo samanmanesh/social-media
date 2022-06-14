@@ -1,15 +1,8 @@
-import {
-  Combobox,
-  Dialog,
-  Listbox,
-  Popover,
-  Transition,
-} from "@headlessui/react";
+import { Combobox } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/outline";
 import { getAllUsers } from "api";
 
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { useMutation } from "react-query";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 type Props = {};
@@ -17,8 +10,6 @@ type Props = {};
 export default function Search({}: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState<string[]>([]);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,9 +18,7 @@ export default function Search({}: Props) {
     data: users,
     error,
   } = useQuery("allUsers", getAllUsers, {
-    onSuccess: (data) => {
-      console.log("data for UseQueery", data);
-    },
+    onSuccess: (data) => {},
     onError: (error) => {
       console.log(error);
     },
@@ -43,45 +32,31 @@ export default function Search({}: Props) {
   }, [query, users]);
 
   useEffect(() => {
-    console.debug("page changed");
     setQuery("");
     document.activeElement && (document.activeElement as HTMLElement).blur();
   }, [location]);
-
-  // const { search, setSearch } = useSearch();
-
-  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   e.preventDefault();
-  //   setQuery(e.target.value);
-  //   // !searchModalIsOpen && openSearchModal();
-  // };
-
-  // const openSearchModal = () => {
-  //   setSearchModalOpen(true);
-  // };
-
-  // const closeSearchModal = () => {
-  //   setSearchModalOpen(false);
-  //   document.activeElement && (document.activeElement as HTMLElement).blur();
-  // };
 
   const onChange = (user: string) => {
     navigate(`/profile/${user}`);
   };
 
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
   return (
     <Combobox
       value={query}
-      onChange={(user) => {
-        navigate(`/profile/${user}`);
-      }}
-      // onChange={onChange}
+      // onChange={(user) => {
+      //   navigate(`/profile/${user}`);
+      // }}
+      onChange={onChange}
     >
       {({ open }) => (
         <div className="relative hidden sm:flex flex-col ">
           <SearchIcon className="w-5 h-5 absolute left-2 top-1 text-gray-500 cursor-pointer items-center" />
           <Combobox.Input
-            onChange={(e) => setQuery(e.target.value)}
+            // onChange={(e) => setQuery(e.target.value)}
+            onChange={onChangeInput}
             className="min-w-fit p-1 pl-8 h-7 border rounded bg-gray-200 focus:outline-none focus:ring focus:border-blue-500"
           />
           {open && (
