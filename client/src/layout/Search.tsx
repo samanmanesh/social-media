@@ -1,16 +1,26 @@
-import { Dialog, Listbox, Transition } from "@headlessui/react";
+import {
+  Combobox,
+  Dialog,
+  Listbox,
+  Popover,
+  Transition,
+} from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/outline";
 import { getAllUsers } from "api";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useMutation } from "react-query";
 import { useQuery } from "react-query";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 type Props = {};
 
 export default function Search({}: Props) {
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
-  const [searchModalIsOpen, setSearchModaIsOpen] = useState(false);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     isLoading,
@@ -26,84 +36,172 @@ export default function Search({}: Props) {
   });
 
   const results = useMemo(() => {
-    if (!users) return [];
-    console.log("users", users.data);
+    if (!users || !query) return [];
     return users.data.filter((user) => {
       return user.username.toLowerCase().includes(query.toLowerCase());
     });
   }, [query, users]);
 
-  console.log("results", results);
+  useEffect(() => {
+    console.debug("page changed");
+    setQuery("");
+    document.activeElement && (document.activeElement as HTMLElement).blur();
+  }, [location]);
+
   // const { search, setSearch } = useSearch();
 
-  const openSearchModal = () => {
-    console.log("open search modal");
-    setSearchModaIsOpen(true);
-  };
-  const closeSearchModal = () => {
-    console.log("close search modal");
-    setSearchModaIsOpen(false);
-  };
-  return (
-    <div className="relative hidden items-center  sm:flex">
-      <SearchIcon className="w-4 h-4 absolute left-2 text-gray-500" />
-      <input
-        placeholder="Search"
-        className="min-w-fit p-1 pl-7 h-7 border rounded bg-gray-200 focus:outline-none focus:ring focus:border-blue-500"
-        type="search"
-        name="search"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onClick={openSearchModal}
-      />
-      {searchModalIsOpen && (
-        <Transition
-          as="div"
-          show={searchModalIsOpen}
-          enter="transition ease-out duration-100"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition ease-in duration-100"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Dialog
-            as="div"
-            className="fixed top-12 right-0 md:right-32 left-0 grid place-items-center"
-            onClose={closeSearchModal}
-          >
-            <Dialog.Panel className="relative m-4 min-w-[22rem]">
-              <div className="absolute top-0 left-0 w-full border rounded-lg bg-white max-h-96 overflow-scroll">
-                {results &&
-                  results.map((user) => {
-                    return (
-                      <div className="flex items-center p-3 space-x-6">
-                        <img
-                          className="w-10 h-10 rounded-full text-center text-gray-500 text-xs object-cover border"
-                          src={
-                            user.profilePicture
-                              ? user.profilePicture
-                              : "https://via.placeholder.com/150"
-                          }
-                          alt={user.username}
-                        />
-                        <div className="flex flex-col">
-                          <span className=" font-medium">{user.username}</span>
-                          {/* check if following type isFollowing */}
-                          <span className="text-xs text-gray-400">
-                            Following
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </Dialog.Panel>
-          </Dialog>
-        </Transition>
-      )}
+  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   setQuery(e.target.value);
+  //   // !searchModalIsOpen && openSearchModal();
+  // };
 
-      {/* <Listbox value={query} onChange={setQuery}>
+  // const openSearchModal = () => {
+  //   setSearchModalOpen(true);
+  // };
+
+  // const closeSearchModal = () => {
+  //   setSearchModalOpen(false);
+  //   document.activeElement && (document.activeElement as HTMLElement).blur();
+  // };
+
+  const onChange = (user: string) => {
+    navigate(`/profile/${user}`);
+  };
+
+  return (
+    <Combobox
+      value={query}
+      onChange={(user) => {
+        navigate(`/profile/${user}`);
+      }}
+      // onChange={onChange}
+    >
+      {({ open }) => (
+        <div className="relative hidden sm:flex flex-col ">
+          <SearchIcon className="w-5 h-5 absolute left-2 top-1 text-gray-500 cursor-pointer items-center" />
+          <Combobox.Input
+            onChange={(e) => setQuery(e.target.value)}
+            className="min-w-fit p-1 pl-8 h-7 border rounded bg-gray-200 focus:outline-none focus:ring focus:border-blue-500"
+          />
+          {open && (
+            <Combobox.Options
+              static
+              className="divide-y border rounded-md bg-white absolute top-full inset-x-0 mt-2"
+            >
+              {results.length === 0 && (
+                <div className="p-8 text-center flex flex-col items-center">
+                  <p className="text-sm">No results</p>
+                </div>
+              )}
+              {results.map((user) => (
+                <Combobox.Option
+                  key={user._id}
+                  value={user.username}
+                  as={Fragment}
+                >
+                  {({ active, selected }) => (
+                    <Link
+                      to={`/profile/${user.username}`}
+                      className={`
+                      flex px-4 py-2 space-x-3  
+                      ${active ? "bg-gray-200" : ""}
+                      ${selected ? "font-medium" : ""}
+                      `}
+                    >
+                      <img
+                        className="rounded-full w-8 h-8  border border-gray-500 object-cover text-xs text-center text-gray-400 "
+                        src={
+                          user?.profilePicture
+                            ? user?.profilePicture
+                            : PF + "people/no-image-avatar2.png"
+                        }
+                        alt={user.username}
+                      />
+                      <div className="flex flex-col">
+                        <span className="text-sm">{user.username}</span>
+                        <span className="text-xs text-gray-500">Following</span>
+                      </div>
+                    </Link>
+                  )}
+                </Combobox.Option>
+              ))}
+            </Combobox.Options>
+          )}
+        </div>
+      )}
+    </Combobox>
+  );
+
+  // return (
+  //   <Popover className="hidden sm:flex flex-col relative">
+  //     <Popover.Button className="relative items-center flex" as="div">
+  //       <SearchIcon
+  //         className="w-4 h-4 absolute left-2 text-gray-500 cursor-pointer"
+  //         onClick={openSearchModal}
+  //       />
+  //       <input
+  //         placeholder="Search"
+  //         className="min-w-fit p-1 pl-8 h-7 border rounded bg-gray-200 focus:outline-none focus:ring focus:border-blue-500"
+  //         type="search"
+  //         name="search"
+  //         value={query}
+  //         onChange={onChange}
+  //         autoCapitalize="none"
+  //         autoComplete="off"
+  //         spellCheck="false"
+  //         onFocus={openSearchModal}
+  //         onBlur={closeSearchModal}
+  //       />
+  //     </Popover.Button>
+  //     {searchModalOpen && (
+  //       <div className="fixed inset-0" onClick={closeSearchModal} />
+  //     )}
+  //     <Transition
+  //       show={searchModalOpen}
+  //       enter="transition ease-in duration-100"
+  //       enterFrom="opacity-0"
+  //       enterTo="opacity-100"
+  //       leave="transition ease-in duration-100"
+  //       leaveFrom="opacity-100"
+  //       leaveTo="opacity-0"
+  //     >
+  //       <Popover.Panel
+  //         static
+  //         className="absolute top-full bg-white border rounded-md shadow -inset-x-6 mt-2 divide-y"
+  //       >
+  // {results.length === 0 && (
+  //   <div className="p-8 text-center flex flex-col items-center">
+  //     <p className="text-sm">No results</p>
+  //   </div>
+  // )}
+  //         {results.length > 0 &&
+  //           results.map((user) => (
+  //             <Link
+  //               className="px-4 py-2 block"
+  //               key={user._id}
+  //               to={`/profile/${user.username}`}
+  //             >
+  //               <div className="flex items-center">
+  //                 <img
+  //                   className="w-8 h-8 rounded-full mr-3"
+  //                   src={"https://picsum.photos/seed/1655244341243/300/300"}
+  //                   alt={user.username}
+  //                 />
+  //                 <div className="flex-1">
+  //                   <p className="text-sm">{user.username}</p>
+  //                 </div>
+  //               </div>
+  //             </Link>
+  //           ))}
+  //       </Popover.Panel>
+  //     </Transition>
+  //   </Popover>
+  // );
+}
+
+{
+  /* <Listbox value={query} onChange={setQuery}>
         <div className="relative  bg-blue-300">
           <input
             placeholder="Search"
@@ -148,7 +246,5 @@ export default function Search({}: Props) {
             </Listbox.Options>
           </Transition>
         </div>
-      </Listbox> */}
-    </div>
-  );
+      </Listbox> */
 }

@@ -61,7 +61,7 @@ const People = ({ closeModal, user: person }: Props) => {
       <Link
         to={`/profile/${person.username}`}
         className="flex space-x-3 m-2 "
-        onClick={closeModal}
+        onClick={closeModal} 
       >
         <img
           className="rounded-full w-8 h-8 object-cover "
