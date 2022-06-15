@@ -58,9 +58,14 @@ export function Sidebar({ ...props }: Props) {
         <Link to={'/explore/people'} className="text-xs font-semibold px-3 self-center">See All</Link>
       </div>
       <div className="flex flex-col space-y-4 p-3">
-        {people.map((person) => (
+        {people.length>0 && people.map((person) => (
           <FriendSuggestion key={person._id} person={person} />
         ))}
+        {people.length === 0 && (
+          <div className="flex flex-col">
+            <span className="text-gray-700 text-sm text-center">No Suggestions</span>
+          </div>
+        )}
       </div>
       <div className="text-gray-400 text-xs font-medium p-3">
         © 2022 Hilarion By Saman Manesh
