@@ -55,7 +55,7 @@ export function Sidebar({ ...props }: Props) {
       </div>
       <div className="mt-6 flex justify-between font-semibold">
         <span className="text-gray-500"> Suggestions For You</span>
-        <Link to={'/people/all'} className="">See All</Link>
+        <Link to={'/explore/people'} className="text-xs font-semibold px-3 self-center">See All</Link>
       </div>
       <div className="flex flex-col space-y-4 p-3">
         {people.map((person) => (

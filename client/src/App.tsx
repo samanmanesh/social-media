@@ -48,7 +48,7 @@ function App() {
                   }
                 />
                 <Route
-                  path="people/all"
+                  path="explore/people"
                   element={
                     <RequireAuth>
                       <FriendsPage />
