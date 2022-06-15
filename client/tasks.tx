@@ -1,0 +1,4 @@
+Tasks to do in feature:
+1. Add notification for when user gets likes and comments on their post 
+2. Add the comments to the post in both frontend and backend (notification when user gets comments on their post)
+3. Work on chat feature (notification for when user gets a message)
