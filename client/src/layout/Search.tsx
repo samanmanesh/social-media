@@ -1,10 +1,12 @@
 import { Combobox } from "@headlessui/react";
 import { SearchIcon } from "@heroicons/react/outline";
 import { getAllUsers } from "api";
+import { useAuth } from "auth";
 
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { UserStatus } from "../profile/components/ProfileHeader";
 type Props = {};
 
 //todo just if user followed the search user then show following text
@@ -14,6 +16,8 @@ export default function Search({}: Props) {
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { user: currUser } = useAuth();
 
   const {
     isLoading,
@@ -45,6 +49,7 @@ export default function Search({}: Props) {
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
+
   return (
     <Combobox
       value={query}
@@ -97,7 +102,11 @@ export default function Search({}: Props) {
                       />
                       <div className="flex flex-col">
                         <span className="text-sm">{user.username}</span>
-                        <span className="text-xs text-gray-500">Following</span>
+                        {currUser?.following.includes(user._id) && (
+                          <span className="text-xs text-gray-500">
+                            Following
+                          </span>
+                        )}
                       </div>
                     </Link>
                   )}
