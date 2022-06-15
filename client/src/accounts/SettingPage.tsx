@@ -17,6 +17,7 @@ const SettingPage = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState(null as File | null); // the file that the user will upload
   const [image, setImage] = useState(null as any); // the image that the user will upload
+  const [removeProfilePhoto, setRemoveProfilePhoto] = useState(false); // if the user wants to remove the profile photo
 
   const { mutate: uploadPhoto } = useMutation(uploadUserProfileImage, {
     onSuccess: (data) => {
@@ -55,6 +56,7 @@ const SettingPage = (props: Props) => {
   useEffect(() => {
     if (file) setImage(URL.createObjectURL(file));
     else setImage(user?.profilePicture || null);
+
   }, [file, user?.profilePicture]);
 
   // this is for when the user change the value of the inputs in the form
@@ -70,7 +72,7 @@ const SettingPage = (props: Props) => {
   // this is for when the user press submit
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (JSON.stringify(currUserData) === JSON.stringify(user) && !file) {
+    if (JSON.stringify(currUserData) === JSON.stringify(user) && !file && !removeProfilePhoto) {
       toast.error("No changes made");
       return;
     }
@@ -80,10 +82,21 @@ const SettingPage = (props: Props) => {
       formData.append("file", file);
       // console.log("formData", formData.getAll("file"));
       uploadPhoto(formData);
-    } else {
+    } else if(removeProfilePhoto) {
       if (currUserData) {
         const { password, ...newUserDataWithoutPassword } = currUserData; // remove the password from the user data to not change it
-
+          const newUserData = {
+            ...newUserDataWithoutPassword,
+            profilePicture: "",
+          };
+        updateUser({
+          userId: currUserData._id,
+          userDataToUpdated: newUserData,
+        });
+      }
+    }else {
+      if (currUserData) {
+        const { password, ...newUserDataWithoutPassword } = currUserData; // remove the password from the user data to not change it
         updateUser({
           userId: currUserData._id,
           userDataToUpdated: newUserDataWithoutPassword,
@@ -168,6 +181,7 @@ const SettingPage = (props: Props) => {
             setFile={setFile}
             image={image}
             setImage={setImage}
+            setRemoveProfilePhoto={setRemoveProfilePhoto}
           />
         </div>
       </div>

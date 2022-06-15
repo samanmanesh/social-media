@@ -12,6 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
   file: any;
   image: any;
   user: User | null;
+  setRemoveProfilePhoto: (removeProfilePhoto: boolean) => void;
 }
 
 function ProfilePhotoUploaderModal({
@@ -22,6 +23,7 @@ function ProfilePhotoUploaderModal({
   setImage,
   isOpen,
   setIsOpen,
+  setRemoveProfilePhoto,
 }: Props) {
   const closeModal = () => {
     setIsOpen(false);
@@ -32,8 +34,12 @@ function ProfilePhotoUploaderModal({
     if (user) {
       //remove from server and update user
       //remove from state
+      console.log("remove profile photo");
       setImage(null);
       setFile(null);
+      setIsOpen(false);
+      setRemoveProfilePhoto(true);
+
     }
   };
 
