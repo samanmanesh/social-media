@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { getPeople, UserSuggestion } from "api";
 import { Link } from "react-router-dom";
 import { useAuth } from "auth";
-import { FriendSuggestion } from "feed/components/FriendSuggestion";
+import { FriendSuggestion } from "friends/components/FriendSuggestion";
 interface Props extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function Sidebar({ ...props }: Props) {
@@ -55,7 +55,7 @@ export function Sidebar({ ...props }: Props) {
       </div>
       <div className="mt-6 flex justify-between font-semibold">
         <span className="text-gray-500"> Suggestions For You</span>
-        <button className="">See All</button>
+        <Link to={'/people/all'} className="">See All</Link>
       </div>
       <div className="flex flex-col space-y-4 p-3">
         {people.map((person) => (

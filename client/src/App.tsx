@@ -8,6 +8,7 @@ import { FeedPage } from "./feed/components";
 import { AuthProvider } from "auth";
 import { Toaster } from "react-hot-toast";
 import SettingPage from "accounts/SettingPage";
+import FriendsPage from './friends/FriendsPage';
 
 function App() {
   const client = new QueryClient();
@@ -46,6 +47,15 @@ function App() {
                     </RequireAuth>
                   }
                 />
+                <Route
+                  path="people/all"
+                  element={
+                    <RequireAuth>
+                      <FriendsPage />
+                    </RequireAuth>
+                  }
+                />
+
               </Route>
             </Routes>
           </Router>
