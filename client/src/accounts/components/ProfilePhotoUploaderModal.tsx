@@ -118,9 +118,7 @@ function ProfilePhotoUploaderModal({
                 Remove Current Photo
               </button>
             )}
-
             <hr className=" text-lg text-black" />
-
             <button onClick={closeModal} className=" font-semibold py-3">
               {" "}
               Cancel

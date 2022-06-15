@@ -1,8 +1,7 @@
 import { useAuth } from "auth";
-import { useQuery } from "react-query";
-import { getTimelinePosts } from "../api/posts";
 import { useMutation } from "react-query";
 import { followUser, unfollowUser, UserSuggestion } from "api";
+import { toast } from 'react-hot-toast';
 
 export const useFollow = (userOfProfile: User | UserSuggestion) => {
   const { user: currUser, setUser } = useAuth();
@@ -18,7 +17,7 @@ export const useFollow = (userOfProfile: User | UserSuggestion) => {
       }
     },
     onError: (err) => {
-      console.log("err in unfollowUser", err);
+     toast.error("Error unfollowing user");
     },
   });
 
