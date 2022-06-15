@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 
 type Props = {};
 
-//todo:  remember when uploading a new profile remove the previous profile photo from the cloudinary
 const SettingPage = (props: Props) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const { user, setUser } = useAuth(); //final change after sending the request to the server to update the user data
@@ -56,7 +55,6 @@ const SettingPage = (props: Props) => {
   useEffect(() => {
     if (file) setImage(URL.createObjectURL(file));
     else setImage(user?.profilePicture || null);
-
   }, [file, user?.profilePicture]);
 
   // this is for when the user change the value of the inputs in the form
@@ -72,7 +70,11 @@ const SettingPage = (props: Props) => {
   // this is for when the user press submit
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (JSON.stringify(currUserData) === JSON.stringify(user) && !file && !removeProfilePhoto) {
+    if (
+      JSON.stringify(currUserData) === JSON.stringify(user) &&
+      !file &&
+      !removeProfilePhoto
+    ) {
       toast.error("No changes made");
       return;
     }
@@ -82,19 +84,19 @@ const SettingPage = (props: Props) => {
       formData.append("file", file);
       // console.log("formData", formData.getAll("file"));
       uploadPhoto(formData);
-    } else if(removeProfilePhoto) {
+    } else if (removeProfilePhoto) {
       if (currUserData) {
         const { password, ...newUserDataWithoutPassword } = currUserData; // remove the password from the user data to not change it
-          const newUserData = {
-            ...newUserDataWithoutPassword,
-            profilePicture: "",
-          };
+        const newUserData = {
+          ...newUserDataWithoutPassword,
+          profilePicture: "",
+        };
         updateUser({
           userId: currUserData._id,
           userDataToUpdated: newUserData,
         });
       }
-    }else {
+    } else {
       if (currUserData) {
         const { password, ...newUserDataWithoutPassword } = currUserData; // remove the password from the user data to not change it
         updateUser({

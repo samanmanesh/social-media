@@ -39,7 +39,6 @@ function ProfilePhotoUploaderModal({
       setFile(null);
       setIsOpen(false);
       setRemoveProfilePhoto(true);
-
     }
   };
 
