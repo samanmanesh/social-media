@@ -133,16 +133,20 @@ const ProfileHeader = ({
             <span>
               <strong>{userDetails.numOfPosts}</strong> posts
             </span>
-            <span onClick={()=>followModalHandler("followers")} className="cursor-pointer">
+            <span
+              onClick={() => followModalHandler("followers")}
+              className="cursor-pointer"
+            >
               <strong>{userDetails.numOfFollowers}</strong> followers
             </span>
-            <span onClick={()=>followModalHandler("following")} className="cursor-pointer">
+            <span
+              onClick={() => followModalHandler("following")}
+              className="cursor-pointer"
+            >
               <strong>{userDetails.numOfFollowing}</strong> following
             </span>
           </div>
-          <div className="mt-2">
-            {userOfProfile.desc}
-          </div>
+          <div className="mt-2">{userOfProfile.desc}</div>
         </div>
       </div>
       <FollowingModal

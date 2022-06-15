@@ -47,7 +47,12 @@ const ProfileGallery = ({ userPosts, userDetails, userStatus }: Props) => {
             </div>
           </div>
         ))}
-        <PostModal isOpen={isOpen} setIsOpen={setIsOpen} post={post} userStatus={userStatus}/>
+        <PostModal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          post={post}
+          userStatus={userStatus}
+        />
       </div>
     </div>
   );

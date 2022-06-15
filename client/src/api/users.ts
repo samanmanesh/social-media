@@ -65,7 +65,6 @@ export const updateUserData = (
   return instance.put(`users/${data.userId}`, data.userDataToUpdated);
 };
 
-
 //getting followers and following of a user data from the server
 export const getFollowers = (
   userId: string

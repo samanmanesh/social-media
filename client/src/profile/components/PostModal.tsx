@@ -38,19 +38,6 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
   });
 
   useEffect(() => {
-    // if post is for current user then don't fetch user otherwise fetch user
-    // const fetchUser = async () => {
-    //   if (user && post.userId === user?._id) {
-    //     setUserOfPost(user);
-    //   } else {
-    //     const res = await getUser({ userId: post.userId });
-    //     setUserOfPost(res.data);
-    //   }
-    // };
-    // fetchUser();
-    // userStatus.isuser
-
-    //check if user liked the post
     if (post && user) {
       setIsLiked(post.likes.includes(user._id));
       //setting num of likes
@@ -73,7 +60,6 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      
       <Dialog
         as="div"
         className="fixed inset-0 grid place-items-center"

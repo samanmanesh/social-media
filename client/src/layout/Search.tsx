@@ -7,7 +7,6 @@ import { useQuery } from "react-query";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 type Props = {};
 
-
 export default function Search({}: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work
   const [query, setQuery] = useState("");
