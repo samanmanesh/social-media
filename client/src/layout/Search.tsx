@@ -7,7 +7,6 @@ import { useQuery } from "react-query";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 type Props = {};
 
-//todo just if user followed the search user then show following text
 
 export default function Search({}: Props) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER; // public folder path in env file for routing to work

@@ -1,4 +1,8 @@
-Tasks to do in feature:
+Tasks to do in future:
 1. Add notification for when user gets likes and comments on their post 
 2. Add the comments to the post in both frontend and backend (notification when user gets comments on their post)
-3. Work on chat feature (notification for when user gets a message)
+3. Add the chat feature (notification for when user gets a message)
+4. Add the ability to delete an account
+
+Fixing bugs in future:
+1. Remove a user profile from cloudinary if they delete a post or account 

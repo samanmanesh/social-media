@@ -7,13 +7,6 @@ import { useAuth } from "auth";
 
 type Props = {};
 
-//todo make the num of followers and following ✔︎
-//todo make the num of posts ✔︎
-// todo make the num of likes ✔︎
-// todo make the num of comments
-
-// todo check is the user is admin or check if the user is the same as the current user then show the profile related to the user  ✔︎
-
 const ProfilePage = (props: Props) => {
   const params = useParams();
   const [userPosts, setUserPosts] = useState([] as Post[]);
