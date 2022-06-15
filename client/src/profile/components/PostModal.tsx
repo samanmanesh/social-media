@@ -85,20 +85,20 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
           leaveFrom="opacity-500"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel className="bg-white rounded-lg relative m-4">
+          <Dialog.Panel className="relative m-4 rounded-lg bg-white">
             {/* For md size upper screen */}
             <div
-              className={`md:grid md:grid-cols-3 lg:max-w-6xl md:h-screen md:max-h-[50rem] hidden md:visible`}
+              className={`hidden md:visible md:grid md:h-screen md:max-h-[50rem] md:grid-cols-3 lg:max-w-6xl`}
             >
               {post && (
                 <img
                   src={post.img}
                   alt=""
-                  className=" object-cover col-span-2 h-full w-full"
+                  className=" col-span-2 h-full w-full object-cover"
                 />
               )}
               <div className="py-2  ">
-                <div className="flex items-center justify-between ml-4">
+                <div className="ml-4 flex items-center justify-between">
                   <div className="flex items-center space-x-4 py-4">
                     <img
                       src={
@@ -107,14 +107,14 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                           : PF + "people/no-image-avatar2.png"
                       }
                       alt="profile"
-                      className="w-8 h-8 rounded-full object-cover"
+                      className="h-8 w-8 rounded-full object-cover"
                     />
                     <span className="text-lg font-semibold">
                       {user?.username}
                     </span>
                   </div>
                   <DotsHorizontalIcon
-                    className="w-4 h-4 mr-4 cursor-pointer "
+                    className="mr-4 h-4 w-4 cursor-pointer "
                     onClick={openModal}
                   />
                   {post && user && (
@@ -128,9 +128,9 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                   )}
                 </div>
                 <hr />
-                <div className="flex flex-col justify-between  h-full">
-                  <div className="text-lg font-semibold p-4">
-                    <div className="flex space-x-3 items-center ">
+                <div className="flex h-full flex-col  justify-between">
+                  <div className="p-4 text-lg font-semibold">
+                    <div className="flex items-center space-x-3 ">
                       <img
                         src={
                           user?.profilePicture
@@ -138,29 +138,29 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                             : PF + "people/no-image-avatar2.png"
                         }
                         alt="profile"
-                        className="w-8 h-8 rounded-full object-cover mr-1"
+                        className="mr-1 h-8 w-8 rounded-full object-cover"
                       />
 
                       <span className="text-sm font-bold">
                         {user?.username}
                       </span>
-                      <p className="text-sm font-normal w-full">{post?.desc}</p>
+                      <p className="w-full text-sm font-normal">{post?.desc}</p>
                     </div>
-                    <span className="text-gray-800 text-xs font-extralight md:ml-12">
+                    <span className="text-xs font-extralight text-gray-800 md:ml-12">
                       {post && format(post.createdAt)}
                     </span>
                   </div>
                   <div className=" mb-20">
                     <button
                       onClick={onClickLike}
-                      className="p-2 border-t  w-full flex space-x-3"
+                      className="flex w-full  space-x-3 border-t p-2"
                     >
                       {isLiked ? (
-                        <HeartIcon className="w-7 h-7 fill-red-500 text-red-600" />
+                        <HeartIcon className="h-7 w-7 fill-red-500 text-red-600" />
                       ) : (
-                        <HeartIcon className="w-7 h-7" />
+                        <HeartIcon className="h-7 w-7" />
                       )}
-                      <AnnotationIcon className="w-7 h-7" />
+                      <AnnotationIcon className="h-7 w-7" />
                     </button>
                     <div className="flex flex-col space-y-1 p-2">
                       {numLikes === 1 ? (
@@ -173,7 +173,7 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                         <span className="">Liked by {numLikes} people</span>
                       )}
 
-                      <span className="text-gray-800 text-sm">
+                      <span className="text-sm text-gray-800">
                         {post && format(post.createdAt)}
                       </span>
                     </div>
@@ -183,7 +183,7 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
             </div>
             {/* For sm size lower screen */}
             <div className="visible md:hidden">
-              <div className="p-2 border-b border-black flex items-center justify-between ">
+              <div className="flex items-center justify-between border-b border-black p-2 ">
                 <div className="flex items-center space-x-1">
                   <img
                     src={
@@ -192,12 +192,12 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                         : PF + "people/no-image-avatar2.png"
                     }
                     alt={user?.username}
-                    className=" w-9 h-9 rounded-full object-cover border border-gray-400 alt-image:font-semibold text-center text-xs text-gray-500"
+                    className=" alt-image:font-semibold h-9 w-9 rounded-full border border-gray-400 object-cover text-center text-xs text-gray-500"
                   />
                   <span className="pl-2 font-semibold ">{user?.username}</span>
                 </div>
                 <button>
-                  <DotsHorizontalIcon className="w-4 h-4" onClick={openModal} />
+                  <DotsHorizontalIcon className="h-4 w-4" onClick={openModal} />
                 </button>
                 {post && user && (
                   <PostCardEditModal
@@ -213,19 +213,19 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                 <img
                   src={post?.img}
                   alt="postImage"
-                  className="object-cover h-full w-full"
+                  className="h-full w-full object-cover"
                 />
               </div>
               <button
                 onClick={onClickLike}
-                className="p-2 border-y border-black w-full flex space-x-3"
+                className="flex w-full space-x-3 border-y border-black p-2"
               >
                 {isLiked ? (
-                  <HeartIcon className="w-7 h-7 fill-red-500 text-red-600" />
+                  <HeartIcon className="h-7 w-7 fill-red-500 text-red-600" />
                 ) : (
-                  <HeartIcon className="w-7 h-7" />
+                  <HeartIcon className="h-7 w-7" />
                 )}
-                <AnnotationIcon className="w-7 h-7" />
+                <AnnotationIcon className="h-7 w-7" />
               </button>
               <div className="flex flex-col space-y-1 p-2">
                 {numLikes === 1 ? (
@@ -238,7 +238,7 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                   <span className="">Liked by {numLikes} people</span>
                 )}
                 <div className="space-x-2">
-                  <span className="font-medium cursor-pointer hover:underline underline-offset-4 ">
+                  <span className="cursor-pointer font-medium underline-offset-4 hover:underline ">
                     {user?.username}
                   </span>
                   <span>
@@ -249,7 +249,7 @@ const PostModal = ({ isOpen, setIsOpen, post, userStatus }: Props) => {
                     )}
                   </span>
                 </div>
-                <span className="text-gray-800 text-sm">
+                <span className="text-sm text-gray-800">
                   {post && format(post.createdAt)}
                 </span>
               </div>
