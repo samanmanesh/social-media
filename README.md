@@ -1,6 +1,6 @@
 <h1 align="center">   Hilarion Social Media </h1> 
                                                           
-A social media app where users can open an account and share posts with friends. You can follow and get followed by others, see their posts, like them and get suggestions from friends.  
+A social media app where users can open an account and share posts with friends. You can follow and get followed by others, see their posts, like them and get friend suggestions.  
 
 It’s a full-stack specifically MERN web app inspired by Instagram.
 
